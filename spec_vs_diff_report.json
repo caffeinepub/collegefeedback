@@ -1,11 +1,19 @@
 {
   "kind": "spec_vs_diff_report",
   "version": "1.0",
-  "generatedAt": "2026-03-01T15:04:44.866Z",
-  "summary": "Both REQ-33 and REQ-34 appear to be implemented. The useGetStats hook in useQueries.ts now guards against undefined actor, returns safe defaults, uses enabled: !!actor && !isFetching, and includes retry logic. Dashboard.tsx now shows skeleton loaders, an Alert error UI with a refresh button, and graceful zero-state handling. All required AC items appear addressed.",
+  "generatedAt": "2026-03-01T15:09:42.839Z",
+  "summary": "The diff implements automatic retry/polling for the Dashboard's stats fetch (REQ-35) through changes to useQueries.ts and Dashboard.tsx. The implementation includes aggressive retry logic, refetchInterval polling, skeleton/spinner loading states, and a non-crashing error fallback without a manual reload button. All acceptance criteria appear to be addressed.",
   "missing_requirements": [],
-  "hallucinated_features": [],
-  "confidence": 0.88,
+  "hallucinated_features": [
+    {
+      "description": "useGetAllPosts and useGetPostsByCategory hooks were also modified with retry/refetchInterval logic",
+      "reason": "The build request explicitly scopes changes to Dashboard.tsx and the useGetStats hook in useQueries.ts as non-goals include changes to any page other than Dashboard.tsx and the useGetStats hook. The diff also modifies useGetAllPosts (retry: 10, refetchInterval polling) and useGetPostsByCategory (retry: 5) which are outside the stated scope.",
+      "evidence": [
+        "frontend/src/hooks/useQueries.ts"
+      ]
+    }
+  ],
+  "confidence": 0.85,
   "changed_files": [
     "frontend-file-summaries.txt",
     "frontend/src/hooks/useQueries.ts",

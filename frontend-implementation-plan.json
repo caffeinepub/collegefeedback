@@ -1,40 +1,28 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Fix Dashboard page failing to load",
+  "title": "Auto-reload the Dashboard page on data fetch failure",
   "requirements": [
     {
-      "id": "REQ-33",
-      "summary": "Fix the Dashboard page (/dashboard) to load correctly by handling undefined/null/error states from useGetStats, adding proper loading spinners and error boundaries so the page never crashes",
+      "id": "REQ-35",
+      "summary": "On the Dashboard page, automatically retry fetching stats data when the actor is not initialized or the fetch fails, without requiring manual user refresh. Replace manual reload prompts with an automatic retry mechanism using React Query options or polling, showing a loading indicator during retries.",
       "acceptanceCriteria": [
-        "Navigating to /dashboard no longer results in a blank page or crash in the deployed version",
-        "The Dashboard renders a loading state while stats data is being fetched",
-        "If the backend getStats call fails, the Dashboard shows a user-friendly error message instead of crashing",
-        "If stats data is undefined or empty, the Dashboard still renders gracefully with zero-state messaging",
-        "All stat cards, category breakdown, top posts lists, and year distribution sections render correctly once data is available"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/pages/Dashboard.tsx",
-          "operation": "modify",
-          "description": "Add comprehensive error handling and loading states for useGetStats data. Wrap all stat rendering logic in conditional checks to handle undefined, null, or empty data gracefully. Add a loading spinner component that displays while isLoading is true. Add an error boundary or error state UI that displays a user-friendly message when isError is true or when the query fails. Ensure all references to stats.totalPosts, stats.categoryCounts, stats.topUpvotedPosts, and stats.topConnectedPosts are guarded with optional chaining or null checks. Add zero-state messaging for empty arrays or undefined stats. Ensure the page structure always renders (no conditional return of entire component) so navigation never results in a blank page."
-        }
-      ]
-    },
-    {
-      "id": "REQ-34",
-      "summary": "Audit and fix the useGetStats hook to handle actor initialization delay, return a stable React Query structure, and prevent unhandled promise rejections when actor is undefined",
-      "acceptanceCriteria": [
-        "useGetStats does not throw when actor is undefined or not yet initialized",
-        "useGetStats correctly calls getStats on the backend actor once it is available",
-        "The hook returns { data, isLoading, isError } in a shape usable by Dashboard.tsx",
-        "The query is enabled only when the actor is available (enabled: !!actor)"
+        "When the Dashboard page mounts and the actor is not yet ready, the page automatically retries the stats fetch at a short interval without user interaction.",
+        "A loading spinner or skeleton is shown while the retry is in progress.",
+        "Once the backend actor is initialized and getStats returns data, the Dashboard renders the stats without requiring a manual page refresh.",
+        "No manual 'Reload' or 'Retry' button is required — recovery is fully automatic.",
+        "If the fetch ultimately fails after retries, a non-crashing fallback error UI is shown."
       ],
       "file_operations": [
         {
           "path": "frontend/src/hooks/useQueries.ts",
           "operation": "modify",
-          "description": "Fix the useGetStats hook to guard against undefined actor by adding an enabled option (enabled: !!actor) to the useQuery configuration. Wrap the queryFn in a check that returns a promise rejection or throws a controlled error if actor is undefined, preventing unhandled promise rejections. Ensure the queryFn only calls actor.getStats() when actor is truthy. Verify the hook returns a stable { data, isLoading, isError, error } structure compatible with React Query and usable by Dashboard.tsx. Add type annotations to ensure PostStats return type matches the backend interface."
+          "description": "Modify the useGetStats hook to enable automatic retry with React Query options. Configure retry: 10, retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 10000), and refetchInterval: 3000 to automatically poll and recover when the backend actor becomes available. Ensure the hook returns { data, isLoading, isError, error } so the Dashboard can render appropriate loading and error states during automatic retries."
+        },
+        {
+          "path": "frontend/src/pages/Dashboard.tsx",
+          "operation": "modify",
+          "description": "Update the Dashboard page to consume the enhanced useGetStats hook. Remove any manual reload or retry button. While isLoading is true, display a loading spinner or skeleton UI. Once data is successfully fetched, render the analytics dashboard (total posts, category breakdown, top posts, year distribution chart). If isError remains true after all retries, show a non-crashing fallback error message without blocking the UI. Ensure the page automatically recovers and displays stats as soon as the backend actor is initialized, without requiring user interaction."
         }
       ]
     }

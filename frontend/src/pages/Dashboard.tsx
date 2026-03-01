@@ -1,5 +1,5 @@
 import { Link } from '@tanstack/react-router';
-import { BarChart2, TrendingUp, Users, BookOpen, AlertCircle } from 'lucide-react';
+import { BarChart2, TrendingUp, Users, BookOpen, AlertCircle, Loader2 } from 'lucide-react';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
@@ -136,35 +136,52 @@ function DashboardSkeleton() {
 
 export default function Dashboard() {
   const { actor, isFetching: actorFetching } = useActor();
-  const { data: stats, isLoading: statsLoading, isError: statsError, error: statsErrorObj } = useGetStats();
-  const { data: allPosts, isLoading: postsLoading, isError: postsError } = useGetAllPosts();
+  const {
+    data: stats,
+    isLoading: statsLoading,
+    isFetching: statsFetching,
+    isError: statsError,
+    error: statsErrorObj,
+    failureCount: statsFailureCount,
+  } = useGetStats();
+  const {
+    data: allPosts,
+    isLoading: postsLoading,
+    isError: postsError,
+  } = useGetAllPosts();
 
-  // Show loading while actor is initializing OR while queries are in flight
+  // Show loading while actor is initializing OR while queries are in flight for the first time
   const isLoading = actorFetching || !actor || statsLoading || postsLoading;
 
   if (isLoading) {
-    return <DashboardSkeleton />;
+    return (
+      <div>
+        <DashboardSkeleton />
+        <div className="flex items-center justify-center gap-2 pb-6 text-muted-foreground text-sm font-body">
+          <Loader2 className="w-4 h-4 animate-spin" />
+          <span>Loading community stats…</span>
+        </div>
+      </div>
+    );
   }
 
-  if (statsError || postsError) {
+  // If we have a persistent error after retries, show a non-crashing fallback
+  // (React Query will keep retrying in the background via refetchInterval)
+  if ((statsError || postsError) && !stats) {
     return (
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl py-20">
         <Alert variant="destructive" className="max-w-lg mx-auto">
           <AlertCircle className="h-4 w-4" />
-          <AlertTitle className="font-heading font-bold">Failed to load dashboard</AlertTitle>
+          <AlertTitle className="font-heading font-bold">Having trouble loading stats</AlertTitle>
           <AlertDescription className="font-body">
             {statsErrorObj instanceof Error
               ? statsErrorObj.message
-              : 'Could not fetch community stats. Please refresh the page and try again.'}
+              : 'Could not fetch community stats. Retrying automatically…'}
           </AlertDescription>
         </Alert>
-        <div className="text-center mt-8">
-          <button
-            onClick={() => window.location.reload()}
-            className="inline-flex items-center gap-2 bg-primary text-primary-foreground hover:bg-primary/90 font-heading font-semibold px-6 py-2.5 rounded-full transition-colors shadow-sm"
-          >
-            🔄 Refresh Page
-          </button>
+        <div className="flex items-center justify-center gap-2 mt-6 text-muted-foreground text-sm font-body">
+          <Loader2 className="w-4 h-4 animate-spin" />
+          <span>Retrying… (attempt {statsFailureCount})</span>
         </div>
       </div>
     );
@@ -197,6 +214,7 @@ export default function Dashboard() {
         <div className="inline-flex items-center gap-2 bg-primary/10 text-primary text-xs font-heading font-semibold px-3 py-1.5 rounded-full mb-3">
           <BarChart2 className="w-3.5 h-3.5" />
           Live stats
+          {statsFetching && <Loader2 className="w-3 h-3 animate-spin ml-1" />}
         </div>
         <h1 className="font-heading font-bold text-3xl sm:text-4xl text-foreground mb-2">
           📊 Community Dashboard

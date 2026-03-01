@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 15,
+  "projectStateVersion": 17,
   "summary": "A college feedback-sharing platform with a frictionless, anonymous workflow: users enter the site, select their college year, type a lesson or feedback, submit it, browse others' feedback, and can connect with anyone — all without sign-in or personal details. The platform is being built to be implementation-ready with multiple pages, custom fonts, emojis, dashboards, and polished UI. New direction includes: multi-language support (Telugu + English combo), social sharing options, a rebranded name ('Memu Nerchunnavi' style English-Telugu combo), a cute/innovative but simple color palette and fonts, and a customizable website/platform name per college.",
   "architectural_notes": [
     "Core purpose: seniors share real college experience feedback to guide juniors on internships, hackathons, and courses",
@@ -250,6 +250,14 @@
       "title": "Audit the useGetStats hook in frontend/src/hooks/useQueries.ts to ensure it correctly calls the backend getStats function using the anonymous actor from useActor, handles actor initialization delay (actor may be undefined on first render), and returns a stable loading/error/data structure compatible with React Query. Ensure the query does not throw an unhandled promise rejection if the actor is not yet ready.",
       "reqIds": [
         "REQ-34"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-on-the-dashboard-page-dashboard-when-the-stats-data-fails-to-load-or-the-actor-is-not-yet-initialized-automatically-retry-reload-the-data-fetch-without-requiring-the-user-to-manually-refresh-the-page-implement-an-automatic-retry-mechanism-e-g-using-react-query-s-retry-and-refetchinterval-options-or-a-useeffect-based-polling-approach-so-that-the-dashboard-recovers-and-displays-data-as-soon-as-the-backend-actor-becomes-available-remove-any-hard-reload-or-manual-refresh-prompt-and-replace-it-with-an-automatic-recovery-flow-that-shows-a-loading-indicator-while-retrying",
+      "title": "On the Dashboard page (/dashboard), when the stats data fails to load or the actor is not yet initialized, automatically retry/reload the data fetch without requiring the user to manually refresh the page. Implement an automatic retry mechanism (e.g. using React Query's retry and refetchInterval options, or a useEffect-based polling approach) so that the Dashboard recovers and displays data as soon as the backend actor becomes available. Remove any hard 'Reload' or manual refresh prompt and replace it with an automatic recovery flow that shows a loading indicator while retrying.",
+      "reqIds": [
+        "REQ-35"
       ],
       "version": 1
     }

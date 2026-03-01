@@ -1,57 +1,36 @@
 {
   "kind": "build_request",
-  "title": "Fix Dashboard page failing to load",
-  "projectName": "Memu Nerchunnavi",
-  "priority": "high",
+  "title": "Auto-reload the Dashboard page on data fetch failure",
+  "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-33",
-      "text": "Fix the Dashboard page (/dashboard) so it loads correctly in the deployed version. Investigate and resolve any runtime errors that prevent the page from rendering — this includes handling cases where the useGetStats hook returns undefined, null, or an error state, where backend getStats call fails or times out, or where the actor is not yet initialized when the Dashboard mounts. Add proper loading spinners and error boundary/fallback UI so the page always renders without crashing.",
+      "id": "REQ-35",
+      "text": "On the Dashboard page (/dashboard), when the stats data fails to load or the actor is not yet initialized, automatically retry/reload the data fetch without requiring the user to manually refresh the page. Implement an automatic retry mechanism (e.g. using React Query's retry and refetchInterval options, or a useEffect-based polling approach) so that the Dashboard recovers and displays data as soon as the backend actor becomes available. Remove any hard 'Reload' or manual refresh prompt and replace it with an automatic recovery flow that shows a loading indicator while retrying.",
       "target": "frontend",
       "source": {
         "messageIds": [
           "msg-4"
         ],
         "quotes": [
-          "it didnt load dashoards"
+          "no make it reload"
         ]
       },
       "acceptanceCriteria": [
-        "Navigating to /dashboard no longer results in a blank page or crash in the deployed version",
-        "The Dashboard renders a loading state while stats data is being fetched",
-        "If the backend getStats call fails, the Dashboard shows a user-friendly error message instead of crashing",
-        "If stats data is undefined or empty, the Dashboard still renders gracefully with zero-state messaging",
-        "All stat cards, category breakdown, top posts lists, and year distribution sections render correctly once data is available"
-      ]
-    },
-    {
-      "id": "REQ-34",
-      "text": "Audit the useGetStats hook in frontend/src/hooks/useQueries.ts to ensure it correctly calls the backend getStats function using the anonymous actor from useActor, handles actor initialization delay (actor may be undefined on first render), and returns a stable loading/error/data structure compatible with React Query. Ensure the query does not throw an unhandled promise rejection if the actor is not yet ready.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-4"
-        ],
-        "quotes": [
-          "it didnt load dashoards"
-        ]
-      },
-      "acceptanceCriteria": [
-        "useGetStats does not throw when actor is undefined or not yet initialized",
-        "useGetStats correctly calls getStats on the backend actor once it is available",
-        "The hook returns { data, isLoading, isError } in a shape usable by Dashboard.tsx",
-        "The query is enabled only when the actor is available (enabled: !!actor)"
+        "When the Dashboard page mounts and the actor is not yet ready, the page automatically retries the stats fetch at a short interval without user interaction.",
+        "A loading spinner or skeleton is shown while the retry is in progress.",
+        "Once the backend actor is initialized and getStats returns data, the Dashboard renders the stats without requiring a manual page refresh.",
+        "No manual 'Reload' or 'Retry' button is required — recovery is fully automatic.",
+        "If the fetch ultimately fails after retries, a non-crashing fallback error UI is shown."
       ]
     }
   ],
   "constraints": [
-    "Do not modify files under frontend/src/hooks/useActor.ts or frontend/src/hooks/useInternetIdentity.ts",
-    "Do not change the backend getStats function signature or return type"
+    "Do not edit files listed in frontend.immutablePaths.",
+    "All Motoko logic must remain in the single main actor file."
   ],
   "nonGoals": [
-    "Adding new stats or metrics to the Dashboard beyond what already exists",
-    "Changing the visual design or layout of the Dashboard",
-    "Modifying the backend actor logic"
+    "Adding new backend endpoints or changing the getStats function signature.",
+    "Changes to any page other than Dashboard.tsx and the useGetStats hook in useQueries.ts."
   ],
   "imageRequirements": {
     "required": [],

@@ -14,6 +14,13 @@ export function useGetAllPosts() {
       return [...posts].sort((a, b) => Number(b.createdAt - a.createdAt));
     },
     enabled: !!actor && !isFetching,
+    retry: 10,
+    retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 10000),
+    refetchInterval: (query) => {
+      // Stop polling once we have data
+      if (query.state.data && query.state.data.length >= 0 && !query.state.error) return false;
+      return 3000;
+    },
   });
 }
 
@@ -28,6 +35,8 @@ export function useGetPostsByCategory(category: Category) {
       return [...posts].sort((a, b) => Number(b.createdAt - a.createdAt));
     },
     enabled: !!actor && !isFetching,
+    retry: 5,
+    retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 10000),
   });
 }
 
@@ -42,6 +51,8 @@ export function useGetPost(id: bigint) {
       return posts.find(p => p.id === id) ?? null;
     },
     enabled: !!actor && !isFetching,
+    retry: 5,
+    retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 10000),
   });
 }
 
@@ -52,20 +63,18 @@ export function useGetStats() {
     queryKey: ['stats'],
     queryFn: async () => {
       if (!actor) {
-        // Return a safe default rather than throwing to avoid unhandled rejections
-        return {
-          totalPosts: BigInt(0),
-          categoryCounts: [],
-          topUpvotedPosts: [],
-          topConnectedPosts: [],
-        } as PostStats;
+        throw new Error('Actor not yet initialized');
       }
       return actor.getStats();
     },
     enabled: !!actor && !isFetching,
-    // Retry on failure with a short delay
-    retry: 2,
-    retryDelay: 1000,
+    retry: 10,
+    retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 10000),
+    refetchInterval: (query) => {
+      // Keep polling until we have data successfully
+      if (query.state.data && !query.state.error) return false;
+      return 3000;
+    },
   });
 }
 

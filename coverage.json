@@ -1,35 +1,26 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-03-01T15:04:44.869Z",
+  "generatedAt": "2026-03-01T15:09:42.844Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
-    "total": 2,
-    "implemented": 2,
+    "total": 1,
+    "implemented": 1,
     "items": [
       {
-        "id": "REQ-33",
-        "summary": "Fix the Dashboard page (/dashboard) so it loads correctly in the deployed version. Investigate and resolve any runtime errors that prevent the page from rendering — this includes handling cases where the useGetStats hook returns undefined, null, or an error state, where backend getStats call fails or times out, or where the actor is not yet initialized when the Dashboard mounts. Add proper loading spinners and error boundary/fallback UI so the page always renders without crashing.",
+        "id": "REQ-35",
+        "summary": "On the Dashboard page (/dashboard), when the stats data fails to load or the actor is not yet initialized, automatically retry/reload the data fetch without requiring the user to manually refresh the page. Implement an automatic retry mechanism (e.g. using React Query's retry and refetchInterval options, or a useEffect-based polling approach) so that the Dashboard recovers and displays data as soon as the backend actor becomes available. Remove any hard 'Reload' or manual refresh prompt and replace it with an automatic recovery flow that shows a loading indicator while retrying.",
         "status": "implemented",
         "plannedFiles": [
+          "frontend/src/hooks/useQueries.ts",
           "frontend/src/pages/Dashboard.tsx"
         ],
         "matchedFiles": [
+          "frontend/src/hooks/useQueries.ts",
           "frontend/src/pages/Dashboard.tsx"
-        ]
-      },
-      {
-        "id": "REQ-34",
-        "summary": "Audit the useGetStats hook in frontend/src/hooks/useQueries.ts to ensure it correctly calls the backend getStats function using the anonymous actor from useActor, handles actor initialization delay (actor may be undefined on first render), and returns a stable loading/error/data structure compatible with React Query. Ensure the query does not throw an unhandled promise rejection if the actor is not yet ready.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/hooks/useQueries.ts"
-        ],
-        "matchedFiles": [
-          "frontend/src/hooks/useQueries.ts"
         ]
       }
     ]

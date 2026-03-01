@@ -1,13 +1,11 @@
 # Specification
 
 ## Summary
-**Goal:** Fix the Dashboard page (`/dashboard`) so it loads correctly without crashing or showing a blank page.
+**Goal:** Automatically retry and recover data loading on the Dashboard page when the backend actor is not yet available, eliminating any manual reload prompt.
 
 **Planned changes:**
-- Audit and fix the `useGetStats` hook in `frontend/src/hooks/useQueries.ts` to guard against undefined actor on first render, enable the query only when the actor is available (`enabled: !!actor`), and prevent unhandled promise rejections
-- Ensure `useGetStats` returns a stable `{ data, isLoading, isError }` shape compatible with React Query
-- Add a loading spinner to the Dashboard while stats data is being fetched
-- Add an error fallback UI to the Dashboard when the `getStats` backend call fails
-- Handle undefined/empty stats data gracefully with zero-state messaging so the page never crashes
+- Update the `useGetStats` hook to use automatic retry logic (e.g. `retry` and `refetchInterval` options) so the stats fetch retries without user interaction.
+- Replace any manual "Reload" or "Retry" button/prompt on the Dashboard with a loading spinner or skeleton shown during retries.
+- Show a non-crashing fallback error UI if the fetch ultimately fails after all retries.
 
-**User-visible outcome:** Navigating to `/dashboard` always renders the page — showing a loading state while fetching, a friendly error message on failure, and all stat cards/sections correctly once data is available.
+**User-visible outcome:** The Dashboard page automatically retries loading stats when the backend is unavailable, showing a loading indicator until data is ready — no manual refresh or reload button required.

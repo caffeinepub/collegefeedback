@@ -2,9 +2,10 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-fix-the-dashboard-page-dashboard-so-it-loads-correctly-in-the-deployed-version-investigate-and-resolve-any-runtime-errors-that-prevent-the-page-from-rendering-this-includes-handling-cases-where-the-usegetstats-hook-returns-undefined-null-or-an-error-state-where-backend-getstats-call-fails-or-times-out-or-where-the-actor-is-not-yet-initialized-when-the-dashboard-mounts-add-proper-loading-spinners-and-error-boundary-fallback-ui-so-the-page-always-renders-without-crashing",
-      "featureTitle": "Fix the Dashboard page (/dashboard) so it loads correctly in the deployed version. Investigate and resolve any runtime errors that prevent the page from rendering — this includes handling cases where the useGetStats hook returns undefined, null, or an error state, where backend getStats call fails or times out, or where the actor is not yet initialized when the Dashboard mounts. Add proper loading spinners and error boundary/fallback UI so the page always renders without crashing.",
+      "featureId": "feature-on-the-dashboard-page-dashboard-when-the-stats-data-fails-to-load-or-the-actor-is-not-yet-initialized-automatically-retry-reload-the-data-fetch-without-requiring-the-user-to-manually-refresh-the-page-implement-an-automatic-retry-mechanism-e-g-using-react-query-s-retry-and-refetchinterval-options-or-a-useeffect-based-polling-approach-so-that-the-dashboard-recovers-and-displays-data-as-soon-as-the-backend-actor-becomes-available-remove-any-hard-reload-or-manual-refresh-prompt-and-replace-it-with-an-automatic-recovery-flow-that-shows-a-loading-indicator-while-retrying",
+      "featureTitle": "On the Dashboard page (/dashboard), when the stats data fails to load or the actor is not yet initialized, automatically retry/reload the data fetch without requiring the user to manually refresh the page. Implement an automatic retry mechanism (e.g. using React Query's retry and refetchInterval options, or a useEffect-based polling approach) so that the Dashboard recovers and displays data as soon as the backend actor becomes available. Remove any hard 'Reload' or manual refresh prompt and replace it with an automatic recovery flow that shows a loading indicator while retrying.",
       "files": [
+        "frontend/src/hooks/useQueries.ts",
         "frontend/src/pages/Dashboard.tsx"
       ],
       "components": [
@@ -16,26 +17,7 @@
         "blob-storage@4.0.0"
       ],
       "testIds": [
-        "REQ-33"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-audit-the-usegetstats-hook-in-frontend-src-hooks-usequeries-ts-to-ensure-it-correctly-calls-the-backend-getstats-function-using-the-anonymous-actor-from-useactor-handles-actor-initialization-delay-actor-may-be-undefined-on-first-render-and-returns-a-stable-loading-error-data-structure-compatible-with-react-query-ensure-the-query-does-not-throw-an-unhandled-promise-rejection-if-the-actor-is-not-yet-ready",
-      "featureTitle": "Audit the useGetStats hook in frontend/src/hooks/useQueries.ts to ensure it correctly calls the backend getStats function using the anonymous actor from useActor, handles actor initialization delay (actor may be undefined on first render), and returns a stable loading/error/data structure compatible with React Query. Ensure the query does not throw an unhandled promise rejection if the actor is not yet ready.",
-      "files": [
-        "frontend/src/hooks/useQueries.ts"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0",
-        "blob-storage@4.0.0"
-      ],
-      "testIds": [
-        "REQ-34"
+        "REQ-35"
       ],
       "confidence": "high"
     }
