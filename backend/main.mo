@@ -8,11 +8,7 @@ import Runtime "mo:core/Runtime";
 import MixinStorage "blob-storage/Mixin";
 import Storage "blob-storage/Storage";
 
-
-
 // Use MixinStorage for blob storage capabilities.
-// Specify migration module in actor definition.
-
 actor {
   include MixinStorage();
 
@@ -79,7 +75,7 @@ actor {
 
   let wishlists = Map.empty<Text, [Nat]>();
 
-  public shared ({ caller }) func createPost(
+  public func createPost(
     content : Text,
     authorYear : Text,
     category : Category,
@@ -146,7 +142,7 @@ actor {
   };
 
   // Wishlist functions
-  public shared ({ caller }) func addToWishlist(sessionKey : Text, postId : Nat) : async () {
+  public func addToWishlist(sessionKey : Text, postId : Nat) : async () {
     let currentWishlist = switch (wishlists.get(sessionKey)) {
       case (null) { [] };
       case (?wishlist) { wishlist };
@@ -171,7 +167,7 @@ actor {
     };
   };
 
-  public shared ({ caller }) func removeFromWishlist(sessionKey : Text, postId : Nat) : async () {
+  public func removeFromWishlist(sessionKey : Text, postId : Nat) : async () {
     switch (wishlists.get(sessionKey)) {
       case (null) { Runtime.trap("No wishlist found for session") };
       case (?currentWishlist) {
@@ -189,7 +185,7 @@ actor {
   };
 
   // College Connect functions
-  public shared ({ caller }) func submitCollegeConnect(collegeName : Text, year : Text, tip : Text) : async Nat {
+  public func submitCollegeConnect(collegeName : Text, year : Text, tip : Text) : async Nat {
     if (tip.size() > 200) {
       Runtime.trap("Tip or message must be 200 characters or less");
     };

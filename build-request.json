@@ -1,79 +1,120 @@
 {
   "kind": "build_request",
-  "title": "Fix theme colours (remove all black), fix SparkParticles distribution, restore warm/bright palette",
-  "priority": "high",
+  "title": "Rebrand platform as 'Memu Nerchukunnam' with shareable public access",
+  "projectName": "Memu Nerchukunnam",
+  "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-50",
-      "text": "Completely remove all black and near-black colours from the entire app UI. No background, card, button, badge, text, border, overlay, modal, header, footer, or any other element should use black (#000000), near-black (#111, #1a1a1a, #0a0a0a, or equivalent dark OKLCH values close to 0% lightness). Audit frontend/src/index.css, frontend/index.css, and tailwind.config.js for any dark-mode or base rules that produce black surfaces or black text and replace them with appropriate light alternatives from the chosen warm palette.",
+      "id": "REQ-1",
+      "text": "Update the app's brand name throughout the frontend to 'Memu Nerchukunnam' (మేము నేర్చుకున్నాం). This includes the site title in index.html, the header/navbar brand display in Layout.tsx, the About page hero, and any other locations where the current platform name appears.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-1"
+          "msg-latest"
         ],
         "quotes": [
-          "do not make the website in black colour at all",
-          "change the theme to previous or much more clear one than a black one"
+          "create a shareable and usable by everyone website name like memu nerchukunnam"
         ]
       },
       "acceptanceCriteria": [
-        "No element in the app renders with a black or near-black (#000–#222 range) background or text colour.",
-        "Dark-mode CSS rules that produce black surfaces are removed or overridden.",
-        "The app remains fully readable with sufficient contrast on all surfaces."
+        "The browser tab title reads 'Memu Nerchukunnam'",
+        "The sticky header displays 'Memu Nerchukunnam' as the brand name",
+        "The About page hero section reflects the new brand name",
+        "All instances of the old platform name are replaced consistently"
       ]
     },
     {
-      "id": "REQ-51",
-      "text": "Redesign the global colour palette to a warm, bright, friendly theme using one of the following combos (or a harmonious combination): warm brown/skin-tone (e.g. sandy #F5CBA7, warm beige #FAE5D3, terracotta #E8956D accents) paired with off-white backgrounds, OR a blue/white palette (sky blue #60A5FA family, white #FFFFFF, soft blue-grey #EFF6FF). Choose the palette that gives the most clarity and cheerfulness, remove the current dark/lavender-heavy or any near-black OKLCH tokens, and apply the new palette consistently across: header, footer, navigation pills, active-route indicator, cards, buttons (primary, secondary), badges, banners, modals (YearSelectionModal), the dot-grid background dots, and the SparkParticles pills. Update tailwind.config.js design tokens and frontend/src/index.css CSS custom properties to reflect the new palette. Ensure every page (Home, Share, PostDetail, Dashboard, About, Wishlist) uses the updated tokens.",
+      "id": "REQ-2",
+      "text": "Add a prominent 'Share This Website' section or button on the Home page and About page that allows visitors to share the platform URL via WhatsApp, copy link to clipboard, and the native Web Share API — so any user can easily spread the site to others.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-1"
+          "msg-latest"
         ],
         "quotes": [
-          "keep the previous or combos like brown-skin tone or blue white or etc",
-          "change the theme to previous or much more clear one than a black one"
+          "shareable and usable by everyone"
         ]
       },
       "acceptanceCriteria": [
-        "The app uses a warm brown/skin-tone or blue/white colour scheme with no black or dark surfaces.",
-        "All Tailwind config colour tokens and CSS custom properties reflect the new palette.",
-        "Cards, buttons, badges, modals, header, and footer all use the new palette consistently.",
-        "Text on all surfaces has sufficient contrast ratio (≥ 4.5:1) for readability."
+        "A 'Share This Website' UI element is visible on the Home page",
+        "A 'Share This Website' UI element is visible on the About page",
+        "WhatsApp share opens a pre-filled message with the site URL and name",
+        "Copy link button copies the root URL to clipboard and shows a confirmation",
+        "Native Web Share API is triggered on supported devices"
       ]
     },
     {
-      "id": "REQ-52",
-      "text": "Fix the SparkParticles component (frontend/src/components/SparkParticles.tsx) so that the 12–20 floating year-label pills ('I'm 1st Year', 'I'm 2nd Year', 'I'm 3rd Year', 'I'm 4th Year') are distributed evenly across the entire viewport — both horizontally (0%–95% of viewport width) and vertically (starting positions spread across 0%–90% of viewport height). The current seeded-random positioning is producing clustering in certain areas; replace the position calculation so particles are spread across a well-distributed grid-like or stratified random layout covering the full screen. Each of the 16 instances should start at a distinct, well-separated position. Also ensure the particles' colours are updated to match the new warm palette (REQ-51) so they do not appear dark or purple.",
+      "id": "REQ-3",
+      "text": "Remove or make optional the year-selection onboarding modal (YearSelectionModal) so that first-time visitors who arrive via a shared link can immediately browse all posts without being blocked by a required gate. Year selection should remain accessible but non-blocking (e.g., as an optional profile step).",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-1"
+          "msg-latest"
         ],
         "quotes": [
-          "the pop ups of im 1st year,2nd year ,3rd year and 4th year are poppping only at certain places so rectify"
+          "usable by everyone"
         ]
       },
       "acceptanceCriteria": [
-        "Spark pills appear across the full viewport width and height, not clustered in one corner or region.",
-        "All four year-label phrases are evenly represented across the 16 instances.",
-        "Spark pill colours match the new warm palette (no dark or purple tones).",
-        "Particles remain pointer-events: none and do not block interactive elements."
+        "A user who opens the site via a shared link can browse posts without being forced to select a year first",
+        "Year selection is still available (e.g., as a banner prompt or optional modal trigger)",
+        "Existing users who have already selected a year are not affected"
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "text": "Update the English and Telugu translation strings in frontend/src/translations/index.ts to reflect the new brand name 'Memu Nerchukunnam' and update the tagline/description copy on the Home and About pages to emphasize that this is an open, community-shared learning platform for all students.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-latest"
+        ],
+        "quotes": [
+          "shareable and usable by everyone",
+          "memu nerchukunnam"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Translation keys referencing the old brand name are updated to 'Memu Nerchukunnam'",
+        "Home page hero tagline reflects the community/open-sharing theme",
+        "About page mission statement mentions open access for all students"
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "text": "Ensure the backend actor in backend/main.mo does not require any form of authentication to read posts or college connect tips. All read (query) functions — getAllPosts, getPostsByCategory, getStats, getAllCollegeConnects — must be publicly accessible without Internet Identity login.",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-latest"
+        ],
+        "quotes": [
+          "usable by everyone"
+        ]
+      },
+      "acceptanceCriteria": [
+        "getAllPosts returns data without requiring a logged-in identity",
+        "getPostsByCategory returns data without requiring a logged-in identity",
+        "getStats returns data without requiring a logged-in identity",
+        "getAllCollegeConnects returns data without requiring a logged-in identity"
       ]
     }
   ],
   "constraints": [
-    "Do not modify any files listed in frontend.immutablePaths.",
-    "Do not introduce any black, near-black (#000–#222), or very dark OKLCH colours anywhere in the UI.",
-    "All changes are frontend-only; no backend modifications are required."
+    "Do not remove or alter files listed in frontend.immutablePaths",
+    "Do not break existing post creation, upvoting, or wishlist functionality",
+    "Internet Identity login must remain available for users who wish to contribute posts"
   ],
   "nonGoals": [
-    "Changing any backend logic or data models.",
-    "Adding new pages or features beyond colour/theme and SparkParticles fixes.",
-    "Modifying font families (Bricolage Grotesque / DM Sans / Dancing Script) unless they are the source of dark colour issues."
+    "Changing the underlying data model or backend schema",
+    "Adding a new authentication system",
+    "Translating all UI copy to Telugu (bilingual support already exists)",
+    "Redesigning the visual theme or color palette"
   ],
   "imageRequirements": {
-    "required": [],
+    "required": [
+      "Warm, welcoming logo mark for 'Memu Nerchukunnam' — a stylized open book with a graduation cap and a subtle Telugu script flourish, on a transparent background (memu-logo.dim_256x256.png)"
+    ],
     "edits": []
   }
 }

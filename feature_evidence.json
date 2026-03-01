@@ -2,42 +2,13 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-completely-remove-all-black-and-near-black-colours-from-the-entire-app-ui-no-background-card-button-badge-text-border-overlay-modal-header-footer-or-any-other-element-should-use-black-000000-near-black-111-1a1a1a-0a0a0a-or-equivalent-dark-oklch-values-close-to-0-lightness-audit-frontend-src-index-css-frontend-index-css-and-tailwind-config-js-for-any-dark-mode-or-base-rules-that-produce-black-surfaces-or-black-text-and-replace-them-with-appropriate-light-alternatives-from-the-chosen-warm-palette",
-      "featureTitle": "Completely remove all black and near-black colours from the entire app UI. No background, card, button, badge, text, border, overlay, modal, header, footer, or any other element should use black (#000000), near-black (#111, #1a1a1a, #0a0a0a, or equivalent dark OKLCH values close to 0% lightness). Audit frontend/src/index.css, frontend/index.css, and tailwind.config.js for any dark-mode or base rules that produce black surfaces or black text and replace them with appropriate light alternatives from the chosen warm palette.",
+      "featureId": "feature-update-the-app-s-brand-name-throughout-the-frontend-to-memu-nerchukunnam-this-includes-the-site-title-in-index-html-the-header-navbar-brand-display-in-layout-tsx-the-about-page-hero-and-any-other-locations-where-the-current-platform-name-appears",
+      "featureTitle": "Update the app's brand name throughout the frontend to 'Memu Nerchukunnam' (మేము నేర్చుకున్నాం). This includes the site title in index.html, the header/navbar brand display in Layout.tsx, the About page hero, and any other locations where the current platform name appears.",
       "files": [
-        "frontend/src/index.css",
-        "frontend/tailwind.config.js"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0",
-        "blob-storage@4.0.0"
-      ],
-      "testIds": [
-        "REQ-50"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-redesign-the-global-colour-palette-to-a-warm-bright-friendly-theme-using-one-of-the-following-combos-or-a-harmonious-combination-warm-brown-skin-tone-e-g-sandy-f5cba7-warm-beige-fae5d3-terracotta-e8956d-accents-paired-with-off-white-backgrounds-or-a-blue-white-palette-sky-blue-60a5fa-family-white-ffffff-soft-blue-grey-eff6ff-choose-the-palette-that-gives-the-most-clarity-and-cheerfulness-remove-the-current-dark-lavender-heavy-or-any-near-black-oklch-tokens-and-apply-the-new-palette-consistently-across-header-footer-navigation-pills-active-route-indicator-cards-buttons-primary-secondary-badges-banners-modals-yearselectionmodal-the-dot-grid-background-dots-and-the-sparkparticles-pills-update-tailwind-config-js-design-tokens-and-frontend-src-index-css-css-custom-properties-to-reflect-the-new-palette-ensure-every-page-home-share-postdetail-dashboard-about-wishlist-uses-the-updated-tokens",
-      "featureTitle": "Redesign the global colour palette to a warm, bright, friendly theme using one of the following combos (or a harmonious combination): warm brown/skin-tone (e.g. sandy #F5CBA7, warm beige #FAE5D3, terracotta #E8956D accents) paired with off-white backgrounds, OR a blue/white palette (sky blue #60A5FA family, white #FFFFFF, soft blue-grey #EFF6FF). Choose the palette that gives the most clarity and cheerfulness, remove the current dark/lavender-heavy or any near-black OKLCH tokens, and apply the new palette consistently across: header, footer, navigation pills, active-route indicator, cards, buttons (primary, secondary), badges, banners, modals (YearSelectionModal), the dot-grid background dots, and the SparkParticles pills. Update tailwind.config.js design tokens and frontend/src/index.css CSS custom properties to reflect the new palette. Ensure every page (Home, Share, PostDetail, Dashboard, About, Wishlist) uses the updated tokens.",
-      "files": [
-        "frontend/src/components/CollegeConnectForm.tsx",
-        "frontend/src/components/CollegeConnectList.tsx",
+        "frontend/index.html",
         "frontend/src/components/Layout.tsx",
-        "frontend/src/components/PostCard.tsx",
-        "frontend/src/components/ShareButtons.tsx",
-        "frontend/src/components/YearSelectionModal.tsx",
-        "frontend/src/index.css",
         "frontend/src/pages/About.tsx",
-        "frontend/src/pages/Dashboard.tsx",
-        "frontend/src/pages/Home.tsx",
-        "frontend/src/pages/PostDetail.tsx",
-        "frontend/src/pages/Wishlist.tsx",
-        "frontend/tailwind.config.js"
+        "frontend/src/pages/Home.tsx"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -48,15 +19,17 @@
         "blob-storage@4.0.0"
       ],
       "testIds": [
-        "REQ-51"
+        "REQ-1"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-fix-the-sparkparticles-component-frontend-src-components-sparkparticles-tsx-so-that-the-12-20-floating-year-label-pills-i-m-1st-year-i-m-2nd-year-i-m-3rd-year-i-m-4th-year-are-distributed-evenly-across-the-entire-viewport-both-horizontally-0-95-of-viewport-width-and-vertically-starting-positions-spread-across-0-90-of-viewport-height-the-current-seeded-random-positioning-is-producing-clustering-in-certain-areas-replace-the-position-calculation-so-particles-are-spread-across-a-well-distributed-grid-like-or-stratified-random-layout-covering-the-full-screen-each-of-the-16-instances-should-start-at-a-distinct-well-separated-position-also-ensure-the-particles-colours-are-updated-to-match-the-new-warm-palette-req-51-so-they-do-not-appear-dark-or-purple",
-      "featureTitle": "Fix the SparkParticles component (frontend/src/components/SparkParticles.tsx) so that the 12–20 floating year-label pills ('I'm 1st Year', 'I'm 2nd Year', 'I'm 3rd Year', 'I'm 4th Year') are distributed evenly across the entire viewport — both horizontally (0%–95% of viewport width) and vertically (starting positions spread across 0%–90% of viewport height). The current seeded-random positioning is producing clustering in certain areas; replace the position calculation so particles are spread across a well-distributed grid-like or stratified random layout covering the full screen. Each of the 16 instances should start at a distinct, well-separated position. Also ensure the particles' colours are updated to match the new warm palette (REQ-51) so they do not appear dark or purple.",
+      "featureId": "feature-add-a-prominent-share-this-website-section-or-button-on-the-home-page-and-about-page-that-allows-visitors-to-share-the-platform-url-via-whatsapp-copy-link-to-clipboard-and-the-native-web-share-api-so-any-user-can-easily-spread-the-site-to-others",
+      "featureTitle": "Add a prominent 'Share This Website' section or button on the Home page and About page that allows visitors to share the platform URL via WhatsApp, copy link to clipboard, and the native Web Share API — so any user can easily spread the site to others.",
       "files": [
-        "frontend/src/components/SparkParticles.tsx"
+        "frontend/src/components/ShareWebsiteButtons.tsx",
+        "frontend/src/pages/About.tsx",
+        "frontend/src/pages/Home.tsx"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -67,7 +40,45 @@
         "blob-storage@4.0.0"
       ],
       "testIds": [
-        "REQ-52"
+        "REQ-2"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-remove-or-make-optional-the-year-selection-onboarding-modal-yearselectionmodal-so-that-first-time-visitors-who-arrive-via-a-shared-link-can-immediately-browse-all-posts-without-being-blocked-by-a-required-gate-year-selection-should-remain-accessible-but-non-blocking-e-g-as-an-optional-profile-step",
+      "featureTitle": "Remove or make optional the year-selection onboarding modal (YearSelectionModal) so that first-time visitors who arrive via a shared link can immediately browse all posts without being blocked by a required gate. Year selection should remain accessible but non-blocking (e.g., as an optional profile step).",
+      "files": [
+        "frontend/src/pages/Home.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "blob-storage@4.0.0"
+      ],
+      "testIds": [
+        "REQ-3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-update-the-english-and-telugu-translation-strings-in-frontend-src-translations-index-ts-to-reflect-the-new-brand-name-memu-nerchukunnam-and-update-the-tagline-description-copy-on-the-home-and-about-pages-to-emphasize-that-this-is-an-open-community-shared-learning-platform-for-all-students",
+      "featureTitle": "Update the English and Telugu translation strings in frontend/src/translations/index.ts to reflect the new brand name 'Memu Nerchukunnam' and update the tagline/description copy on the Home and About pages to emphasize that this is an open, community-shared learning platform for all students.",
+      "files": [
+        "frontend/src/translations/index.ts"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "blob-storage@4.0.0"
+      ],
+      "testIds": [
+        "REQ-4"
       ],
       "confidence": "high"
     }

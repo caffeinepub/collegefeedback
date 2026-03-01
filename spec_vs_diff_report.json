@@ -1,37 +1,29 @@
 {
   "kind": "spec_vs_diff_report",
   "version": "1.0",
-  "generatedAt": "2026-03-01T18:30:06.997Z",
-  "summary": "The diff implements all three requirements substantially. REQ-50 (remove black/near-black colours) is addressed via warm OKLCH palette replacements in index.css, tailwind.config.js, and all component/page files. REQ-51 (warm brown/skin-tone palette redesign) is applied consistently across header, footer, nav pills, cards, buttons, badges, modals, dot-grid, and all pages. REQ-52 (SparkParticles even distribution + warm colours) is implemented with a stratified 4x4 grid layout and warm brown/peach pill colours. One minor concern: the dark-mode .dark block in index.css still uses OKLCH lightness values around 0.22-0.26, which are very dark though not pure black.",
+  "generatedAt": "2026-03-01T19:05:42.974Z",
+  "summary": "The diff implements most requirements well. REQ-1 (branding), REQ-2 (share buttons), REQ-3 (non-blocking year selection), and REQ-4 (translation strings) are all clearly implemented. REQ-5 is partially addressed — the backend query functions are present but still retain the ({ caller }) pattern, and crucially getAllCollegeConnects is not visible in the truncated diff, raising uncertainty about its public accessibility.",
   "missing_requirements": [
     {
-      "id": "REQ-50",
-      "requirement": "Dark-mode CSS rules that produce black surfaces are removed or overridden",
-      "reason": "The .dark block in frontend/src/index.css still defines --background at oklch(0.22 0.025 55), which is a very dark surface (lightness 22%). While not pure black, it is close to the near-black threshold and the AC states dark-mode rules producing black surfaces should be removed or overridden.",
+      "id": "REQ-5",
+      "requirement": "getAllCollegeConnects must be publicly accessible without Internet Identity login",
+      "reason": "The backend/main.mo diff is truncated and does not show the getAllCollegeConnects function. While getAllPosts, getPostsByCategory, and getStats are visible, getAllCollegeConnects is not confirmed to exist or be unauthenticated in the diff.",
       "evidence": [
-        "frontend/src/index.css"
+        "backend/main.mo"
       ]
     }
   ],
   "hallucinated_features": [],
   "confidence": 0.82,
   "changed_files": [
+    "backend/main.mo",
     "frontend-file-summaries.txt",
-    "frontend/src/components/CollegeConnectForm.tsx",
-    "frontend/src/components/CollegeConnectList.tsx",
+    "frontend/index.html",
     "frontend/src/components/Layout.tsx",
-    "frontend/src/components/PostCard.tsx",
-    "frontend/src/components/ShareButtons.tsx",
-    "frontend/src/components/SparkParticles.tsx",
-    "frontend/src/components/YearSelectionModal.tsx",
-    "frontend/src/index.css",
+    "frontend/src/components/ShareWebsiteButtons.tsx",
     "frontend/src/pages/About.tsx",
-    "frontend/src/pages/Dashboard.tsx",
     "frontend/src/pages/Home.tsx",
-    "frontend/src/pages/PostDetail.tsx",
-    "frontend/src/pages/ShareExperience.tsx",
-    "frontend/src/pages/Wishlist.tsx",
-    "frontend/tailwind.config.js",
+    "frontend/src/translations/index.ts",
     "project_state.json"
   ]
 }

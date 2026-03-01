@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { useGetAllPosts, useGetPostsByCategory } from "../hooks/useQueries";
 import PostCard from "../components/PostCard";
+import ShareWebsiteButtons from "../components/ShareWebsiteButtons";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Category } from "../backend";
+import { useYearSelection } from "../hooks/useYearSelection";
+import YearSelectionModal from "../components/YearSelectionModal";
 
 const CATEGORIES = [
   { value: "all" as const, label: "✨ All" },
@@ -14,6 +17,9 @@ const CATEGORIES = [
 
 const Home: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState<"all" | Category>("all");
+  const { hasSelected } = useYearSelection();
+  const [showYearBanner, setShowYearBanner] = useState(!hasSelected);
+  const [showYearModal, setShowYearModal] = useState(false);
 
   const { data: allPosts, isLoading: allLoading, isError: allError } = useGetAllPosts();
   const {
@@ -21,7 +27,6 @@ const Home: React.FC = () => {
     isLoading: filteredLoading,
     isError: filteredError,
   } = useGetPostsByCategory(
-    // Always pass a valid Category; when "all" is selected we pass general but won't use the result
     activeCategory !== "all" ? activeCategory : Category.general
   );
 
@@ -31,8 +36,13 @@ const Home: React.FC = () => {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
+      {/* Year Selection Modal (optional) */}
+      {showYearModal && (
+        <YearSelectionModal onClose={() => setShowYearModal(false)} />
+      )}
+
       {/* Hero Banner */}
-      <div className="relative rounded-2xl overflow-hidden mb-8 shadow-md">
+      <div className="relative rounded-2xl overflow-hidden mb-6 shadow-md">
         <img
           src="/assets/generated/hero-pastel.dim_1200x400.png"
           alt="College campus"
@@ -42,20 +52,70 @@ const Home: React.FC = () => {
           className="absolute inset-0 flex flex-col items-center justify-center text-center px-4"
           style={{ background: "oklch(0.55 0.08 50 / 0.45)" }}
         >
-          <h1
-            className="font-brand text-3xl sm:text-4xl mb-2 drop-shadow-sm"
-            style={{ color: "oklch(0.99 0.005 58)" }}
-          >
-            Memu నేర్చుకున్నవి
-          </h1>
+          <div className="flex items-center gap-3 mb-2">
+            <img
+              src="/assets/generated/memu-logo.dim_256x256.png"
+              alt="Memu Nerchukunnam"
+              className="w-10 h-10 rounded-full object-cover shadow-md"
+              style={{ border: "2px solid oklch(0.99 0.005 58 / 0.7)" }}
+            />
+            <h1
+              className="font-brand text-3xl sm:text-4xl drop-shadow-sm"
+              style={{ color: "oklch(0.99 0.005 58)" }}
+            >
+              Memu Nerchukunnam
+            </h1>
+          </div>
           <p
             className="text-sm sm:text-base font-medium max-w-md drop-shadow-sm"
             style={{ color: "oklch(0.97 0.010 58)" }}
           >
-            Real experiences from real students 🎓
+            మేము నేర్చుకున్నాం — Open to everyone, free forever 🎓
           </p>
         </div>
       </div>
+
+      {/* Share Website Buttons */}
+      <div className="mb-6">
+        <ShareWebsiteButtons />
+      </div>
+
+      {/* Optional Year Personalization Banner */}
+      {showYearBanner && (
+        <div
+          className="flex items-center justify-between gap-3 rounded-xl border px-4 py-3 mb-6"
+          style={{
+            background: "oklch(0.95 0.025 58)",
+            borderColor: "oklch(0.85 0.030 55)",
+          }}
+        >
+          <div className="flex items-center gap-2">
+            <span className="text-lg">🎓</span>
+            <p className="text-sm" style={{ color: "oklch(0.40 0.06 50)" }}>
+              <strong>Personalize your feed</strong> — select your college year to see the most relevant posts.
+            </p>
+          </div>
+          <div className="flex items-center gap-2 shrink-0">
+            <button
+              onClick={() => setShowYearModal(true)}
+              className="px-3 py-1.5 rounded-full text-xs font-semibold transition-all"
+              style={{
+                background: "oklch(0.55 0.12 42)",
+                color: "oklch(0.99 0.005 58)",
+              }}
+            >
+              Select Year
+            </button>
+            <button
+              onClick={() => setShowYearBanner(false)}
+              className="text-xs underline"
+              style={{ color: "oklch(0.55 0.05 50)" }}
+            >
+              Dismiss
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Category Filter */}
       <div className="flex gap-2 flex-wrap mb-6">

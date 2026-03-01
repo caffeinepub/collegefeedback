@@ -17,7 +17,6 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
   const [mutedState, setMutedState] = useState(getMuted());
-  // useYearSelection returns { year, hasSelected, setYear, ... }
   const { year, hasSelected } = useYearSelection();
 
   const toggleMute = () => {
@@ -27,7 +26,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   };
 
   const appId = encodeURIComponent(
-    typeof window !== "undefined" ? window.location.hostname : "memu-nerchukunnavii"
+    typeof window !== "undefined" ? window.location.hostname : "memu-nerchukunnam"
   );
 
   return (
@@ -46,15 +45,21 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
           {/* Brand */}
           <Link to="/" className="flex items-center gap-2 group">
+            <img
+              src="/assets/generated/memu-logo.dim_256x256.png"
+              alt="Memu Nerchukunnam logo"
+              className="w-8 h-8 rounded-full object-cover"
+              style={{ border: "1.5px solid oklch(0.82 0.06 52)" }}
+            />
             <span
-              className="font-brand text-2xl leading-none"
+              className="font-brand text-xl leading-none"
               style={{ color: "oklch(0.45 0.10 42)" }}
             >
-              Memu నేర్చుకున్నవి
+              Memu Nerchukunnam
             </span>
             {hasSelected && year && (
               <span
-                className="text-xs font-semibold px-2 py-0.5 rounded-full"
+                className="text-xs font-semibold px-2 py-0.5 rounded-full hidden sm:inline"
                 style={{
                   background: "oklch(0.88 0.06 55)",
                   color: "oklch(0.35 0.08 48)",
@@ -164,11 +169,16 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       >
         <div className="max-w-6xl mx-auto px-4 py-6 flex flex-col sm:flex-row items-center justify-between gap-3">
           <div className="flex items-center gap-2">
+            <img
+              src="/assets/generated/memu-logo.dim_256x256.png"
+              alt="logo"
+              className="w-6 h-6 rounded-full object-cover"
+            />
             <span
-              className="font-brand text-lg"
+              className="font-brand text-base"
               style={{ color: "oklch(0.45 0.10 42)" }}
             >
-              Memu నేర్చుకున్నవి
+              Memu Nerchukunnam
             </span>
             <span className="text-xs" style={{ color: "oklch(0.55 0.05 50)" }}>
               © {new Date().getFullYear()}

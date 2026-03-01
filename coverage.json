@@ -1,99 +1,93 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-03-01T18:30:07.002Z",
+  "generatedAt": "2026-03-01T19:05:42.978Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
-    "total": 3,
-    "implemented": 3,
+    "total": 5,
+    "implemented": 4,
     "items": [
       {
-        "id": "REQ-50",
-        "summary": "Completely remove all black and near-black colours from the entire app UI. No background, card, button, badge, text, border, overlay, modal, header, footer, or any other element should use black (#000000), near-black (#111, #1a1a1a, #0a0a0a, or equivalent dark OKLCH values close to 0% lightness). Audit frontend/src/index.css, frontend/index.css, and tailwind.config.js for any dark-mode or base rules that produce black surfaces or black text and replace them with appropriate light alternatives from the chosen warm palette.",
+        "id": "REQ-1",
+        "summary": "Update the app's brand name throughout the frontend to 'Memu Nerchukunnam' (మేము నేర్చుకున్నాం). This includes the site title in index.html, the header/navbar brand display in Layout.tsx, the About page hero, and any other locations where the current platform name appears.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/index.css",
-          "frontend/index.css",
-          "frontend/tailwind.config.js"
+          "frontend/index.html",
+          "frontend/src/components/Layout.tsx",
+          "frontend/src/pages/About.tsx",
+          "frontend/src/pages/Home.tsx"
         ],
         "matchedFiles": [
-          "frontend/src/index.css",
-          "frontend/tailwind.config.js"
+          "frontend/index.html",
+          "frontend/src/components/Layout.tsx",
+          "frontend/src/pages/About.tsx",
+          "frontend/src/pages/Home.tsx"
         ]
       },
       {
-        "id": "REQ-51",
-        "summary": "Redesign the global colour palette to a warm, bright, friendly theme using one of the following combos (or a harmonious combination): warm brown/skin-tone (e.g. sandy #F5CBA7, warm beige #FAE5D3, terracotta #E8956D accents) paired with off-white backgrounds, OR a blue/white palette (sky blue #60A5FA family, white #FFFFFF, soft blue-grey #EFF6FF). Choose the palette that gives the most clarity and cheerfulness, remove the current dark/lavender-heavy or any near-black OKLCH tokens, and apply the new palette consistently across: header, footer, navigation pills, active-route indicator, cards, buttons (primary, secondary), badges, banners, modals (YearSelectionModal), the dot-grid background dots, and the SparkParticles pills. Update tailwind.config.js design tokens and frontend/src/index.css CSS custom properties to reflect the new palette. Ensure every page (Home, Share, PostDetail, Dashboard, About, Wishlist) uses the updated tokens.",
+        "id": "REQ-2",
+        "summary": "Add a prominent 'Share This Website' section or button on the Home page and About page that allows visitors to share the platform URL via WhatsApp, copy link to clipboard, and the native Web Share API — so any user can easily spread the site to others.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/tailwind.config.js",
-          "frontend/src/index.css",
-          "frontend/index.css",
-          "frontend/src/components/Layout.tsx",
-          "frontend/src/components/PostCard.tsx",
-          "frontend/src/components/YearSelectionModal.tsx",
+          "frontend/src/components/ShareWebsiteButtons.tsx",
           "frontend/src/pages/Home.tsx",
-          "frontend/src/pages/Share.tsx",
-          "frontend/src/pages/PostDetail.tsx",
-          "frontend/src/pages/Dashboard.tsx",
-          "frontend/src/pages/About.tsx",
-          "frontend/src/pages/Wishlist.tsx",
-          "frontend/src/components/CollegeConnectForm.tsx",
-          "frontend/src/components/CollegeConnectList.tsx",
-          "frontend/src/components/ShareButtons.tsx"
+          "frontend/src/pages/About.tsx"
         ],
         "matchedFiles": [
-          "frontend/tailwind.config.js",
-          "frontend/src/index.css",
-          "frontend/src/components/Layout.tsx",
-          "frontend/src/components/PostCard.tsx",
-          "frontend/src/components/YearSelectionModal.tsx",
+          "frontend/src/components/ShareWebsiteButtons.tsx",
           "frontend/src/pages/Home.tsx",
-          "frontend/src/pages/PostDetail.tsx",
-          "frontend/src/pages/Dashboard.tsx",
-          "frontend/src/pages/About.tsx",
-          "frontend/src/pages/Wishlist.tsx",
-          "frontend/src/components/CollegeConnectForm.tsx",
-          "frontend/src/components/CollegeConnectList.tsx",
-          "frontend/src/components/ShareButtons.tsx"
+          "frontend/src/pages/About.tsx"
         ]
       },
       {
-        "id": "REQ-52",
-        "summary": "Fix the SparkParticles component (frontend/src/components/SparkParticles.tsx) so that the 12–20 floating year-label pills ('I'm 1st Year', 'I'm 2nd Year', 'I'm 3rd Year', 'I'm 4th Year') are distributed evenly across the entire viewport — both horizontally (0%–95% of viewport width) and vertically (starting positions spread across 0%–90% of viewport height). The current seeded-random positioning is producing clustering in certain areas; replace the position calculation so particles are spread across a well-distributed grid-like or stratified random layout covering the full screen. Each of the 16 instances should start at a distinct, well-separated position. Also ensure the particles' colours are updated to match the new warm palette (REQ-51) so they do not appear dark or purple.",
+        "id": "REQ-3",
+        "summary": "Remove or make optional the year-selection onboarding modal (YearSelectionModal) so that first-time visitors who arrive via a shared link can immediately browse all posts without being blocked by a required gate. Year selection should remain accessible but non-blocking (e.g., as an optional profile step).",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/components/SparkParticles.tsx"
+          "frontend/src/App.tsx",
+          "frontend/src/pages/Home.tsx",
+          "frontend/src/pages/ShareExperience.tsx"
         ],
         "matchedFiles": [
-          "frontend/src/components/SparkParticles.tsx"
+          "frontend/src/pages/Home.tsx"
         ]
+      },
+      {
+        "id": "REQ-4",
+        "summary": "Update the English and Telugu translation strings in frontend/src/translations/index.ts to reflect the new brand name 'Memu Nerchukunnam' and update the tagline/description copy on the Home and About pages to emphasize that this is an open, community-shared learning platform for all students.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/translations/index.ts"
+        ],
+        "matchedFiles": [
+          "frontend/src/translations/index.ts"
+        ]
+      },
+      {
+        "id": "REQ-5",
+        "summary": "Ensure the backend actor in backend/main.mo does not require any form of authentication to read posts or college connect tips. All read (query) functions — getAllPosts, getPostsByCategory, getStats, getAllCollegeConnects — must be publicly accessible without Internet Identity login.",
+        "status": "unknown",
+        "plannedFiles": [],
+        "matchedFiles": []
       }
     ]
   },
   "changedFiles": [
+    "backend/main.mo",
     "build-request.json",
     "feature_evidence.json",
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
-    "frontend/src/components/CollegeConnectForm.tsx",
-    "frontend/src/components/CollegeConnectList.tsx",
+    "frontend/index.html",
+    "frontend/public/assets/generated/memu-logo.dim_256x256.png",
     "frontend/src/components/Layout.tsx",
-    "frontend/src/components/PostCard.tsx",
-    "frontend/src/components/ShareButtons.tsx",
-    "frontend/src/components/SparkParticles.tsx",
-    "frontend/src/components/YearSelectionModal.tsx",
-    "frontend/src/index.css",
+    "frontend/src/components/ShareWebsiteButtons.tsx",
     "frontend/src/pages/About.tsx",
-    "frontend/src/pages/Dashboard.tsx",
     "frontend/src/pages/Home.tsx",
-    "frontend/src/pages/PostDetail.tsx",
-    "frontend/src/pages/ShareExperience.tsx",
-    "frontend/src/pages/Wishlist.tsx",
-    "frontend/tailwind.config.js",
+    "frontend/src/translations/index.ts",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",

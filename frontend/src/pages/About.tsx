@@ -1,11 +1,12 @@
 import React from "react";
 import { Link } from "@tanstack/react-router";
+import ShareWebsiteButtons from "../components/ShareWebsiteButtons";
 
 const FEATURES = [
   {
     emoji: "🎓",
-    title: "Student-First",
-    desc: "Every post is written by a real student sharing genuine experiences from their college journey.",
+    title: "Open to Everyone",
+    desc: "No sign-in required. Any student can browse, read, and share experiences — completely free, forever.",
   },
   {
     emoji: "🔒",
@@ -38,23 +39,31 @@ const About: React.FC = () => {
           className="absolute inset-0 flex flex-col items-center justify-center text-center px-4"
           style={{ background: "oklch(0.55 0.08 50 / 0.45)" }}
         >
-          <h1
-            className="font-brand text-3xl sm:text-4xl mb-2 drop-shadow-sm"
-            style={{ color: "oklch(0.99 0.005 58)" }}
-          >
-            Memu నేర్చుకున్నవి
-          </h1>
+          <div className="flex items-center gap-3 mb-2">
+            <img
+              src="/assets/generated/memu-logo.dim_256x256.png"
+              alt="Memu Nerchukunnam"
+              className="w-10 h-10 rounded-full object-cover shadow-md"
+              style={{ border: "2px solid oklch(0.99 0.005 58 / 0.7)" }}
+            />
+            <h1
+              className="font-brand text-3xl sm:text-4xl drop-shadow-sm"
+              style={{ color: "oklch(0.99 0.005 58)" }}
+            >
+              Memu Nerchukunnam
+            </h1>
+          </div>
           <p
             className="text-sm sm:text-base font-medium drop-shadow-sm"
             style={{ color: "oklch(0.97 0.010 58)" }}
           >
-            మేము నేర్చుకున్నవి — What We Learned
+            మేము నేర్చుకున్నాం — What We Learned Together
           </p>
         </div>
       </div>
 
       {/* Mission */}
-      <section className="mb-10">
+      <section className="mb-8">
         <h2
           className="font-heading text-2xl font-bold mb-4"
           style={{ color: "oklch(0.35 0.08 48)" }}
@@ -64,15 +73,25 @@ const About: React.FC = () => {
         <p className="text-base leading-relaxed mb-3" style={{ color: "oklch(0.38 0.04 50)" }}>
           College is full of lessons that no textbook teaches — the internship that changed
           everything, the hackathon that pushed your limits, the course that opened new doors.
-          <strong style={{ color: "oklch(0.45 0.10 42)" }}> Memu నేర్చుకున్నవి</strong> is a
-          platform where students share these real experiences so others can learn, grow, and
-          navigate college life better.
+          <strong style={{ color: "oklch(0.45 0.10 42)" }}> Memu Nerchukunnam</strong> is a
+          free, open platform where students share these real experiences so others can learn,
+          grow, and navigate college life better.
+        </p>
+        <p className="text-base leading-relaxed mb-3" style={{ color: "oklch(0.38 0.04 50)" }}>
+          Whether you're a fresher looking for guidance or a final-year student wanting to give
+          back — this is your space. <strong style={{ color: "oklch(0.45 0.10 42)" }}>No
+          sign-in required. Open to all students.</strong>
         </p>
         <p className="text-base leading-relaxed" style={{ color: "oklch(0.38 0.04 50)" }}>
-          Whether you're a fresher looking for guidance or a final-year student wanting to give
-          back — this is your space.
+          Share this platform with your friends and classmates — the more students who
+          contribute, the richer the community knowledge becomes for everyone.
         </p>
       </section>
+
+      {/* Share Website Buttons */}
+      <div className="mb-10">
+        <ShareWebsiteButtons />
+      </div>
 
       {/* Features */}
       <section className="mb-10">
@@ -124,7 +143,7 @@ const About: React.FC = () => {
         <p className="text-sm leading-relaxed mb-4" style={{ color: "oklch(0.42 0.04 50)" }}>
           College Connect lets students from different colleges share quick tips — about
           placements, campus life, study strategies, and more. It's cross-campus wisdom in
-          bite-sized form.
+          bite-sized form. Open to all, no account needed.
         </p>
         <Link
           to="/dashboard"
@@ -156,6 +175,7 @@ const About: React.FC = () => {
           This platform runs entirely on the Internet Computer Protocol (ICP) — a decentralized
           blockchain network. Your posts and data are stored on-chain, ensuring transparency,
           permanence, and censorship-resistance without relying on traditional cloud servers.
+          This means Memu Nerchukunnam stays accessible to everyone, always.
         </p>
       </section>
     </div>

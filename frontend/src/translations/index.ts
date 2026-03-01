@@ -3,9 +3,9 @@ export type Language = 'en' | 'te';
 export const translations = {
   en: {
     // App name
-    appName: 'Memu Nerchunnavi',
-    appNameSub: 'మేము నేర్చున్నవి',
-    appTagline: 'Campus wisdom, peer to peer 🎓',
+    appName: 'Memu Nerchukunnam',
+    appNameSub: 'మేము నేర్చుకున్నాం',
+    appTagline: 'Open to everyone — real experiences from real students 🎓',
 
     // Navigation
     navFeed: '🏠 Feed',
@@ -25,13 +25,13 @@ export const translations = {
     footerTagline: 'Real advice from real students who\'ve been there.',
     footerQuickLinks: 'Quick Links',
     footerAbout: 'About',
-    footerAboutDesc: 'A community platform for students to share campus wisdom and help each other succeed.',
-    footerCopyright: 'Memu Nerchunnavi. Empowering every student to start early.',
+    footerAboutDesc: 'A free, open community platform for students to share campus wisdom and help each other succeed.',
+    footerCopyright: 'Memu Nerchukunnam. Open to all students, free forever.',
     footerNoSignIn: 'No sign-in required — just share your wisdom 🌟',
     footerShareExp: '✍️ Share Experience',
 
     // Year selection modal
-    yearModalWelcome: 'Welcome to Memu Nerchunnavi! 🎓',
+    yearModalWelcome: 'Welcome to Memu Nerchukunnam! 🎓',
     yearModalSubtitle: 'Which year are you in? We\'ll show you the most relevant advice from your seniors.',
     yearModalCollegePlaceholder: 'Your College Name (optional)',
     yearModalCollegeLabel: 'Customize your experience',
@@ -54,8 +54,8 @@ export const translations = {
 
     // Home page
     heroBadge: 'Real advice from real seniors ✨',
-    heroTitle: 'Learn from seniors. 🎓\nStart early.\nMake every semester count ✨',
-    heroSubtitle: 'Don\'t wait until your final year to discover internships, hackathons, and courses that could define your career.',
+    heroTitle: 'Memu Nerchukunnam 🎓\nOpen to everyone.\nFree forever ✨',
+    heroSubtitle: 'A shareable, community-driven platform where students share real experiences — internships, hackathons, courses and more. No sign-in needed.',
     heroBtn: 'Share Your Story ✍️',
     trendingTitle: 'Trending This Week 🔥',
     trendingEmpty: 'No trending posts this week yet 🌱 — be the first to share something!',
@@ -105,11 +105,11 @@ export const translations = {
     shareCopyLink: 'Copy Link',
     shareCopied: 'Copied! ✅',
     shareNative: 'Share',
-    shareVia: 'Check out this tip on Memu Nerchunnavi:',
+    shareVia: 'Check out this tip on Memu Nerchukunnam:',
 
     // Dashboard
     dashTitle: '📊 Community Dashboard',
-    dashSubtitle: 'See how the Memu Nerchunnavi community is growing and what\'s resonating most.',
+    dashSubtitle: 'See how the Memu Nerchukunnam community is growing and what\'s resonating most.',
     dashLiveStats: 'Live stats',
     dashTotalPosts: 'Total Posts',
     dashTotalPostsSub: 'Shared by students',
@@ -138,16 +138,16 @@ export const translations = {
 
     // About page
     aboutMissionBadge: '🎓 Our Mission',
-    aboutTitle: 'What is Memu Nerchunnavi? 🎓',
-    aboutP1: 'Memu Nerchunnavi (మేము నేర్చున్నవి) is a peer-to-peer campus wisdom platform where students share the lessons they wish they\'d known earlier — and help the next generation start sooner.',
+    aboutTitle: 'What is Memu Nerchukunnam? 🎓',
+    aboutP1: 'Memu Nerchukunnam (మేము నేర్చుకున్నాం) is a free, open, peer-to-peer campus wisdom platform where students share the lessons they wish they\'d known earlier — and help the next generation start sooner. No sign-in required, open to all students.',
     aboutP2: 'Too much valuable knowledge stays locked in the heads of graduating seniors. The student who discovered a life-changing internship in 1st year, the one who found the perfect course sequence, the one who built a startup at a hackathon — their stories rarely reach the freshers who need them most.',
-    aboutP3: 'We\'re changing that. Memu Nerchunnavi is a living, growing library of real student experiences, organized by category and year, accessible to anyone on campus — no sign-in required.',
+    aboutP3: 'We\'re changing that. Memu Nerchukunnam is a living, growing library of real student experiences, organized by category and year, accessible to anyone — no sign-in required. Share this platform freely!',
     aboutHowTitle: 'How It Works ⚙️',
-    aboutHowSub: 'Four simple steps to get the most out of Memu Nerchunnavi.',
+    aboutHowSub: 'Four simple steps to get the most out of Memu Nerchukunnam.',
     aboutWhyTitle: 'Why It Matters 💡',
-    aboutWhyDesc: 'The gap between students who thrive and those who struggle is often just information. The right advice at the right time can change everything — which internship to apply for, which course to take early, which hackathon to join. Memu Nerchunnavi exists to close that gap.',
+    aboutWhyDesc: 'The gap between students who thrive and those who struggle is often just information. The right advice at the right time can change everything — which internship to apply for, which course to take early, which hackathon to join. Memu Nerchukunnam exists to close that gap, for every student, everywhere.',
     aboutQuote: '"The best time to learn from a senior was four years ago. The second best time is right now."',
-    aboutQuoteAuthor: '— The Memu Nerchunnavi Community 🎓',
+    aboutQuoteAuthor: '— The Memu Nerchukunnam Community 🎓',
     aboutCTATitle: 'Ready to start?',
     aboutCTADesc: 'Browse the feed for instant wisdom, or share your own lesson in under a minute.',
     aboutBrowseBtn: '🏠 Browse the Feed',
@@ -172,9 +172,9 @@ export const translations = {
 
   te: {
     // App name
-    appName: 'మేము నేర్చున్నవి',
-    appNameSub: 'Memu Nerchunnavi',
-    appTagline: 'క్యాంపస్ జ్ఞానం, పీర్ టు పీర్ 🎓',
+    appName: 'మేము నేర్చుకున్నాం',
+    appNameSub: 'Memu Nerchukunnam',
+    appTagline: 'అందరికీ తెరిచి ఉంది — నిజమైన విద్యార్థుల నుండి నిజమైన అనుభవాలు 🎓',
 
     // Navigation
     navFeed: '🏠 ఫీడ్',
@@ -194,13 +194,13 @@ export const translations = {
     footerTagline: 'అనుభవం ఉన్న విద్యార్థుల నుండి నిజమైన సలహా.',
     footerQuickLinks: 'త్వరిత లింకులు',
     footerAbout: 'గురించి',
-    footerAboutDesc: 'విద్యార్థులు క్యాంపస్ జ్ఞానాన్ని పంచుకోవడానికి ఒక కమ్యూనిటీ వేదిక.',
-    footerCopyright: 'మేము నేర్చున్నవి. ప్రతి విద్యార్థిని ముందుగా ప్రారంభించేలా చేయడం.',
+    footerAboutDesc: 'విద్యార్థులు క్యాంపస్ జ్ఞానాన్ని పంచుకోవడానికి ఒక ఉచిత, బహిరంగ కమ్యూనిటీ వేదిక.',
+    footerCopyright: 'మేము నేర్చుకున్నాం. అందరి విద్యార్థులకు, ఎల్లప్పుడూ ఉచితం.',
     footerNoSignIn: 'లాగిన్ అవసరం లేదు — మీ జ్ఞానాన్ని పంచుకోండి 🌟',
     footerShareExp: '✍️ అనుభవం పంచుకోండి',
 
     // Year selection modal
-    yearModalWelcome: 'మేము నేర్చున్నవికి స్వాగతం! 🎓',
+    yearModalWelcome: 'మేము నేర్చుకున్నాంకి స్వాగతం! 🎓',
     yearModalSubtitle: 'మీరు ఏ సంవత్సరంలో ఉన్నారు? మీ సీనియర్ల నుండి అత్యంత సంబంధిత సలహాలు చూపిస్తాం.',
     yearModalCollegePlaceholder: 'మీ కళాశాల పేరు (ఐచ్ఛికం)',
     yearModalCollegeLabel: 'మీ అనుభవాన్ని అనుకూలీకరించండి',
@@ -223,8 +223,8 @@ export const translations = {
 
     // Home page
     heroBadge: 'నిజమైన సీనియర్ల నుండి నిజమైన సలహా ✨',
-    heroTitle: 'సీనియర్ల నుండి నేర్చుకోండి. 🎓\nముందుగా ప్రారంభించండి.\nప్రతి సెమిస్టర్‌ను విలువైనదిగా చేయండి ✨',
-    heroSubtitle: 'మీ కెరీర్‌ను నిర్వచించే ఇంటర్న్‌షిప్‌లు, హ్యాకథాన్‌లు మరియు కోర్సులను చివరి సంవత్సరం వరకు వేచి ఉండకండి.',
+    heroTitle: 'మేము నేర్చుకున్నాం 🎓\nఅందరికీ తెరిచి ఉంది.\nఎల్లప్పుడూ ఉచితం ✨',
+    heroSubtitle: 'విద్యార్థులు నిజమైన అనుభవాలు పంచుకునే ఒక షేర్ చేయదగిన, కమ్యూనిటీ వేదిక — లాగిన్ అవసరం లేదు.',
     heroBtn: 'మీ కథ పంచుకోండి ✍️',
     trendingTitle: 'ఈ వారం ట్రెండింగ్ 🔥',
     trendingEmpty: 'ఈ వారం ఇంకా ట్రెండింగ్ పోస్ట్‌లు లేవు 🌱 — మొదటిగా ఏదైనా పంచుకోండి!',
@@ -274,11 +274,11 @@ export const translations = {
     shareCopyLink: 'లింక్ కాపీ చేయండి',
     shareCopied: 'కాపీ అయింది! ✅',
     shareNative: 'షేర్',
-    shareVia: 'మేము నేర్చున్నవిలో ఈ చిట్కా చూడండి:',
+    shareVia: 'మేము నేర్చుకున్నాంలో ఈ చిట్కా చూడండి:',
 
     // Dashboard
     dashTitle: '📊 కమ్యూనిటీ డాష్‌బోర్డ్',
-    dashSubtitle: 'మేము నేర్చున్నవి కమ్యూనిటీ ఎలా పెరుగుతుందో చూడండి.',
+    dashSubtitle: 'మేము నేర్చుకున్నాం కమ్యూనిటీ ఎలా పెరుగుతుందో చూడండి.',
     dashLiveStats: 'లైవ్ గణాంకాలు',
     dashTotalPosts: 'మొత్తం పోస్ట్‌లు',
     dashTotalPostsSub: 'విద్యార్థులు పంచుకున్నారు',
@@ -307,16 +307,16 @@ export const translations = {
 
     // About page
     aboutMissionBadge: '🎓 మా లక్ష్యం',
-    aboutTitle: 'మేము నేర్చున్నవి అంటే ఏమిటి? 🎓',
-    aboutP1: 'మేము నేర్చున్నవి (Memu Nerchunnavi) అనేది ఒక పీర్-టు-పీర్ క్యాంపస్ జ్ఞాన వేదిక, ఇక్కడ విద్యార్థులు తాము ముందే తెలిసి ఉంటే బాగుండేది అని అనిపించే పాఠాలను పంచుకుంటారు.',
+    aboutTitle: 'మేము నేర్చుకున్నాం అంటే ఏమిటి? 🎓',
+    aboutP1: 'మేము నేర్చుకున్నాం (Memu Nerchukunnam) అనేది ఒక ఉచిత, బహిరంగ పీర్-టు-పీర్ క్యాంపస్ జ్ఞాన వేదిక, ఇక్కడ విద్యార్థులు తాము ముందే తెలిసి ఉంటే బాగుండేది అని అనిపించే పాఠాలను పంచుకుంటారు. లాగిన్ అవసరం లేదు, అందరికీ అందుబాటులో ఉంటుంది.',
     aboutP2: 'చాలా విలువైన జ్ఞానం పట్టభద్రులయ్యే సీనియర్ల మనసుల్లో మూసుకుపోయి ఉంటుంది. 1వ సంవత్సరంలో జీవితాన్ని మార్చే ఇంటర్న్‌షిప్ కనుగొన్న విద్యార్థి, సరైన కోర్సు క్రమం కనుగొన్న విద్యార్థి — వారి కథలు అత్యంత అవసరమైన ఫ్రెషర్లకు చేరవు.',
-    aboutP3: 'మేము దాన్ని మారుస్తున్నాం. మేము నేర్చున్నవి అనేది నిజమైన విద్యార్థి అనుభవాల జీవంతమైన, పెరుగుతున్న లైబ్రరీ — లాగిన్ అవసరం లేకుండా అందరికీ అందుబాటులో ఉంటుంది.',
+    aboutP3: 'మేము దాన్ని మారుస్తున్నాం. మేము నేర్చుకున్నాం అనేది నిజమైన విద్యార్థి అనుభవాల జీవంతమైన, పెరుగుతున్న లైబ్రరీ — లాగిన్ అవసరం లేకుండా అందరికీ అందుబాటులో ఉంటుంది. ఈ వేదికను స్వేచ్ఛగా పంచుకోండి!',
     aboutHowTitle: 'ఇది ఎలా పని చేస్తుంది ⚙️',
-    aboutHowSub: 'మేము నేర్చున్నవి నుండి గరిష్ట ప్రయోజనం పొందడానికి నాలుగు సులభమైన దశలు.',
+    aboutHowSub: 'మేము నేర్చుకున్నాం నుండి గరిష్ట ప్రయోజనం పొందడానికి నాలుగు సులభమైన దశలు.',
     aboutWhyTitle: 'ఇది ఎందుకు ముఖ్యమైనది 💡',
-    aboutWhyDesc: 'అభివృద్ధి చెందే విద్యార్థులకు మరియు కష్టపడే వారికి మధ్య తేడా తరచుగా కేవలం సమాచారం మాత్రమే. సరైన సమయంలో సరైన సలహా అన్నింటినీ మార్చగలదు. మేము నేర్చున్నవి ఆ అంతరాన్ని తగ్గించడానికి ఉనికిలో ఉంది.',
+    aboutWhyDesc: 'అభివృద్ధి చెందే విద్యార్థులకు మరియు కష్టపడే వారికి మధ్య తేడా తరచుగా కేవలం సమాచారం మాత్రమే. సరైన సమయంలో సరైన సలహా అన్నింటినీ మార్చగలదు. మేము నేర్చుకున్నాం ఆ అంతరాన్ని తగ్గించడానికి ఉనికిలో ఉంది — ప్రతి విద్యార్థికి, ప్రతిచోటా.',
     aboutQuote: '"సీనియర్ నుండి నేర్చుకోవడానికి అత్యుత్తమ సమయం నాలుగు సంవత్సరాల క్రితం. రెండవ అత్యుత్తమ సమయం ఇప్పుడే."',
-    aboutQuoteAuthor: '— మేము నేర్చున్నవి కమ్యూనిటీ 🎓',
+    aboutQuoteAuthor: '— మేము నేర్చుకున్నాం కమ్యూనిటీ 🎓',
     aboutCTATitle: 'ప్రారంభించడానికి సిద్ధంగా ఉన్నారా?',
     aboutCTADesc: 'తక్షణ జ్ఞానం కోసం ఫీడ్ బ్రౌజ్ చేయండి, లేదా ఒక నిమిషంలో మీ స్వంత పాఠం పంచుకోండి.',
     aboutBrowseBtn: '🏠 ఫీడ్ బ్రౌజ్ చేయండి',
