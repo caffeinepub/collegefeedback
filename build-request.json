@@ -1,0 +1,60 @@
+{
+  "kind": "build_request",
+  "title": "Add college/platform name customisation feature",
+  "projectName": "Memu Nerchunnavi",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-31",
+      "text": "On the Year Selection modal (first-launch screen), add an optional text input field labelled 'Your College Name (optional)' that allows the user to enter their college's name. Store this value in sessionStorage alongside the selected year using the existing useYearSelection hook.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-3"
+        ],
+        "quotes": [
+          "make the final one"
+        ]
+      },
+      "acceptanceCriteria": [
+        "The Year Selection modal displays an optional text input labelled 'Your College Name (optional)' beneath the year selection buttons",
+        "The input is not required — users can proceed without filling it in",
+        "On confirmation, the college name value is stored in sessionStorage via useYearSelection alongside the selected year",
+        "If the user leaves the field blank, no college name subtitle is shown in the header"
+      ]
+    },
+    {
+      "id": "REQ-32",
+      "text": "In the Layout header, display the user's entered college name as a small subtitle directly beneath the 'Memu Nerchunnavi' logo/platform name (e.g. 'JNTU Hyderabad'). Read the value from sessionStorage via the useYearSelection hook. Only show this subtitle if a college name was provided.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-3"
+        ],
+        "quotes": [
+          "make the final one"
+        ]
+      },
+      "acceptanceCriteria": [
+        "If the user entered a college name in the modal, it appears as a subtitle beneath the platform name in the sticky header on all pages",
+        "The subtitle is styled in a smaller, muted font consistent with the current pastel violet/DM Sans theme",
+        "If no college name was entered, the subtitle is not rendered and the header layout remains intact",
+        "The college name persists across page navigation within the same session"
+      ]
+    }
+  ],
+  "constraints": [
+    "Do not modify files listed in frontend.immutablePaths",
+    "All state must be stored in sessionStorage — no backend changes required",
+    "The college name input must remain optional; do not block progression if it is empty"
+  ],
+  "nonGoals": [
+    "Persisting the college name beyond the current session (e.g. localStorage or backend)",
+    "Allowing the college name to be edited after the initial modal submission",
+    "Any backend schema changes"
+  ],
+  "imageRequirements": {
+    "required": [],
+    "edits": []
+  }
+}

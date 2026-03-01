@@ -1,0 +1,391 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 13,
+  "summary": "A college feedback-sharing platform with a frictionless, anonymous workflow: users enter the site, select their college year, type a lesson or feedback, submit it, browse others' feedback, and can connect with anyone — all without sign-in or personal details. The platform is being built to be implementation-ready with multiple pages, custom fonts, emojis, dashboards, and polished UI. New direction includes: multi-language support (Telugu + English combo), social sharing options, a rebranded name ('Memu Nerchunnavi' style English-Telugu combo), a cute/innovative but simple color palette and fonts, and a customizable website/platform name per college.",
+  "architectural_notes": [
+    "Core purpose: seniors share real college experience feedback to guide juniors on internships, hackathons, and courses",
+    "User flow: Enter site → Select college year → Write lesson/feedback → Submit → Browse all feedback → Connect with anyone → Exit (no sign-in or personal details required)",
+    "Platform should be implementation-ready: multi-page navigation, rich UI with fonts/emojis, dashboard, and polished UX so it can be used immediately",
+    "Platform should support Telugu-English bilingual UI and be easily adoptable by other colleges with minimal setup"
+  ],
+  "known_issues": [],
+  "isFixRequest": false,
+  "existing_features": [
+    {
+      "id": "feature-build-a-home-feed-page-that-displays-all-senior-feedback-posts-sorted-by-recency-and-upvotes-showing-the-post-title-category-badge-a-snippet-of-the-content-author-name-and-upvote-count-include-a-top-banner-communicating-the-platform-s-motto-learn-from-seniors-start-early-make-every-semester-count",
+      "title": "Build a home feed page that displays all senior feedback posts sorted by recency and upvotes, showing the post title, category badge, a snippet of the content, author name, and upvote count. Include a top banner communicating the platform's motto: 'Learn from seniors. Start early. Make every semester count.'",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-category-filter-tabs-on-the-home-feed-for-all-internships-hackathons-courses-general-tips-clicking-a-tab-filters-the-displayed-posts-to-that-category",
+      "title": "Add category filter tabs on the home feed for: All, Internships, Hackathons, Courses, General Tips. Clicking a tab filters the displayed posts to that category.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-share-your-experience-form-page-where-a-senior-can-submit-a-feedback-post-by-entering-their-name-selecting-their-role-senior-junior-choosing-a-category-entering-a-title-and-writing-their-experience-advice-in-a-text-area-on-submission-the-post-is-saved-to-the-backend-and-appears-in-the-feed",
+      "title": "Create a 'Share Your Experience' form page where a senior can submit a feedback post by entering: their name, selecting their role (Senior / Junior), choosing a category, entering a title, and writing their experience/advice in a text area. On submission, the post is saved to the backend and appears in the feed.",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-an-upvote-button-on-each-post-card-in-the-feed-clicking-it-calls-the-upvotepost-backend-function-and-optimistically-updates-the-displayed-count",
+      "title": "Add an upvote button on each post card in the feed. Clicking it calls the upvotePost backend function and optimistically updates the displayed count.",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-a-warm-energetic-visual-theme-inspired-by-campus-culture-use-bold-typography-a-warm-amber-orange-and-off-white-color-palette-with-dark-charcoal-accents-card-based-layout-and-motivational-micro-copy-throughout-the-ui-to-keep-the-experience-engaging-and-action-oriented",
+      "title": "Apply a warm, energetic visual theme inspired by campus culture — use bold typography, a warm amber/orange and off-white color palette with dark charcoal accents, card-based layout, and motivational micro-copy throughout the UI to keep the experience engaging and action-oriented.",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-generate-and-display-a-hero-illustration-on-the-home-page-banner-representing-a-senior-student-mentoring-a-junior-in-a-flat-illustration-style-matching-the-warm-amber-orange-theme",
+      "title": "Generate and display a hero illustration on the home page banner representing a senior student mentoring a junior, in a flat illustration style matching the warm amber/orange theme.",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-college-year-selection-step-as-the-first-screen-or-modal-when-a-user-enters-the-website-the-user-must-pick-their-college-year-1st-year-2nd-year-3rd-year-4th-year-before-accessing-any-other-part-of-the-app-this-selection-is-stored-in-local-session-state-and-used-to-tag-any-feedback-they-submit-no-sign-in-or-personal-details-are-required",
+      "title": "Add a college year selection step as the first screen or modal when a user enters the website. The user must pick their college year (1st Year, 2nd Year, 3rd Year, 4th Year) before accessing any other part of the app. This selection is stored in local/session state and used to tag any feedback they submit. No sign-in or personal details are required.",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-simplify-the-feedback-submission-form-share-your-experience-to-require-only-the-selected-year-pre-filled-from-req-8-a-single-free-text-field-for-the-lesson-or-feedback-e-g-i-learned-today-a-course-that-can-be-learned-before-and-a-category-selector-remove-the-name-role-and-title-fields-entirely-on-submission-save-the-post-to-the-backend-with-the-year-as-the-author-identifier",
+      "title": "Simplify the feedback submission form ('Share Your Experience') to require only: the selected year (pre-filled from REQ-8), a single free-text field for the lesson or feedback (e.g. 'I learned today a course that can be learned before'), and a category selector. Remove the name, role, and title fields entirely. On submission, save the post to the backend with the year as the author identifier.",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-post-cards-in-the-home-feed-to-display-the-author-s-year-e-g-2nd-year-instead-of-the-author-s-name-and-role-badge",
+      "title": "Update the post cards in the home feed to display the author's year (e.g. '2nd Year') instead of the author's name and role badge.",
+      "reqIds": [
+        "REQ-11"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-lightweight-connect-feature-on-each-post-card-that-allows-a-user-to-express-interest-in-connecting-with-the-feedback-author-without-requiring-sign-in-or-personal-details-this-can-be-implemented-as-a-connect-button-that-increments-a-connect-count-on-the-post-similar-to-the-upvote-mechanic-so-users-can-signal-interest-anonymously",
+      "title": "Add a lightweight 'Connect' feature on each post card that allows a user to express interest in connecting with the feedback author without requiring sign-in or personal details. This can be implemented as a 'Connect' button that increments a connect count on the post, similar to the upvote mechanic, so users can signal interest anonymously.",
+      "reqIds": [
+        "REQ-12"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-post-detail-page-route-post-id-that-displays-the-full-post-content-category-badge-with-emoji-author-year-timestamp-upvote-count-with-upvote-button-connect-count-with-connect-button-and-a-motivational-call-to-action-to-share-their-own-experience-each-post-card-in-the-home-feed-must-link-to-this-detail-page",
+      "title": "Create a Post Detail page (route: /post/:id) that displays the full post content, category badge with emoji, author year, timestamp, upvote count with upvote button, connect count with connect button, and a motivational call-to-action to share their own experience. Each post card in the Home feed must link to this detail page.",
+      "reqIds": [
+        "REQ-13"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-dashboard-stats-page-route-dashboard-showing-total-number-of-posts-breakdown-of-posts-by-category-displayed-as-a-visual-bar-or-card-grid-top-5-most-upvoted-posts-top-5-most-connected-posts-and-a-distribution-of-posts-by-college-year-all-data-must-be-fetched-live-from-the-backend-using-existing-query-functions",
+      "title": "Add a Dashboard / Stats page (route: /dashboard) showing: total number of posts, breakdown of posts by category (displayed as a visual bar or card grid), top 5 most upvoted posts, top 5 most connected posts, and a distribution of posts by college year. All data must be fetched live from the backend using existing query functions.",
+      "reqIds": [
+        "REQ-14"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-an-about-how-it-works-page-route-about-with-three-clearly-separated-sections-1-what-is-campuswise-mission-statement-and-platform-purpose-with-an-expressive-emoji-header-2-how-it-works-a-numbered-step-by-step-flow-pick-your-year-browse-advice-share-a-lesson-connect-with-peers-with-emoji-icons-per-step-3-why-it-matters-a-motivational-paragraph-with-student-centric-micro-copy-link-this-page-in-the-main-navigation",
+      "title": "Add an 'About / How It Works' page (route: /about) with three clearly separated sections: (1) What is CampusWise — mission statement and platform purpose with an expressive emoji header; (2) How It Works — a numbered step-by-step flow (Pick your year → Browse advice → Share a lesson → Connect with peers) with emoji icons per step; (3) Why It Matters — a motivational paragraph with student-centric micro-copy. Link this page in the main navigation.",
+      "reqIds": [
+        "REQ-15"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-react-query-hook-usegetstats-in-frontend-src-hooks-usequeries-ts-that-calls-the-getstats-backend-function-and-returns-the-aggregated-stats-data-for-use-on-the-dashboard-page",
+      "title": "Add a React Query hook useGetStats in frontend/src/hooks/useQueries.ts that calls the getStats backend function and returns the aggregated stats data for use on the Dashboard page.",
+      "reqIds": [
+        "REQ-17"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-upgrade-the-global-typography-and-emoji-usage-across-the-entire-app-switch-the-primary-display-font-to-space-grotesk-bold-modern-for-headings-and-keep-sora-for-body-text-add-relevant-emojis-to-navigation-links-feed-share-dashboard-about-category-badges-internships-hackathons-courses-general-tips-the-home-page-banner-headline-the-year-selection-modal-prompt-the-post-submission-success-screen-and-all-section-headings-on-the-about-page-update-tailwind-config-js-and-index-css-to-include-space-grotesk",
+      "title": "Upgrade the global typography and emoji usage across the entire app: switch the primary display font to 'Space Grotesk' (bold, modern) for headings and keep 'Sora' for body text. Add relevant emojis to: navigation links (🏠 Feed, ✍️ Share, 📊 Dashboard, ℹ️ About), category badges (💼 Internships, 💡 Hackathons, 📚 Courses, 🎓 General Tips), the home page banner headline, the year selection modal prompt, the post submission success screen, and all section headings on the About page. Update tailwind.config.js and index.css to include Space Grotesk.",
+      "reqIds": [
+        "REQ-18"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-redesign-the-layout-header-and-navigation-to-be-fully-implementation-ready-replace-plain-text-links-with-styled-pill-tab-navigation-items-that-include-emojis-add-an-active-route-indicator-highlighted-pill-and-display-the-user-s-selected-college-year-as-a-small-badge-e-g-2nd-year-in-the-top-right-corner-of-the-header-ensure-the-footer-includes-quick-links-to-all-four-pages-and-a-tagline",
+      "title": "Redesign the Layout header and navigation to be fully implementation-ready: replace plain text links with styled pill/tab navigation items that include emojis, add an active route indicator (highlighted pill), and display the user's selected college year as a small badge (e.g. '2nd Year 🎓') in the top-right corner of the header. Ensure the footer includes quick links to all four pages and a tagline.",
+      "reqIds": [
+        "REQ-19"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-trending-this-week-section-on-the-home-page-rendered-below-the-category-filter-tabs-and-above-the-main-feed-showing-the-top-3-most-upvoted-posts-from-the-current-week-as-compact-highlight-cards-with-emoji-category-a-content-snippet-max-80-chars-and-upvote-count-if-fewer-than-3-posts-exist-show-whatever-is-available",
+      "title": "Add a 'Trending This Week' section on the Home page, rendered below the category filter tabs and above the main feed, showing the top 3 most upvoted posts from the current week as compact highlight cards with emoji, category, a content snippet (max 80 chars), and upvote count. If fewer than 3 posts exist, show whatever is available.",
+      "reqIds": [
+        "REQ-20"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-polish-the-share-experience-page-with-an-implementation-ready-ux-add-a-live-character-counter-below-the-feedback-textarea-showing-characters-typed-vs-a-500-character-maximum-add-an-animated-submission-progress-indicator-spinner-or-step-bar-show-category-descriptions-as-helper-text-beneath-the-selector-e-g-internships-share-interview-tips-prep-strategies-and-company-insights-and-display-a-polished-full-page-success-screen-with-a-large-emoji-a-congratulatory-message-the-submitted-year-and-category-and-two-cta-buttons-see-your-post-in-the-feed-and-share-another-tip",
+      "title": "Polish the Share Experience page with an implementation-ready UX: add a live character counter below the feedback textarea showing characters typed vs. a 500-character maximum, add an animated submission progress indicator (spinner or step bar), show category descriptions as helper text beneath the selector (e.g. '💼 Internships — Share interview tips, prep strategies, and company insights'), and display a polished full-page success screen with a large emoji, a congratulatory message, the submitted year and category, and two CTA buttons: 'See Your Post in the Feed 🏠' and 'Share Another Tip ✍️'.",
+      "reqIds": [
+        "REQ-21"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-banner-image-to-the-about-page-depicting-a-group-of-diverse-students-in-a-campus-setting-with-notebooks-and-laptops-in-a-warm-flat-illustration-style-matching-the-amber-orange-theme",
+      "title": "Add a banner image to the About page depicting a group of diverse students in a campus setting with notebooks and laptops, in a warm flat-illustration style matching the amber/orange theme.",
+      "reqIds": [
+        "REQ-22"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-rebrand-the-platform-name-from-campuswise-seniorcompass-to-memu-nerchunnavi-as-the-default-display-name-throughout-the-app-in-the-header-logo-page-titles-about-page-footer-tagline-and-the-html-title-in-index-html",
+      "title": "Rebrand the platform name from 'CampusWise' / 'SeniorCompass' to 'Memu Nerchunnavi' (మేము నేర్చున్నవి) as the default display name throughout the app — in the header logo, page titles, About page, footer tagline, and the HTML <title> in index.html.",
+      "reqIds": [
+        "REQ-23"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-college-platform-name-customisation-feature-on-the-year-selection-modal-first-launch-screen-include-an-optional-text-input-labelled-your-college-name-optional-that-lets-the-user-enter-their-college-s-name-store-this-value-in-sessionstorage-alongside-the-year-display-it-as-a-subtitle-beneath-the-platform-name-in-the-header-e-g-jntu-hyderabad-this-allows-different-colleges-to-personalise-the-platform-when-sharing-the-link",
+      "title": "Add a college/platform name customisation feature: on the Year Selection modal (first-launch screen), include an optional text input labelled 'Your College Name (optional)' that lets the user enter their college's name. Store this value in sessionStorage alongside the year. Display it as a subtitle beneath the platform name in the header (e.g. 'JNTU Hyderabad'). This allows different colleges to personalise the platform when sharing the link.",
+      "reqIds": [
+        "REQ-24"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-multi-language-support-for-english-and-telugu-create-a-lightweight-i18n-context-languagecontext-that-stores-the-active-language-en-or-te-in-sessionstorage-and-exposes-a-translate-function-t-provide-translation-strings-for-all-key-ui-copy-navigation-labels-category-names-banner-headlines-year-selection-prompt-form-labels-button-text-success-messages-about-page-section-headings-and-footer-tagline-add-a-language-toggle-button-english-in-the-header-visible-on-all-pages-telugu-strings-should-use-the-script-style-keep-the-toggle-simple-a-two-state-pill-button",
+      "title": "Add multi-language support for English and Telugu. Create a lightweight i18n context (LanguageContext) that stores the active language ('en' or 'te') in sessionStorage and exposes a translate function (t). Provide translation strings for all key UI copy: navigation labels, category names, banner headlines, year selection prompt, form labels, button text, success messages, About page section headings, and footer tagline. Add a language toggle button (🇮🇳 తెలుగు / English) in the header, visible on all pages. Telugu strings should use the script మేము నేర్చున్నవి style. Keep the toggle simple — a two-state pill button.",
+      "reqIds": [
+        "REQ-25"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-social-sharing-options-to-each-post-card-and-the-post-detail-page-include-three-share-actions-1-share-on-whatsapp-opens-a-whatsapp-share-link-https-wa-me-text-with-the-post-content-snippet-and-a-link-to-the-post-detail-url-2-copy-link-copies-the-post-s-direct-url-to-clipboard-and-shows-a-brief-copied-confirmation-tooltip-3-share-via-web-share-api-if-the-browser-supports-navigator-share-show-a-generic-share-button-that-invokes-the-native-share-sheet-display-these-as-small-icon-buttons-beneath-the-post-content-on-the-card-and-as-a-share-bar-on-the-post-detail-page",
+      "title": "Add social sharing options to each Post Card and the Post Detail page. Include three share actions: (1) Share on WhatsApp — opens a WhatsApp share link (https://wa.me/?text=...) with the post content snippet and a link to the post detail URL; (2) Copy Link — copies the post's direct URL to clipboard and shows a brief 'Copied!' confirmation tooltip; (3) Share via Web Share API — if the browser supports navigator.share, show a generic 'Share' button that invokes the native share sheet. Display these as small icon buttons beneath the post content on the card and as a share bar on the Post Detail page.",
+      "reqIds": [
+        "REQ-26"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-redesign-the-global-color-palette-and-typography-to-be-cute-friendly-and-innovative-while-remaining-simple-replace-the-amber-orange-palette-with-a-soft-pastel-palette-primary-accent-soft-violet-lavender-7c3aed-tones-softened-to-pastel-secondary-mint-teal-2dd4bf-family-background-warm-white-fafafa-cards-pure-white-with-soft-lavender-border-text-deep-charcoal-1e1b2e-switch-heading-font-from-space-grotesk-to-nunito-rounded-friendly-google-font-and-keep-sora-for-body-text-update-tailwind-config-js-frontend-src-index-css-and-all-page-component-files-that-reference-hard-coded-amber-orange-colour-classes-to-use-the-new-palette-tokens-ensure-the-cute-approachable-feel-is-consistent-across-cards-buttons-badges-banners-modals-and-the-navigation-bar",
+      "title": "Redesign the global color palette and typography to be cute, friendly, and innovative while remaining simple. Replace the amber/orange palette with a soft pastel palette: primary accent — soft violet/lavender (#7C3AED tones softened to pastel), secondary — mint/teal (#2DD4BF family), background — warm white (#FAFAFA), cards — pure white with soft lavender border, text — deep charcoal (#1E1B2E). Switch heading font from Space Grotesk to 'Nunito' (rounded, friendly, Google Font) and keep 'Sora' for body text. Update tailwind.config.js, frontend/src/index.css, and all page/component files that reference hard-coded amber/orange colour classes to use the new palette tokens. Ensure the cute, approachable feel is consistent across cards, buttons, badges, banners, modals, and the navigation bar.",
+      "reqIds": [
+        "REQ-27"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-switch-the-app-s-heading-font-from-nunito-to-bricolage-grotesque-a-fresh-expressive-google-font-with-personality-and-switch-the-body-font-from-sora-to-dm-sans-clean-modern-highly-readable-import-both-fonts-from-google-fonts-in-frontend-src-index-css-and-update-tailwind-config-js-to-replace-the-existing-font-family-tokens-fontfamily-heading-fontfamily-body-or-equivalent-with-the-new-fonts-ensure-headings-across-all-pages-home-share-post-detail-dashboard-about-yearselectionmodal-layout-header-use-the-new-heading-font-and-body-text-uses-the-new-body-font",
+      "title": "Switch the app's heading font from 'Nunito' to 'Bricolage Grotesque' (a fresh, expressive Google Font with personality) and switch the body font from 'Sora' to 'DM Sans' (clean, modern, highly readable). Import both fonts from Google Fonts in frontend/src/index.css and update tailwind.config.js to replace the existing font-family tokens (fontFamily.heading / fontFamily.body or equivalent) with the new fonts. Ensure headings across all pages (Home, Share, Post Detail, Dashboard, About, YearSelectionModal, Layout header) use the new heading font, and body text uses the new body font.",
+      "reqIds": [
+        "REQ-28"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-subtle-dot-grid-background-pattern-to-the-entire-app-implement-this-as-a-fixed-full-viewport-css-background-layer-on-the-root-layout-body-or-the-outermost-wrapper-in-layout-tsx-using-an-svg-based-or-css-radial-gradient-dot-pattern-the-dots-should-be-very-light-soft-lavender-violet-tint-at-low-opacity-0-15-so-they-don-t-overwhelm-the-content-the-grid-background-must-not-interfere-with-card-modal-or-overlay-z-indices",
+      "title": "Add a subtle dot-grid background pattern to the entire app. Implement this as a fixed full-viewport CSS background layer on the root layout (body or the outermost wrapper in Layout.tsx) using an SVG-based or CSS radial-gradient dot pattern. The dots should be very light (soft lavender/violet tint at low opacity ~0.15) so they don't overwhelm the content. The grid background must not interfere with card, modal, or overlay z-indices.",
+      "reqIds": [
+        "REQ-29"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-lightweight-ambient-sound-system-to-the-app-create-a-utility-module-at-frontend-src-utils-sounds-ts-that-uses-the-web-audio-api-to-generate-and-play-two-simple-procedural-sounds-1-a-soft-bubble-pop-sound-short-pleasant-tone-burst-triggered-on-primary-button-clicks-upvote-connect-submit-category-tab-select-and-2-a-gentle-typing-tick-sound-triggered-on-each-keypress-inside-the-feedback-textarea-on-the-share-experience-page-include-a-global-sound-toggle-mute-unmute-button-in-the-layout-header-store-the-mute-preference-in-sessionstorage-all-sounds-must-be-generated-via-web-audio-api-oscillators-no-external-audio-files-required-sounds-must-be-silent-if-the-user-has-muted-or-if-the-browser-does-not-support-web-audio-api",
+      "title": "Add a lightweight ambient sound system to the app. Create a utility module at frontend/src/utils/sounds.ts that uses the Web Audio API to generate and play two simple procedural sounds: (1) a soft 'bubble pop' sound (short, pleasant tone burst) triggered on primary button clicks (upvote, connect, submit, category tab select), and (2) a gentle 'typing tick' sound triggered on each keypress inside the feedback textarea on the Share Experience page. Include a global sound toggle (mute/unmute 🔔/🔕) button in the Layout header. Store the mute preference in sessionStorage. All sounds must be generated via Web Audio API oscillators (no external audio files required). Sounds must be silent if the user has muted or if the browser does not support Web Audio API.",
+      "reqIds": [
+        "REQ-30"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-on-the-year-selection-modal-first-launch-screen-add-an-optional-text-input-field-labelled-your-college-name-optional-that-allows-the-user-to-enter-their-college-s-name-store-this-value-in-sessionstorage-alongside-the-selected-year-using-the-existing-useyearselection-hook",
+      "title": "On the Year Selection modal (first-launch screen), add an optional text input field labelled 'Your College Name (optional)' that allows the user to enter their college's name. Store this value in sessionStorage alongside the selected year using the existing useYearSelection hook.",
+      "reqIds": [
+        "REQ-31"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Senior feedback/advice posts that juniors can browse",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Categories for feedback: internships, hackathons, courses, general college tips",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Home feed showing curated senior advice and tips",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Create a backend data model and actor to store feedback posts with fields: id, title, content, category (internships | hackathons | courses | general), authorName, authorRole (senior | junior), createdAt timestamp, and upvote count. Expose update/query functions: createPost, getAllPosts, getPostsByCategory, upvotePost.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-6",
+      "summary": "Year selection step at entry: user picks their college year (e.g. 1st, 2nd, 3rd, 4th year) before submitting feedback",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-7",
+      "summary": "Simplified feedback submission: single text input for a lesson/feedback (e.g. 'I learned today a course that can be learned before') tied to selected year, no name or role required",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-8",
+      "summary": "Anonymous usage: no sign-in, no personal details required at any point in the flow",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-9",
+      "summary": "Connect with others: allow users to connect or reach out to feedback authors without requiring sign-in or personal details",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-12",
+      "summary": "Update the backend Post data model to replace the authorName and authorRole fields with a single authorYear field (e.g. '1st Year', '2nd Year', '3rd Year', '4th Year'). Update createPost and getAllPosts/getPostsByCategory to accept and return authorYear. Ensure no sign-in or identity is required to call any backend function.",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-13",
+      "summary": "Add multiple distinct pages: Home Feed, Share Experience, Post Detail, Dashboard/Stats, and About/How It Works page",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-14",
+      "summary": "Add a dashboard page showing stats like total posts, posts by category, most upvoted posts, and connect counts",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-15",
+      "summary": "Use custom web fonts (e.g. Google Fonts) and emojis throughout the UI to make it feel polished and expressive",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-16",
+      "summary": "Add an 'About / How It Works' page explaining the platform's purpose and user flow for new visitors",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-20",
+      "summary": "Extend the backend to expose a getStats query function that returns: total post count, per-category post counts, the top 5 posts by upvote count, and the top 5 posts by connect count. This function must require no authentication and be callable anonymously.",
+      "reqIds": [
+        "REQ-16"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-21",
+      "summary": "Add multi-language support: allow users to switch between English and Telugu (and potentially other Indian languages). UI labels, navigation, and key copy should be translatable.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-22",
+      "summary": "Add social sharing options: allow users to share individual posts via WhatsApp, copy link, or other platforms so the platform can spread to other colleges easily.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-23",
+      "summary": "Rebrand the platform name from 'Senior Campus' to an English-Telugu combo name like 'Memu Nerchunnavi' (మేము నేర్చున్నవి) meaning 'What We Learned'.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-24",
+      "summary": "Allow users/colleges to customize the platform name when they set it up or use it, so different colleges can brand it as their own (e.g. input field for college/platform name).",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-25",
+      "summary": "Redesign the color palette and fonts to be cute, innovative, but simple — move away from amber/orange to a fresher, more playful palette (e.g. soft purples, teals, or pastels) with a friendly rounded font.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-26",
+      "summary": "Change the app font to a new style (different from current Nunito/Sora)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-27",
+      "summary": "Add a grid/dot grid background pattern to the app UI",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-28",
+      "summary": "Add simple ambient/interactive sounds to the app (e.g. typing sounds, bubble pop sounds on button clicks)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-30",
+      "summary": "In the Layout header, display the user's entered college name as a small subtitle directly beneath the 'Memu Nerchunnavi' logo/platform name (e.g. 'JNTU Hyderabad'). Read the value from sessionStorage via the useYearSelection hook. Only show this subtitle if a college name was provided.",
+      "reqIds": [
+        "REQ-32"
+      ],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "CollegeFeedback",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

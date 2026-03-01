@@ -1,0 +1,46 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Add college/platform name customisation feature",
+  "requirements": [
+    {
+      "id": "REQ-31",
+      "summary": "Add an optional 'Your College Name (optional)' text input field to the Year Selection modal that stores the entered value in sessionStorage via useYearSelection",
+      "acceptanceCriteria": [
+        "The Year Selection modal displays an optional text input labelled 'Your College Name (optional)' beneath the year selection buttons",
+        "The input is not required — users can proceed without filling it in",
+        "On confirmation, the college name value is stored in sessionStorage via useYearSelection alongside the selected year",
+        "If the user leaves the field blank, no college name subtitle is shown in the header"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/YearSelectionModal.tsx",
+          "operation": "modify",
+          "description": "Add a text input field labelled 'Your College Name (optional)' beneath the year selection buttons. Wire the input value to local state and pass it to useYearSelection.setSelection when the user confirms their choice. Ensure the modal allows progression even if the field is left empty."
+        },
+        {
+          "path": "frontend/src/hooks/useYearSelection.ts",
+          "operation": "modify",
+          "description": "Extend the useYearSelection hook to read and write a college name value from/to sessionStorage alongside the existing year value. Update the getSelection, setSelection, and hasSelection methods to handle the optional college name field."
+        }
+      ]
+    },
+    {
+      "id": "REQ-32",
+      "summary": "Display the user's entered college name as a small subtitle beneath the 'Memu Nerchunnavi' platform name in the Layout header, reading the value from sessionStorage via useYearSelection",
+      "acceptanceCriteria": [
+        "If the user entered a college name in the modal, it appears as a subtitle beneath the platform name in the sticky header on all pages",
+        "The subtitle is styled in a smaller, muted font consistent with the current pastel violet/DM Sans theme",
+        "If no college name was entered, the subtitle is not rendered and the header layout remains intact",
+        "The college name persists across page navigation within the same session"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/Layout.tsx",
+          "operation": "modify",
+          "description": "Import the useYearSelection hook and read the college name from sessionStorage. Conditionally render a small subtitle beneath the 'Memu Nerchunnavi' logo in the header if a college name exists. Style the subtitle in a smaller, muted font (e.g., text-sm text-muted-foreground) consistent with the current pastel violet/DM Sans theme. Ensure the header layout remains intact when no college name is present."
+        }
+      ]
+    }
+  ]
+}

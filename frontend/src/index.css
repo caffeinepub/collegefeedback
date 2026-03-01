@@ -1,0 +1,145 @@
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --radius: 0.875rem;
+
+    /* Pastel violet/mint/warm-white palette */
+    --background: 0.975 0.008 290;
+    --foreground: 0.18 0.04 280;
+
+    --card: 1 0 0;
+    --card-foreground: 0.18 0.04 280;
+
+    --popover: 1 0 0;
+    --popover-foreground: 0.18 0.04 280;
+
+    /* Primary: soft violet/lavender */
+    --primary: 0.62 0.18 295;
+    --primary-foreground: 1 0 0;
+
+    /* Secondary: mint/teal */
+    --secondary: 0.92 0.06 175;
+    --secondary-foreground: 0.22 0.06 175;
+
+    /* Muted: soft lavender-gray */
+    --muted: 0.94 0.02 290;
+    --muted-foreground: 0.52 0.05 280;
+
+    /* Accent: mint teal */
+    --accent: 0.72 0.14 175;
+    --accent-foreground: 0.12 0.04 175;
+
+    --destructive: 0.577 0.245 27.325;
+    --destructive-foreground: 0.985 0 0;
+
+    --border: 0.88 0.04 290;
+    --input: 0.88 0.04 290;
+    --ring: 0.62 0.18 295;
+
+    --chart-1: 0.62 0.18 295;
+    --chart-2: 0.72 0.14 175;
+    --chart-3: 0.68 0.16 320;
+    --chart-4: 0.75 0.12 200;
+    --chart-5: 0.65 0.2 260;
+
+    --sidebar: 0.96 0.02 290;
+    --sidebar-foreground: 0.18 0.04 280;
+    --sidebar-primary: 0.62 0.18 295;
+    --sidebar-primary-foreground: 1 0 0;
+    --sidebar-accent: 0.93 0.03 290;
+    --sidebar-accent-foreground: 0.25 0.05 280;
+    --sidebar-border: 0.88 0.04 290;
+    --sidebar-ring: 0.62 0.18 295;
+
+    /* Dot grid dot color (light mode) */
+    --dot-color: oklch(0.62 0.18 295 / 0.13);
+  }
+
+  .dark {
+    --background: 0.14 0.04 280;
+    --foreground: 0.96 0.02 290;
+
+    --card: 0.19 0.05 282;
+    --card-foreground: 0.96 0.02 290;
+
+    --popover: 0.22 0.05 282;
+    --popover-foreground: 0.96 0.02 290;
+
+    --primary: 0.72 0.2 295;
+    --primary-foreground: 0.12 0.02 280;
+
+    --secondary: 0.25 0.05 175;
+    --secondary-foreground: 0.92 0.06 175;
+
+    --muted: 0.25 0.04 282;
+    --muted-foreground: 0.65 0.04 285;
+
+    --accent: 0.68 0.16 175;
+    --accent-foreground: 0.12 0.04 175;
+
+    --destructive: 0.704 0.191 22.216;
+    --destructive-foreground: 0.985 0 0;
+
+    --border: 1 0 0 / 12%;
+    --input: 1 0 0 / 15%;
+    --ring: 0.72 0.2 295;
+
+    --chart-1: 0.72 0.2 295;
+    --chart-2: 0.68 0.16 175;
+    --chart-3: 0.65 0.18 320;
+    --chart-4: 0.75 0.12 200;
+    --chart-5: 0.7 0.22 260;
+
+    --sidebar: 0.19 0.05 282;
+    --sidebar-foreground: 0.96 0.02 290;
+    --sidebar-primary: 0.72 0.2 295;
+    --sidebar-primary-foreground: 0.12 0.02 280;
+    --sidebar-accent: 0.25 0.04 282;
+    --sidebar-accent-foreground: 0.92 0.02 290;
+    --sidebar-border: 1 0 0 / 12%;
+    --sidebar-ring: 0.72 0.2 295;
+
+    /* Dot grid dot color (dark mode) */
+    --dot-color: oklch(0.72 0.2 295 / 0.12);
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'DM Sans', sans-serif;
+    /* Dot-grid background pattern */
+    background-image: radial-gradient(circle, var(--dot-color) 1.5px, transparent 1.5px);
+    background-size: 28px 28px;
+    background-attachment: fixed;
+  }
+
+  h1, h2, h3 {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 800;
+  }
+
+  h4, h5, h6 {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 700;
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: 'Bricolage Grotesque', sans-serif;
+  }
+  .font-heading {
+    font-family: 'Bricolage Grotesque', sans-serif;
+  }
+  .font-body {
+    font-family: 'DM Sans', sans-serif;
+  }
+}

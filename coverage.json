@@ -1,0 +1,47 @@
+{
+  "kind": "coverage_report",
+  "version": "1.0",
+  "generatedAt": "2026-03-01T14:58:49.619Z",
+  "sources": {
+    "buildRequest": true,
+    "implementationPlan": true
+  },
+  "requirements": {
+    "total": 2,
+    "implemented": 1,
+    "items": [
+      {
+        "id": "REQ-31",
+        "summary": "On the Year Selection modal (first-launch screen), add an optional text input field labelled 'Your College Name (optional)' that allows the user to enter their college's name. Store this value in sessionStorage alongside the selected year using the existing useYearSelection hook.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/YearSelectionModal.tsx",
+          "frontend/src/hooks/useYearSelection.ts"
+        ],
+        "matchedFiles": [
+          "frontend/src/components/YearSelectionModal.tsx"
+        ]
+      },
+      {
+        "id": "REQ-32",
+        "summary": "In the Layout header, display the user's entered college name as a small subtitle directly beneath the 'Memu Nerchunnavi' logo/platform name (e.g. 'JNTU Hyderabad'). Read the value from sessionStorage via the useYearSelection hook. Only show this subtitle if a college name was provided.",
+        "status": "missing",
+        "plannedFiles": [
+          "frontend/src/components/Layout.tsx"
+        ],
+        "matchedFiles": []
+      }
+    ]
+  },
+  "changedFiles": [
+    "build-request.json",
+    "feature_evidence.json",
+    "frontend-file-summaries.txt",
+    "frontend-implementation-plan.json",
+    "frontend/src/components/YearSelectionModal.tsx",
+    "project_state.json",
+    "scratch/component-selection.json",
+    "spec.md",
+    "spec_vs_diff_report.json"
+  ]
+}
