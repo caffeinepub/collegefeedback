@@ -1,82 +1,76 @@
 {
   "kind": "build_request",
-  "title": "Cursive logo font, visible dot-grid background, and year-label spark animations",
-  "projectName": "Memu Nerchukunnavi",
-  "priority": "normal",
+  "title": "Fix theme colours (remove all black), fix SparkParticles distribution, restore warm/bright palette",
+  "priority": "high",
   "requirements": [
     {
-      "id": "REQ-38",
-      "text": "Apply a script/cursive font combination specifically to the 'Memu Nerchukunnavi' brand name wherever it appears as a logo or heading (Layout header, YearSelectionModal title, About page hero heading, index.html <title> display). Import a Google Font pairing — use 'Dancing Script' or 'Pacifico' (script/cursive style) for the Telugu-English brand name text. The rest of the app retains its existing Bricolage Grotesque / DM Sans font stack. Update tailwind.config.js to add a `fontFamily.brand` token pointing to the chosen script font and apply it via a dedicated CSS class (e.g. `font-brand`) on all brand-name elements.",
+      "id": "REQ-50",
+      "text": "Completely remove all black and near-black colours from the entire app UI. No background, card, button, badge, text, border, overlay, modal, header, footer, or any other element should use black (#000000), near-black (#111, #1a1a1a, #0a0a0a, or equivalent dark OKLCH values close to 0% lightness). Audit frontend/src/index.css, frontend/index.css, and tailwind.config.js for any dark-mode or base rules that produce black surfaces or black text and replace them with appropriate light alternatives from the chosen warm palette.",
       "target": "frontend",
       "source": {
         "messageIds": [
           "msg-1"
         ],
         "quotes": [
-          "use the script -cursive combo for MEMU merchukunnavi"
+          "do not make the website in black colour at all",
+          "change the theme to previous or much more clear one than a black one"
         ]
       },
       "acceptanceCriteria": [
-        "The text 'Memu Nerchukunnavi' in the Layout header renders in a script/cursive Google Font (Dancing Script or Pacifico).",
-        "The same script font is applied to the brand name in YearSelectionModal and About page hero heading.",
-        "All other text (navigation, body, badges) continues to use Bricolage Grotesque / DM Sans.",
-        "tailwind.config.js contains a fontFamily.brand token referencing the chosen script font.",
-        "Google Font import for the script font is present in frontend/src/index.css."
+        "No element in the app renders with a black or near-black (#000–#222 range) background or text colour.",
+        "Dark-mode CSS rules that produce black surfaces are removed or overridden.",
+        "The app remains fully readable with sufficient contrast on all surfaces."
       ]
     },
     {
-      "id": "REQ-39",
-      "text": "Increase the visibility of the existing dot-grid background pattern so it is clearly perceptible without overwhelming content. Raise the dot opacity from ~0.15 to approximately 0.35–0.45, increase the dot size slightly (from ~1px to ~2px), and reduce the grid spacing slightly so more dots are visible. Apply this updated pattern as the fixed full-viewport background layer in Layout.tsx (or via the body rule in index.css), ensuring it still sits below all card, modal, and overlay z-indices.",
+      "id": "REQ-51",
+      "text": "Redesign the global colour palette to a warm, bright, friendly theme using one of the following combos (or a harmonious combination): warm brown/skin-tone (e.g. sandy #F5CBA7, warm beige #FAE5D3, terracotta #E8956D accents) paired with off-white backgrounds, OR a blue/white palette (sky blue #60A5FA family, white #FFFFFF, soft blue-grey #EFF6FF). Choose the palette that gives the most clarity and cheerfulness, remove the current dark/lavender-heavy or any near-black OKLCH tokens, and apply the new palette consistently across: header, footer, navigation pills, active-route indicator, cards, buttons (primary, secondary), badges, banners, modals (YearSelectionModal), the dot-grid background dots, and the SparkParticles pills. Update tailwind.config.js design tokens and frontend/src/index.css CSS custom properties to reflect the new palette. Ensure every page (Home, Share, PostDetail, Dashboard, About, Wishlist) uses the updated tokens.",
       "target": "frontend",
       "source": {
         "messageIds": [
           "msg-1"
         ],
         "quotes": [
-          "use grid background that is visible"
+          "keep the previous or combos like brown-skin tone or blue white or etc",
+          "change the theme to previous or much more clear one than a black one"
         ]
       },
       "acceptanceCriteria": [
-        "The dot-grid background is clearly visible on all pages without a magnifying glass.",
-        "Dot opacity is between 0.35 and 0.45.",
-        "Dots are approximately 2px in size.",
-        "Cards, modals, and navigation overlays render above the background without visual bleed.",
-        "Background does not shift or scroll with page content (position: fixed)."
+        "The app uses a warm brown/skin-tone or blue/white colour scheme with no black or dark surfaces.",
+        "All Tailwind config colour tokens and CSS custom properties reflect the new palette.",
+        "Cards, buttons, badges, modals, header, and footer all use the new palette consistently.",
+        "Text on all surfaces has sufficient contrast ratio (≥ 4.5:1) for readability."
       ]
     },
     {
-      "id": "REQ-40",
-      "text": "Add floating spark/particle animations scattered across the background layer of the app. Each spark displays one of four year-label phrases: 'I'm 1st Year', 'I'm 2nd Year', 'I'm 3rd Year', 'I'm 4th Year'. Implement this as a React component (e.g. SparkParticles) rendered inside Layout.tsx, positioned fixed and full-viewport below content z-index. Generate 12–20 spark instances, each assigned a random year label, random starting position, random animation duration (6s–14s), and a gentle floating/drifting upward keyframe animation with fade-in and fade-out. Style each spark as a small pill or badge — soft lavender/violet background, rounded corners, tiny font (10–11px), low base opacity (~0.55) that pulses slightly. Add a subtle glint/sparkle icon (✦ or ✨) before the label text. Sparks must not block pointer events on any interactive element (pointer-events: none on the container and all spark elements).",
+      "id": "REQ-52",
+      "text": "Fix the SparkParticles component (frontend/src/components/SparkParticles.tsx) so that the 12–20 floating year-label pills ('I'm 1st Year', 'I'm 2nd Year', 'I'm 3rd Year', 'I'm 4th Year') are distributed evenly across the entire viewport — both horizontally (0%–95% of viewport width) and vertically (starting positions spread across 0%–90% of viewport height). The current seeded-random positioning is producing clustering in certain areas; replace the position calculation so particles are spread across a well-distributed grid-like or stratified random layout covering the full screen. Each of the 16 instances should start at a distinct, well-separated position. Also ensure the particles' colours are updated to match the new warm palette (REQ-51) so they do not appear dark or purple.",
       "target": "frontend",
       "source": {
         "messageIds": [
           "msg-1"
         ],
         "quotes": [
-          "little sparks in between saying im first year /second year/third/fourth"
+          "the pop ups of im 1st year,2nd year ,3rd year and 4th year are poppping only at certain places so rectify"
         ]
       },
       "acceptanceCriteria": [
-        "Between 12 and 20 spark badges float across the background on every page.",
-        "Each spark shows one of: 'I'm 1st Year', 'I'm 2nd Year', 'I'm 3rd Year', 'I'm 4th Year' with a sparkle prefix.",
-        "Sparks animate upward with a fade-in/fade-out loop; animation durations vary per spark.",
-        "No spark intercepts click or touch events on buttons, cards, or navigation (pointer-events: none).",
-        "Sparks are rendered below all page content in z-index.",
-        "The SparkParticles component is mounted inside Layout.tsx so it appears on all pages."
+        "Spark pills appear across the full viewport width and height, not clustered in one corner or region.",
+        "All four year-label phrases are evenly represented across the 16 instances.",
+        "Spark pill colours match the new warm palette (no dark or purple tones).",
+        "Particles remain pointer-events: none and do not block interactive elements."
       ]
     }
   ],
   "constraints": [
-    "Do not modify any file under frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useActor.ts, frontend/src/main.tsx, or frontend/src/components/ui.",
-    "The script/cursive font must only apply to the brand name 'Memu Nerchukunnavi' — no other text elements.",
-    "Spark particles must use pointer-events: none so they never block interactive UI elements.",
-    "Background layers (dot-grid and sparks) must remain below all card, modal, and overlay z-indices."
+    "Do not modify any files listed in frontend.immutablePaths.",
+    "Do not introduce any black, near-black (#000–#222), or very dark OKLCH colours anywhere in the UI.",
+    "All changes are frontend-only; no backend modifications are required."
   ],
   "nonGoals": [
-    "Changing the overall color palette or existing font stack for non-brand-name text.",
-    "Adding new backend functionality.",
-    "Modifying the navigation structure or adding new pages.",
-    "Using external audio or animation libraries beyond CSS keyframes and React state."
+    "Changing any backend logic or data models.",
+    "Adding new pages or features beyond colour/theme and SparkParticles fixes.",
+    "Modifying font families (Bricolage Grotesque / DM Sans / Dancing Script) unless they are the source of dark colour issues."
   ],
   "imageRequirements": {
     "required": [],

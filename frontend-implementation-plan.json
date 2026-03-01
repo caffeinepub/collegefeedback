@@ -1,100 +1,135 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Cursive logo font, visible dot-grid background, and year-label spark animations",
+  "title": "Fix theme colours (remove all black), fix SparkParticles distribution, restore warm/bright palette",
   "requirements": [
     {
-      "id": "REQ-38",
-      "summary": "Apply script/cursive Google Font to 'Memu Nerchukunnavi' brand name across all logo and heading instances while preserving existing font stack for all other text",
+      "id": "REQ-50",
+      "summary": "Completely remove all black and near-black colours from the entire app UI",
       "acceptanceCriteria": [
-        "The text 'Memu Nerchukunnavi' in the Layout header renders in a script/cursive Google Font (Dancing Script or Pacifico).",
-        "The same script font is applied to the brand name in YearSelectionModal and About page hero heading.",
-        "All other text (navigation, body, badges) continues to use Bricolage Grotesque / DM Sans.",
-        "tailwind.config.js contains a fontFamily.brand token referencing the chosen script font.",
-        "Google Font import for the script font is present in frontend/src/index.css."
+        "No element in the app renders with a black or near-black (#000–#222 range) background or text colour.",
+        "Dark-mode CSS rules that produce black surfaces are removed or overridden.",
+        "The app remains fully readable with sufficient contrast on all surfaces."
       ],
       "file_operations": [
         {
           "path": "frontend/src/index.css",
           "operation": "modify",
-          "description": "Add Google Fonts import for Dancing Script (or Pacifico) at the top of the file alongside existing font imports. Import weights 400 and 700 to support regular and bold brand name display."
+          "description": "Remove or override all dark-mode CSS custom properties that produce black or near-black backgrounds and text. Replace any OKLCH values with lightness close to 0% with appropriate light alternatives from the warm palette. Ensure base body styles and border styles do not use black tones."
+        },
+        {
+          "path": "frontend/index.css",
+          "operation": "modify",
+          "description": "Audit and remove any OKLCH-based design tokens for light and dark modes that produce black (#000000) or near-black (#111, #1a1a1a, #0a0a0a) colours. Replace all dark background tokens with warm, light alternatives to ensure no element renders with a black surface."
         },
         {
           "path": "frontend/tailwind.config.js",
           "operation": "modify",
-          "description": "Add a new 'brand' key to the fontFamily object in theme.extend, mapping to ['Dancing Script', 'cursive'] (or ['Pacifico', 'cursive']). This creates the font-brand utility class for Tailwind."
+          "description": "Remove or override any Tailwind custom color tokens (OKLCH-based semantic tokens) that produce black or near-black colours in dark mode. Ensure all semantic tokens use light, warm colour values with sufficient lightness (≥40%) to prevent black surfaces from appearing anywhere in the app."
+        }
+      ]
+    },
+    {
+      "id": "REQ-51",
+      "summary": "Redesign the global colour palette to a warm, bright, friendly theme",
+      "acceptanceCriteria": [
+        "The app uses a warm brown/skin-tone or blue/white colour scheme with no black or dark surfaces.",
+        "All Tailwind config colour tokens and CSS custom properties reflect the new palette.",
+        "Cards, buttons, badges, modals, header, and footer all use the new palette consistently.",
+        "Text on all surfaces has sufficient contrast ratio (≥ 4.5:1) for readability."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/tailwind.config.js",
+          "operation": "modify",
+          "description": "Replace the current OKLCH-based semantic color tokens with a new warm palette. Choose either warm brown/skin-tone (sandy #F5CBA7, warm beige #FAE5D3, terracotta #E8956D accents) or blue/white (sky blue #60A5FA family, white #FFFFFF, soft blue-grey #EFF6FF). Update all primary, secondary, accent, background, foreground, card, border, and muted tokens to reflect the chosen palette. Remove any dark/lavender-heavy or near-black tokens."
+        },
+        {
+          "path": "frontend/src/index.css",
+          "operation": "modify",
+          "description": "Update CSS custom properties to reflect the new warm palette chosen in tailwind.config.js. Replace any dark or lavender-heavy OKLCH tokens with the new warm brown/skin-tone or blue/white values. Ensure the dot-grid background dots use the new palette. Update any animation or spark-float effect colours to match the new theme."
+        },
+        {
+          "path": "frontend/index.css",
+          "operation": "modify",
+          "description": "Update the OKLCH-based design tokens for colors, radius, and sidebar to match the new warm palette. Ensure all light and dark mode tokens use the warm brown/skin-tone or blue/white colour scheme with no black or dark surfaces."
         },
         {
           "path": "frontend/src/components/Layout.tsx",
           "operation": "modify",
-          "description": "Apply the font-brand class to the 'Memu Nerchukunnavi' text element in the header logo. Ensure no other navigation or UI elements receive this class; they should retain existing font stack."
+          "description": "Ensure the header, navigation pills, active-route indicator, and footer use the new warm palette tokens. Update any inline styles or className references to use the updated Tailwind tokens. Verify the mute/unmute toggle and year badge also use the new colour scheme."
+        },
+        {
+          "path": "frontend/src/components/PostCard.tsx",
+          "operation": "modify",
+          "description": "Update the PostCard component to use the new warm palette for card backgrounds, borders, badges, and text. Ensure the category badge, year label, upvotes, and bookmark button all use the updated Tailwind tokens for consistent styling."
         },
         {
           "path": "frontend/src/components/YearSelectionModal.tsx",
           "operation": "modify",
-          "description": "Apply the font-brand class to the modal title 'Memu Nerchukunnavi' (or whichever heading displays the brand name). Keep all other modal text (instructions, buttons, labels) in the existing font stack."
+          "description": "Update the YearSelectionModal to use the new warm palette for the modal background, buttons, and text. Ensure all interactive elements (year selection buttons, college name input, submit button) use the updated Tailwind tokens."
+        },
+        {
+          "path": "frontend/src/pages/Home.tsx",
+          "operation": "modify",
+          "description": "Update the Home page to use the new warm palette for the hero banner, category filter tabs, and post card grid. Ensure all buttons, badges, and loading skeletons use the updated Tailwind tokens for consistent styling."
+        },
+        {
+          "path": "frontend/src/pages/Share.tsx",
+          "operation": "modify",
+          "description": "Update the ShareExperience page to use the new warm palette for form elements, buttons, and validation messages. Ensure the category selection, textarea, and submit button all use the updated Tailwind tokens."
+        },
+        {
+          "path": "frontend/src/pages/PostDetail.tsx",
+          "operation": "modify",
+          "description": "Update the PostDetail page to use the new warm palette for the post card, category badge, bookmark button, share buttons, and back navigation. Ensure all elements use the updated Tailwind tokens for consistent styling."
+        },
+        {
+          "path": "frontend/src/pages/Dashboard.tsx",
+          "operation": "modify",
+          "description": "Update the Dashboard page to use the new warm palette for statistics cards, recent posts, and the College Connect form and list. Ensure all cards, buttons, badges, and loading states use the updated Tailwind tokens."
         },
         {
           "path": "frontend/src/pages/About.tsx",
           "operation": "modify",
-          "description": "Apply the font-brand class to the hero heading that displays 'Memu Nerchukunnavi' or the brand name. Ensure the mission statement, how-it-works steps, and values text continue using the existing font stack."
+          "description": "Update the About page to use the new warm palette for the banner, feature cards, and text. Ensure all elements use the updated Tailwind tokens for consistent styling."
         },
         {
-          "path": "frontend/index.html",
+          "path": "frontend/src/pages/Wishlist.tsx",
           "operation": "modify",
-          "description": "Update the <title> tag content from 'Meme Nerchukunnavi' to 'Memu Nerchukunnavi' (correct spelling). Note: HTML title elements do not support custom fonts, so no font class is applied here; this is a text correction only."
-        }
-      ]
-    },
-    {
-      "id": "REQ-39",
-      "summary": "Increase dot-grid background visibility by raising dot opacity to 0.35–0.45, increasing dot size to ~2px, and reducing grid spacing",
-      "acceptanceCriteria": [
-        "The dot-grid background is clearly visible on all pages without a magnifying glass.",
-        "Dot opacity is between 0.35 and 0.45.",
-        "Dots are approximately 2px in size.",
-        "Cards, modals, and navigation overlays render above the background without visual bleed.",
-        "Background does not shift or scroll with page content (position: fixed)."
-      ],
-      "file_operations": [
+          "description": "Update the Wishlist page to use the new warm palette for the post card grid, loading skeletons, and empty state. Ensure all elements use the updated Tailwind tokens for consistent styling."
+        },
         {
-          "path": "frontend/src/index.css",
+          "path": "frontend/src/components/CollegeConnectForm.tsx",
           "operation": "modify",
-          "description": "Locate the existing dot-grid background pattern definition (likely in a body or .dot-grid rule using radial-gradient). Increase the radial-gradient circle size from ~1px to ~2px. Raise the RGBA or OKLCH alpha channel for the dot color from approximately 0.15 to a value between 0.35 and 0.45. Reduce the background-size property (grid spacing) by approximately 20–30% to display more dots per viewport. Ensure the rule includes position: fixed, top: 0, left: 0, width: 100vw, height: 100vh, and z-index below content layers (e.g., z-index: -1 or z-index: 0 with content layers at z-index: 1+)."
+          "description": "Update the CollegeConnectForm component to use the new warm palette for form fields, buttons, validation messages, and success feedback. Ensure all elements use the updated Tailwind tokens."
+        },
+        {
+          "path": "frontend/src/components/CollegeConnectList.tsx",
+          "operation": "modify",
+          "description": "Update the CollegeConnectList component to use the new warm palette for tip cards, year-colored badges, and loading skeletons. Ensure all elements use the updated Tailwind tokens."
+        },
+        {
+          "path": "frontend/src/components/ShareButtons.tsx",
+          "operation": "modify",
+          "description": "Update the ShareButtons component to use the new warm palette for action buttons. Ensure the WhatsApp, copy link, and native share buttons all use the updated Tailwind tokens for consistent styling."
         }
       ]
     },
     {
-      "id": "REQ-40",
-      "summary": "Create floating spark particle animations displaying year labels ('I'm 1st Year', 'I'm 2nd Year', 'I'm 3rd Year', 'I'm 4th Year') scattered across the background with gentle upward drift, fade-in/fade-out, and non-blocking pointer events",
+      "id": "REQ-52",
+      "summary": "Fix the SparkParticles component so that the 12–20 floating year-label pills are distributed evenly across the entire viewport",
       "acceptanceCriteria": [
-        "Between 12 and 20 spark badges float across the background on every page.",
-        "Each spark shows one of: 'I'm 1st Year', 'I'm 2nd Year', 'I'm 3rd Year', 'I'm 4th Year' with a sparkle prefix.",
-        "Sparks animate upward with a fade-in/fade-out loop; animation durations vary per spark.",
-        "No spark intercepts click or touch events on buttons, cards, or navigation (pointer-events: none).",
-        "Sparks are rendered below all page content in z-index.",
-        "The SparkParticles component is mounted inside Layout.tsx so it appears on all pages."
+        "Spark pills appear across the full viewport width and height, not clustered in one corner or region.",
+        "All four year-label phrases are evenly represented across the 16 instances.",
+        "Spark pill colours match the new warm palette (no dark or purple tones).",
+        "Particles remain pointer-events: none and do not block interactive elements."
       ],
       "file_operations": [
         {
           "path": "frontend/src/components/SparkParticles.tsx",
-          "operation": "create",
-          "description": "Create a React component that renders 12–20 floating spark badge elements. Each spark displays one of four year labels: 'I'm 1st Year', 'I'm 2nd Year', 'I'm 3rd Year', 'I'm 4th Year', prefixed with a sparkle icon (✦ or ✨). Use a state or constant array to generate spark instances with randomized properties: starting x/y positions (spread across viewport), animation duration (6s–14s), and assigned year label. Style each spark as a small pill (border-radius: 9999px or similar) with soft lavender/violet background (e.g., bg-purple-200/55 or a custom OKLCH token), tiny font size (text-[10px] or text-[11px]), and low base opacity (~0.55) that pulses slightly via CSS animation. Apply pointer-events: none to the container div and all spark elements so they never block interactions. Position the container as fixed, full viewport (inset-0), with z-index below content layers (e.g., z-index: 0 or z-index: 1, ensuring Layout content sits at z-index: 10+). Implement CSS keyframe animations (or Tailwind animate utilities) for upward floating drift with fade-in at start and fade-out at end of each loop. Animation should be infinite with randomized delays per spark for staggered effect."
-        },
-        {
-          "path": "frontend/src/index.css",
           "operation": "modify",
-          "description": "Add CSS @keyframes definitions for the spark floating animation: a gentle upward translateY drift (e.g., from translateY(0) to translateY(-100vh) or similar) combined with opacity fade-in (0% to 20%: opacity 0 to 0.55) and fade-out (80% to 100%: opacity 0.55 to 0). Optionally add a subtle horizontal sway (translateX oscillation) for more organic motion. Name the keyframe (e.g., @keyframes spark-float) and ensure it can be referenced from the SparkParticles component via Tailwind animate or inline style."
-        },
-        {
-          "path": "frontend/tailwind.config.js",
-          "operation": "modify",
-          "description": "Extend the animation section in theme.extend to register the spark-float keyframe animation with appropriate duration and easing (e.g., 'spark-float': 'spark-float 10s ease-in-out infinite'). This allows using animate-spark-float in the SparkParticles component. If multiple durations are needed, register variants (spark-float-fast, spark-float-slow) or apply inline duration overrides in the component."
-        },
-        {
-          "path": "frontend/src/components/Layout.tsx",
-          "operation": "modify",
-          "description": "Import and render the SparkParticles component as the first child inside the Layout component's outermost wrapper (before the header and main content), ensuring it appears on all pages. Verify that the Layout's content layers have explicit z-index values higher than the SparkParticles container (e.g., header at z-index: 10, main at z-index: 5) so sparks render below interactive UI elements."
+          "description": "Replace the current seeded-random position calculation with a stratified random or grid-based layout that distributes all 16 particles evenly across the full viewport (0%–95% width, 0%–90% height). Ensure each particle starts at a distinct, well-separated position to prevent clustering. Update the particle colours to use the new warm palette tokens (e.g., warm brown/skin-tone or blue/white) instead of the current pastel purple/dark tones. Maintain pointer-events: none to keep particles non-interactive."
         }
       ]
     }

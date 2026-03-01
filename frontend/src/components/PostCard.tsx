@@ -1,121 +1,156 @@
-import { Clock, GraduationCap, ThumbsUp, UserPlus } from 'lucide-react';
-import { Link } from '@tanstack/react-router';
-import { Card, CardContent, CardFooter } from '@/components/ui/card';
-import { type Post, Category } from '../backend';
-import ShareButtons from './ShareButtons';
-import { useLanguage } from '../contexts/LanguageContext';
+import React from "react";
+import { Link } from "@tanstack/react-router";
+import { ThumbsUp, Users, Bookmark, BookmarkCheck } from "lucide-react";
+import { Post, Category } from "../backend";
+import { useWishlistState } from "../hooks/useWishlist";
+import { playBubblePop } from "../utils/sounds";
+
+export const categoryConfig: Record<
+  Category,
+  { emoji: string; label: string; color: string; bg: string }
+> = {
+  [Category.internships]: {
+    emoji: "💼",
+    label: "Internships",
+    color: "oklch(0.40 0.10 42)",
+    bg: "oklch(0.92 0.04 55)",
+  },
+  [Category.hackathons]: {
+    emoji: "⚡",
+    label: "Hackathons",
+    color: "oklch(0.42 0.12 60)",
+    bg: "oklch(0.94 0.05 72)",
+  },
+  [Category.courses]: {
+    emoji: "📚",
+    label: "Courses",
+    color: "oklch(0.38 0.10 200)",
+    bg: "oklch(0.92 0.04 200)",
+  },
+  [Category.general]: {
+    emoji: "💬",
+    label: "General",
+    color: "oklch(0.40 0.08 280)",
+    bg: "oklch(0.93 0.03 280)",
+  },
+};
+
+export function formatTimeAgo(nanoseconds: bigint): string {
+  const ms = Number(nanoseconds) / 1_000_000;
+  const diff = Date.now() - ms;
+  const minutes = Math.floor(diff / 60000);
+  const hours = Math.floor(diff / 3600000);
+  const days = Math.floor(diff / 86400000);
+  if (days > 0) return `${days}d ago`;
+  if (hours > 0) return `${hours}h ago`;
+  if (minutes > 0) return `${minutes}m ago`;
+  return "just now";
+}
 
 interface PostCardProps {
   post: Post;
 }
 
-export const categoryConfig: Record<Category, { label: string; emoji: string; className: string }> = {
-  [Category.internships]: {
-    label: 'Internships',
-    emoji: '💼',
-    className: 'bg-primary/10 text-primary border-primary/20',
-  },
-  [Category.hackathons]: {
-    label: 'Hackathons',
-    emoji: '💡',
-    className: 'bg-accent/10 text-accent border-accent/20',
-  },
-  [Category.courses]: {
-    label: 'Courses',
-    emoji: '📚',
-    className: 'bg-secondary text-secondary-foreground border-border',
-  },
-  [Category.general]: {
-    label: 'General Tips',
-    emoji: '🎓',
-    className: 'bg-muted text-muted-foreground border-border',
-  },
-};
+const PostCard: React.FC<PostCardProps> = ({ post }) => {
+  const catConfig = categoryConfig[post.category] ?? categoryConfig[Category.general];
+  // useWishlistState returns { isSaved, toggleWishlist, isLoading }
+  const { isSaved, toggleWishlist, isLoading } = useWishlistState(post.id);
 
-export function formatTimeAgo(nanoseconds: bigint): string {
-  const ms = Number(nanoseconds / BigInt(1_000_000));
-  const now = Date.now();
-  const diff = now - ms;
-  const seconds = Math.floor(diff / 1000);
-  const minutes = Math.floor(seconds / 60);
-  const hours = Math.floor(minutes / 60);
-  const days = Math.floor(hours / 24);
-
-  if (days > 0) return `${days}d ago`;
-  if (hours > 0) return `${hours}h ago`;
-  if (minutes > 0) return `${minutes}m ago`;
-  return 'just now';
-}
-
-export default function PostCard({ post }: PostCardProps) {
-  const { t } = useLanguage();
-  const catConfig = categoryConfig[post.category];
-  const snippet = post.content.length > 160
-    ? post.content.slice(0, 160).trimEnd() + '…'
-    : post.content;
-
-  const catLabel = post.category === Category.internships ? t('catInternships')
-    : post.category === Category.hackathons ? t('catHackathons')
-    : post.category === Category.courses ? t('catCourses')
-    : t('catGeneral');
-
-  const postUrl = `${window.location.origin}/post/${String(post.id)}`;
+  const handleBookmark = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    playBubblePop();
+    toggleWishlist();
+  };
 
   return (
-    <div className="block h-full">
-      <Card className="group flex flex-col h-full border border-border shadow-card hover:shadow-card-hover transition-all duration-200 hover:-translate-y-0.5 bg-card animate-fade-in">
-        <Link to="/post/$id" params={{ id: String(post.id) }} className="flex-1 flex flex-col cursor-pointer">
-          <CardContent className="flex-1 pt-5 pb-3 px-5">
-            {/* Category badge + time */}
-            <div className="flex items-center justify-between mb-3">
-              <span
-                className={`inline-flex items-center gap-1.5 text-xs font-heading font-bold px-2.5 py-1 rounded-full border ${catConfig.className}`}
-              >
-                <span>{catConfig.emoji}</span>
-                {catLabel}
-              </span>
-              <span className="flex items-center gap-1 text-xs text-muted-foreground">
-                <Clock className="w-3 h-3" />
-                {formatTimeAgo(post.createdAt)}
-              </span>
-            </div>
+    // Route param is $id per App.tsx route definition
+    <Link to="/post/$id" params={{ id: String(post.id) }}>
+      <article
+        className="rounded-xl border p-4 transition-all duration-200 hover:shadow-md cursor-pointer group"
+        style={{
+          background: "oklch(0.98 0.015 60)",
+          borderColor: "oklch(0.88 0.025 55)",
+        }}
+        onMouseEnter={(e) => {
+          (e.currentTarget as HTMLElement).style.borderColor = "oklch(0.72 0.08 52)";
+          (e.currentTarget as HTMLElement).style.background = "oklch(0.99 0.010 58)";
+        }}
+        onMouseLeave={(e) => {
+          (e.currentTarget as HTMLElement).style.borderColor = "oklch(0.88 0.025 55)";
+          (e.currentTarget as HTMLElement).style.background = "oklch(0.98 0.015 60)";
+        }}
+      >
+        {/* Header row */}
+        <div className="flex items-start justify-between gap-2 mb-3">
+          <div className="flex items-center gap-2 flex-wrap">
+            {/* Category badge */}
+            <span
+              className="inline-flex items-center gap-1 text-xs font-semibold px-2 py-0.5 rounded-full"
+              style={{
+                background: catConfig.bg,
+                color: catConfig.color,
+              }}
+            >
+              {catConfig.emoji} {catConfig.label}
+            </span>
+            {/* Year badge */}
+            <span
+              className="text-xs px-2 py-0.5 rounded-full font-medium"
+              style={{
+                background: "oklch(0.92 0.025 55)",
+                color: "oklch(0.45 0.06 50)",
+              }}
+            >
+              {post.authorYear}
+            </span>
+          </div>
 
-            {/* Content snippet */}
-            <p className="text-sm text-foreground leading-relaxed font-body">
-              {snippet}
-            </p>
-          </CardContent>
-
-          <CardFooter className="px-5 pb-3 pt-2 flex items-center justify-between border-t border-border/50 mt-2">
-            {/* Author year */}
-            <div className="flex items-center gap-2">
-              <div className="w-7 h-7 rounded-full bg-primary/15 flex items-center justify-center">
-                <GraduationCap className="w-3.5 h-3.5 text-primary" />
-              </div>
-              <span className="text-xs font-heading font-bold text-foreground">
-                {post.authorYear}
-              </span>
-            </div>
-
-            {/* Stats (read-only display) */}
-            <div className="flex items-center gap-2">
-              <span className="inline-flex items-center gap-1 text-xs text-muted-foreground font-heading font-bold px-2.5 py-1 rounded-full bg-muted/60">
-                <UserPlus className="w-3 h-3" />
-                {Number(post.connectCount)}
-              </span>
-              <span className="inline-flex items-center gap-1 text-xs text-muted-foreground font-heading font-bold px-2.5 py-1 rounded-full bg-muted/60">
-                <ThumbsUp className="w-3 h-3" />
-                {Number(post.upvotes)}
-              </span>
-            </div>
-          </CardFooter>
-        </Link>
-
-        {/* Share buttons */}
-        <div className="px-5 pb-4 pt-1 border-t border-border/30">
-          <ShareButtons postId={String(post.id)} postContent={post.content} postUrl={postUrl} compact />
+          {/* Bookmark */}
+          <button
+            onClick={handleBookmark}
+            disabled={isLoading}
+            className="p-1 rounded-full transition-colors flex-shrink-0"
+            style={{ color: isSaved ? "oklch(0.55 0.12 42)" : "oklch(0.65 0.04 50)" }}
+            title={isSaved ? "Remove from wishlist" : "Save to wishlist"}
+          >
+            {isSaved ? <BookmarkCheck size={16} /> : <Bookmark size={16} />}
+          </button>
         </div>
-      </Card>
-    </div>
+
+        {/* Content */}
+        <p
+          className="text-sm leading-relaxed line-clamp-3 mb-3"
+          style={{ color: "oklch(0.32 0.04 50)" }}
+        >
+          {post.content}
+        </p>
+
+        {/* Footer row */}
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <span
+              className="flex items-center gap-1 text-xs"
+              style={{ color: "oklch(0.55 0.05 50)" }}
+            >
+              <ThumbsUp size={13} />
+              {String(post.upvotes)}
+            </span>
+            <span
+              className="flex items-center gap-1 text-xs"
+              style={{ color: "oklch(0.55 0.05 50)" }}
+            >
+              <Users size={13} />
+              {String(post.connectCount)}
+            </span>
+          </div>
+          <span className="text-xs" style={{ color: "oklch(0.62 0.04 50)" }}>
+            {formatTimeAgo(post.createdAt)}
+          </span>
+        </div>
+      </article>
+    </Link>
   );
-}
+};
+
+export default PostCard;

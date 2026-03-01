@@ -2,13 +2,17 @@ import Map "mo:core/Map";
 import Array "mo:core/Array";
 import Time "mo:core/Time";
 import Order "mo:core/Order";
-import Runtime "mo:core/Runtime";
 import Iter "mo:core/Iter";
+import Nat "mo:core/Nat";
+import Runtime "mo:core/Runtime";
 import MixinStorage "blob-storage/Mixin";
 import Storage "blob-storage/Storage";
 
+
+
 // Use MixinStorage for blob storage capabilities.
 // Specify migration module in actor definition.
+
 actor {
   include MixinStorage();
 
@@ -36,6 +40,19 @@ actor {
     topConnectedPosts : [Post];
   };
 
+  type Wishlist = {
+    sessionKey : Text;
+    postIds : [Nat];
+  };
+
+  type CollegeConnect = {
+    id : Nat;
+    collegeName : Text;
+    year : Text;
+    tip : Text;
+    createdAt : Int;
+  };
+
   module Post {
     public func compareByUpvotes(post1 : Post, post2 : Post) : Order.Order {
       if (post1.upvotes > post2.upvotes) {
@@ -56,6 +73,11 @@ actor {
 
   var nextPostId = 0;
   let posts = Map.empty<Nat, Post>();
+
+  var nextCollegeConnectId = 0;
+  let collegeConnects = Map.empty<Nat, CollegeConnect>();
+
+  let wishlists = Map.empty<Text, [Nat]>();
 
   public shared ({ caller }) func createPost(
     content : Text,
@@ -121,5 +143,80 @@ actor {
       topUpvotedPosts = topUpvoted;
       topConnectedPosts = topConnected;
     };
+  };
+
+  // Wishlist functions
+  public shared ({ caller }) func addToWishlist(sessionKey : Text, postId : Nat) : async () {
+    let currentWishlist = switch (wishlists.get(sessionKey)) {
+      case (null) { [] };
+      case (?wishlist) { wishlist };
+    };
+
+    let postExists = posts.containsKey(postId);
+    if (not postExists) {
+      Runtime.trap("Post does not exist, cannot add to wishlist");
+    };
+
+    let alreadyWishlisted = currentWishlist.find(
+      func(id) { id == postId }
+    );
+    switch (alreadyWishlisted) {
+      case (null) {
+        let newWishlist = currentWishlist.concat([postId]);
+        wishlists.add(sessionKey, newWishlist);
+      };
+      case (?_) {
+        Runtime.trap("Post already in wishlist");
+      };
+    };
+  };
+
+  public shared ({ caller }) func removeFromWishlist(sessionKey : Text, postId : Nat) : async () {
+    switch (wishlists.get(sessionKey)) {
+      case (null) { Runtime.trap("No wishlist found for session") };
+      case (?currentWishlist) {
+        let newWishlist = currentWishlist.filter(func(id) { id != postId });
+        wishlists.add(sessionKey, newWishlist);
+      };
+    };
+  };
+
+  public query ({ caller }) func getWishlist(sessionKey : Text) : async [Nat] {
+    switch (wishlists.get(sessionKey)) {
+      case (null) { [] };
+      case (?wishlist) { wishlist };
+    };
+  };
+
+  // College Connect functions
+  public shared ({ caller }) func submitCollegeConnect(collegeName : Text, year : Text, tip : Text) : async Nat {
+    if (tip.size() > 200) {
+      Runtime.trap("Tip or message must be 200 characters or less");
+    };
+
+    let entryId = nextCollegeConnectId;
+    let connectEntry : CollegeConnect = {
+      id = entryId;
+      collegeName;
+      year;
+      tip;
+      createdAt = Time.now();
+    };
+    collegeConnects.add(entryId, connectEntry);
+    nextCollegeConnectId += 1;
+    entryId;
+  };
+
+  public query ({ caller }) func getAllCollegeConnects() : async [CollegeConnect] {
+    let entries = collegeConnects.values().toArray();
+    entries.sort(
+      func(entry1, entry2) {
+        if (entry1.createdAt > entry2.createdAt) {
+          #less;
+        } else if (entry1.createdAt < entry2.createdAt) {
+          #greater;
+        } else { #equal };
+      }
+    );
   };
 };

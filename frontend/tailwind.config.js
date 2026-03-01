@@ -1,133 +1,109 @@
-import typography from '@tailwindcss/typography';
-import containerQueries from '@tailwindcss/container-queries';
-import animate from 'tailwindcss-animate';
-
 /** @type {import('tailwindcss').Config} */
 export default {
-  darkMode: ['class'],
-  content: ['index.html', 'src/**/*.{js,ts,jsx,tsx,html,css}'],
+  darkMode: ["class"],
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    container: {
-      center: true,
-      padding: '2rem',
-      screens: {
-        '2xl': '1400px'
-      }
-    },
     extend: {
       fontFamily: {
-        display: ['Bricolage Grotesque', 'sans-serif'],
-        body: ['DM Sans', 'sans-serif'],
-        heading: ['Bricolage Grotesque', 'sans-serif'],
-        sans: ['DM Sans', 'sans-serif'],
-        // Script/cursive font for brand name "Memu Nerchukunnavi"
-        brand: ['Dancing Script', 'cursive'],
+        brand: ["Dancing Script", "cursive"],
+        heading: ["Bricolage Grotesque", "sans-serif"],
+        sans: ["DM Sans", "sans-serif"],
       },
       colors: {
-        border: 'oklch(var(--border))',
-        input: 'oklch(var(--input))',
-        ring: 'oklch(var(--ring) / <alpha-value>)',
-        background: 'oklch(var(--background))',
-        foreground: 'oklch(var(--foreground))',
-        primary: {
-          DEFAULT: 'oklch(var(--primary) / <alpha-value>)',
-          foreground: 'oklch(var(--primary-foreground))'
-        },
-        secondary: {
-          DEFAULT: 'oklch(var(--secondary) / <alpha-value>)',
-          foreground: 'oklch(var(--secondary-foreground))'
-        },
-        destructive: {
-          DEFAULT: 'oklch(var(--destructive) / <alpha-value>)',
-          foreground: 'oklch(var(--destructive-foreground))'
-        },
-        muted: {
-          DEFAULT: 'oklch(var(--muted) / <alpha-value>)',
-          foreground: 'oklch(var(--muted-foreground) / <alpha-value>)'
-        },
-        accent: {
-          DEFAULT: 'oklch(var(--accent) / <alpha-value>)',
-          foreground: 'oklch(var(--accent-foreground))'
+        background: "oklch(var(--background) / <alpha-value>)",
+        foreground: "oklch(var(--foreground) / <alpha-value>)",
+        card: {
+          DEFAULT: "oklch(var(--card) / <alpha-value>)",
+          foreground: "oklch(var(--card-foreground) / <alpha-value>)",
         },
         popover: {
-          DEFAULT: 'oklch(var(--popover))',
-          foreground: 'oklch(var(--popover-foreground))'
+          DEFAULT: "oklch(var(--popover) / <alpha-value>)",
+          foreground: "oklch(var(--popover-foreground) / <alpha-value>)",
         },
-        card: {
-          DEFAULT: 'oklch(var(--card))',
-          foreground: 'oklch(var(--card-foreground))'
+        primary: {
+          DEFAULT: "oklch(var(--primary) / <alpha-value>)",
+          foreground: "oklch(var(--primary-foreground) / <alpha-value>)",
         },
-        chart: {
-          1: 'oklch(var(--chart-1))',
-          2: 'oklch(var(--chart-2))',
-          3: 'oklch(var(--chart-3))',
-          4: 'oklch(var(--chart-4))',
-          5: 'oklch(var(--chart-5))'
+        secondary: {
+          DEFAULT: "oklch(var(--secondary) / <alpha-value>)",
+          foreground: "oklch(var(--secondary-foreground) / <alpha-value>)",
         },
+        muted: {
+          DEFAULT: "oklch(var(--muted) / <alpha-value>)",
+          foreground: "oklch(var(--muted-foreground) / <alpha-value>)",
+        },
+        accent: {
+          DEFAULT: "oklch(var(--accent) / <alpha-value>)",
+          foreground: "oklch(var(--accent-foreground) / <alpha-value>)",
+        },
+        destructive: {
+          DEFAULT: "oklch(var(--destructive) / <alpha-value>)",
+          foreground: "oklch(var(--destructive-foreground) / <alpha-value>)",
+        },
+        border: "oklch(var(--border) / <alpha-value>)",
+        input: "oklch(var(--input) / <alpha-value>)",
+        ring: "oklch(var(--ring) / <alpha-value>)",
         sidebar: {
-          DEFAULT: 'oklch(var(--sidebar))',
-          foreground: 'oklch(var(--sidebar-foreground))',
-          primary: 'oklch(var(--sidebar-primary))',
-          'primary-foreground': 'oklch(var(--sidebar-primary-foreground))',
-          accent: 'oklch(var(--sidebar-accent))',
-          'accent-foreground': 'oklch(var(--sidebar-accent-foreground))',
-          border: 'oklch(var(--sidebar-border))',
-          ring: 'oklch(var(--sidebar-ring))'
-        }
+          DEFAULT: "oklch(var(--sidebar-background) / <alpha-value>)",
+          foreground: "oklch(var(--sidebar-foreground) / <alpha-value>)",
+          primary: "oklch(var(--sidebar-primary) / <alpha-value>)",
+          "primary-foreground": "oklch(var(--sidebar-primary-foreground) / <alpha-value>)",
+          accent: "oklch(var(--sidebar-accent) / <alpha-value>)",
+          "accent-foreground": "oklch(var(--sidebar-accent-foreground) / <alpha-value>)",
+          border: "oklch(var(--sidebar-border) / <alpha-value>)",
+          ring: "oklch(var(--sidebar-ring) / <alpha-value>)",
+        },
+        warm: {
+          sand: "var(--warm-sand)",
+          terracotta: "var(--warm-terracotta)",
+          peach: "var(--warm-peach)",
+          cream: "var(--warm-cream)",
+          brown: "var(--warm-brown)",
+          sienna: "var(--warm-sienna)",
+        },
       },
       borderRadius: {
-        lg: 'var(--radius)',
-        md: 'calc(var(--radius) - 2px)',
-        sm: 'calc(var(--radius) - 4px)',
-        xl: 'calc(var(--radius) + 4px)',
-        '2xl': 'calc(var(--radius) + 8px)',
-        '3xl': 'calc(var(--radius) + 16px)',
-      },
-      boxShadow: {
-        xs: '0 1px 2px 0 rgba(0,0,0,0.05)',
-        card: '0 2px 12px 0 rgba(120,80,200,0.08)',
-        'card-hover': '0 6px 24px 0 rgba(120,80,200,0.16)',
-      },
-      keyframes: {
-        'accordion-down': {
-          from: { height: '0' },
-          to: { height: 'var(--radix-accordion-content-height)' }
-        },
-        'accordion-up': {
-          from: { height: 'var(--radix-accordion-content-height)' },
-          to: { height: '0' }
-        },
-        'fade-in': {
-          from: { opacity: '0', transform: 'translateY(8px)' },
-          to: { opacity: '1', transform: 'translateY(0)' }
-        },
-        'spark-float': {
-          '0%': { opacity: '0', transform: 'translateY(0) translateX(0)' },
-          '10%': { opacity: '0.6' },
-          '45%': { opacity: '0.55', transform: 'translateY(-45vh) translateX(12px)' },
-          '55%': { opacity: '0.55', transform: 'translateY(-55vh) translateX(-8px)' },
-          '85%': { opacity: '0.3' },
-          '100%': { opacity: '0', transform: 'translateY(-100vh) translateX(6px)' },
-        },
-        'spark-float-sway': {
-          '0%': { opacity: '0', transform: 'translateY(0) translateX(0) rotate(-2deg)' },
-          '12%': { opacity: '0.55' },
-          '40%': { opacity: '0.5', transform: 'translateY(-40vh) translateX(-14px) rotate(2deg)' },
-          '70%': { opacity: '0.4', transform: 'translateY(-70vh) translateX(10px) rotate(-1deg)' },
-          '90%': { opacity: '0.15' },
-          '100%': { opacity: '0', transform: 'translateY(-100vh) translateX(-4px) rotate(1deg)' },
-        },
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
       },
       animation: {
-        'accordion-down': 'accordion-down 0.2s ease-out',
-        'accordion-up': 'accordion-up 0.2s ease-out',
-        'fade-in': 'fade-in 0.3s ease-out',
-        'spark-float': 'spark-float 10s ease-in-out infinite',
-        'spark-float-sway': 'spark-float-sway 12s ease-in-out infinite',
-        'spark-float-fast': 'spark-float 7s ease-in-out infinite',
-        'spark-float-slow': 'spark-float-sway 15s ease-in-out infinite',
-      }
-    }
+        "spark-float-1": "spark-float-1 var(--duration, 4s) ease-in-out infinite",
+        "spark-float-2": "spark-float-2 var(--duration, 4.5s) ease-in-out infinite",
+        "spark-float-3": "spark-float-3 var(--duration, 3.8s) ease-in-out infinite",
+        "spark-float-4": "spark-float-4 var(--duration, 5s) ease-in-out infinite",
+      },
+      keyframes: {
+        "spark-float-1": {
+          "0%": { transform: "translateY(0px) translateX(0px) scale(0.8)", opacity: "0" },
+          "10%": { transform: "translateY(-8px) translateX(4px) scale(1.3)", opacity: "1" },
+          "20%": { transform: "translateY(-15px) translateX(2px) scale(1.0)", opacity: "0.9" },
+          "80%": { transform: "translateY(-80px) translateX(-6px) scale(0.95)", opacity: "0.7" },
+          "100%": { transform: "translateY(-120px) translateX(8px) scale(0.85)", opacity: "0" },
+        },
+        "spark-float-2": {
+          "0%": { transform: "translateY(0px) translateX(0px) scale(0.8)", opacity: "0" },
+          "10%": { transform: "translateY(-6px) translateX(-5px) scale(1.3)", opacity: "1" },
+          "20%": { transform: "translateY(-12px) translateX(-3px) scale(1.0)", opacity: "0.9" },
+          "80%": { transform: "translateY(-90px) translateX(8px) scale(0.95)", opacity: "0.7" },
+          "100%": { transform: "translateY(-130px) translateX(-4px) scale(0.85)", opacity: "0" },
+        },
+        "spark-float-3": {
+          "0%": { transform: "translateY(0px) translateX(0px) scale(0.8)", opacity: "0" },
+          "10%": { transform: "translateY(-10px) translateX(6px) scale(1.3)", opacity: "1" },
+          "20%": { transform: "translateY(-18px) translateX(4px) scale(1.0)", opacity: "0.9" },
+          "80%": { transform: "translateY(-70px) translateX(-10px) scale(0.95)", opacity: "0.7" },
+          "100%": { transform: "translateY(-110px) translateX(6px) scale(0.85)", opacity: "0" },
+        },
+        "spark-float-4": {
+          "0%": { transform: "translateY(0px) translateX(0px) scale(0.8)", opacity: "0" },
+          "10%": { transform: "translateY(-7px) translateX(-4px) scale(1.3)", opacity: "1" },
+          "20%": { transform: "translateY(-14px) translateX(-2px) scale(1.0)", opacity: "0.9" },
+          "80%": { transform: "translateY(-85px) translateX(5px) scale(0.95)", opacity: "0.7" },
+          "100%": { transform: "translateY(-125px) translateX(-8px) scale(0.85)", opacity: "0" },
+        },
+      },
+    },
   },
-  plugins: [typography, containerQueries, animate]
+  plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
 };

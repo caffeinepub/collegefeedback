@@ -95,6 +95,10 @@ export interface PostStats {
     topConnectedPosts: Array<Post>;
     totalPosts: bigint;
 }
+export interface _CaffeineStorageRefillResult {
+    success?: boolean;
+    topped_up_amount?: bigint;
+}
 export interface Post {
     id: bigint;
     upvotes: bigint;
@@ -104,16 +108,19 @@ export interface Post {
     connectCount: bigint;
     category: Category;
 }
+export interface _CaffeineStorageRefillInformation {
+    proposed_top_up_amount?: bigint;
+}
 export interface _CaffeineStorageCreateCertificateResult {
     method: string;
     blob_hash: string;
 }
-export interface _CaffeineStorageRefillResult {
-    success?: boolean;
-    topped_up_amount?: bigint;
-}
-export interface _CaffeineStorageRefillInformation {
-    proposed_top_up_amount?: bigint;
+export interface CollegeConnect {
+    id: bigint;
+    tip: string;
+    collegeName: string;
+    createdAt: bigint;
+    year: string;
 }
 export enum Category {
     courses = "courses",
@@ -128,10 +135,15 @@ export interface backendInterface {
     _caffeineStorageCreateCertificate(blobHash: string): Promise<_CaffeineStorageCreateCertificateResult>;
     _caffeineStorageRefillCashier(refillInformation: _CaffeineStorageRefillInformation | null): Promise<_CaffeineStorageRefillResult>;
     _caffeineStorageUpdateGatewayPrincipals(): Promise<void>;
+    addToWishlist(sessionKey: string, postId: bigint): Promise<void>;
     createPost(content: string, authorYear: string, category: Category): Promise<bigint>;
+    getAllCollegeConnects(): Promise<Array<CollegeConnect>>;
     getAllPosts(): Promise<Array<Post>>;
     getPostsByCategory(category: Category): Promise<Array<Post>>;
     getStats(): Promise<PostStats>;
+    getWishlist(sessionKey: string): Promise<Array<bigint>>;
+    removeFromWishlist(sessionKey: string, postId: bigint): Promise<void>;
+    submitCollegeConnect(collegeName: string, year: string, tip: string): Promise<bigint>;
 }
 import type { Category as _Category, Post as _Post, PostStats as _PostStats, _CaffeineStorageRefillInformation as __CaffeineStorageRefillInformation, _CaffeineStorageRefillResult as __CaffeineStorageRefillResult } from "./declarations/backend.did.d.ts";
 export class Backend implements backendInterface {
@@ -220,6 +232,20 @@ export class Backend implements backendInterface {
             return result;
         }
     }
+    async addToWishlist(arg0: string, arg1: bigint): Promise<void> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.addToWishlist(arg0, arg1);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.addToWishlist(arg0, arg1);
+            return result;
+        }
+    }
     async createPost(arg0: string, arg1: string, arg2: Category): Promise<bigint> {
         if (this.processError) {
             try {
@@ -231,6 +257,20 @@ export class Backend implements backendInterface {
             }
         } else {
             const result = await this.actor.createPost(arg0, arg1, to_candid_Category_n8(this._uploadFile, this._downloadFile, arg2));
+            return result;
+        }
+    }
+    async getAllCollegeConnects(): Promise<Array<CollegeConnect>> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getAllCollegeConnects();
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getAllCollegeConnects();
             return result;
         }
     }
@@ -274,6 +314,48 @@ export class Backend implements backendInterface {
         } else {
             const result = await this.actor.getStats();
             return from_candid_PostStats_n15(this._uploadFile, this._downloadFile, result);
+        }
+    }
+    async getWishlist(arg0: string): Promise<Array<bigint>> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getWishlist(arg0);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getWishlist(arg0);
+            return result;
+        }
+    }
+    async removeFromWishlist(arg0: string, arg1: bigint): Promise<void> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.removeFromWishlist(arg0, arg1);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.removeFromWishlist(arg0, arg1);
+            return result;
+        }
+    }
+    async submitCollegeConnect(arg0: string, arg1: string, arg2: string): Promise<bigint> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.submitCollegeConnect(arg0, arg1, arg2);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.submitCollegeConnect(arg0, arg1, arg2);
+            return result;
         }
     }
 }

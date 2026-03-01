@@ -14,6 +14,13 @@ export type Category = { 'courses' : null } |
   { 'hackathons' : null } |
   { 'internships' : null } |
   { 'general' : null };
+export interface CollegeConnect {
+  'id' : bigint,
+  'tip' : string,
+  'collegeName' : string,
+  'createdAt' : bigint,
+  'year' : string,
+}
 export interface Post {
   'id' : bigint,
   'upvotes' : bigint,
@@ -56,10 +63,15 @@ export interface _SERVICE {
     _CaffeineStorageRefillResult
   >,
   '_caffeineStorageUpdateGatewayPrincipals' : ActorMethod<[], undefined>,
+  'addToWishlist' : ActorMethod<[string, bigint], undefined>,
   'createPost' : ActorMethod<[string, string, Category], bigint>,
+  'getAllCollegeConnects' : ActorMethod<[], Array<CollegeConnect>>,
   'getAllPosts' : ActorMethod<[], Array<Post>>,
   'getPostsByCategory' : ActorMethod<[Category], Array<Post>>,
   'getStats' : ActorMethod<[], PostStats>,
+  'getWishlist' : ActorMethod<[string], Array<bigint>>,
+  'removeFromWishlist' : ActorMethod<[string, bigint], undefined>,
+  'submitCollegeConnect' : ActorMethod<[string, string, string], bigint>,
 }
 export declare const idlService: IDL.ServiceClass;
 export declare const idlInitArgs: IDL.Type[];

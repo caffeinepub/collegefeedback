@@ -1,25 +1,36 @@
-import { useState, useEffect } from 'react';
-import { RouterProvider, createRouter, createRoute, createRootRoute, Outlet } from '@tanstack/react-router';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import {
+  createRouter,
+  createRoute,
+  createRootRoute,
+  RouterProvider,
+  Outlet,
+} from '@tanstack/react-router';
+import { ThemeProvider } from 'next-themes';
+import { Toaster } from '@/components/ui/sonner';
 import Layout from './components/Layout';
 import Home from './pages/Home';
 import ShareExperience from './pages/ShareExperience';
 import PostDetail from './pages/PostDetail';
 import Dashboard from './pages/Dashboard';
 import About from './pages/About';
-import YearSelectionModal from './components/YearSelectionModal';
-import { useYearSelection } from './hooks/useYearSelection';
-import { LanguageProvider } from './contexts/LanguageContext';
+import Wishlist from './pages/Wishlist';
 
-// Root route with layout
-const rootRoute = createRootRoute({
-  component: () => (
+const queryClient = new QueryClient();
+
+function AppShell() {
+  return (
     <Layout>
       <Outlet />
     </Layout>
-  ),
+  );
+}
+
+const rootRoute = createRootRoute({
+  component: AppShell,
 });
 
-const indexRoute = createRoute({
+const homeRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/',
   component: Home,
@@ -49,12 +60,19 @@ const aboutRoute = createRoute({
   component: About,
 });
 
+const wishlistRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/wishlist',
+  component: Wishlist,
+});
+
 const routeTree = rootRoute.addChildren([
-  indexRoute,
+  homeRoute,
   shareRoute,
   postDetailRoute,
   dashboardRoute,
   aboutRoute,
+  wishlistRoute,
 ]);
 
 const router = createRouter({ routeTree });
@@ -65,30 +83,13 @@ declare module '@tanstack/react-router' {
   }
 }
 
-function AppWithYearGate() {
-  const { hasSelected } = useYearSelection();
-  const [yearConfirmed, setYearConfirmed] = useState(hasSelected);
-
-  useEffect(() => {
-    const handler = () => setYearConfirmed(true);
-    window.addEventListener('year-selected', handler);
-    return () => window.removeEventListener('year-selected', handler);
-  }, []);
-
-  return (
-    <>
-      {!yearConfirmed && (
-        <YearSelectionModal onYearSelected={() => setYearConfirmed(true)} />
-      )}
-      <RouterProvider router={router} />
-    </>
-  );
-}
-
 export default function App() {
   return (
-    <LanguageProvider>
-      <AppWithYearGate />
-    </LanguageProvider>
+    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+        <Toaster />
+      </QueryClientProvider>
+    </ThemeProvider>
   );
 }

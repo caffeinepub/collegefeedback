@@ -22,6 +22,13 @@ export interface Post {
     connectCount: bigint;
     category: Category;
 }
+export interface CollegeConnect {
+    id: bigint;
+    tip: string;
+    collegeName: string;
+    createdAt: bigint;
+    year: string;
+}
 export enum Category {
     courses = "courses",
     hackathons = "hackathons",
@@ -29,8 +36,13 @@ export enum Category {
     general = "general"
 }
 export interface backendInterface {
+    addToWishlist(sessionKey: string, postId: bigint): Promise<void>;
     createPost(content: string, authorYear: string, category: Category): Promise<bigint>;
+    getAllCollegeConnects(): Promise<Array<CollegeConnect>>;
     getAllPosts(): Promise<Array<Post>>;
     getPostsByCategory(category: Category): Promise<Array<Post>>;
     getStats(): Promise<PostStats>;
+    getWishlist(sessionKey: string): Promise<Array<bigint>>;
+    removeFromWishlist(sessionKey: string, postId: bigint): Promise<void>;
+    submitCollegeConnect(collegeName: string, year: string, tip: string): Promise<bigint>;
 }

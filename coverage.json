@@ -1,7 +1,7 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-03-01T17:57:58.714Z",
+  "generatedAt": "2026-03-01T18:30:07.002Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
@@ -11,52 +11,65 @@
     "implemented": 3,
     "items": [
       {
-        "id": "REQ-38",
-        "summary": "Apply a script/cursive font combination specifically to the 'Memu Nerchukunnavi' brand name wherever it appears as a logo or heading (Layout header, YearSelectionModal title, About page hero heading, index.html <title> display). Import a Google Font pairing — use 'Dancing Script' or 'Pacifico' (script/cursive style) for the Telugu-English brand name text. The rest of the app retains its existing Bricolage Grotesque / DM Sans font stack. Update tailwind.config.js to add a `fontFamily.brand` token pointing to the chosen script font and apply it via a dedicated CSS class (e.g. `font-brand`) on all brand-name elements.",
+        "id": "REQ-50",
+        "summary": "Completely remove all black and near-black colours from the entire app UI. No background, card, button, badge, text, border, overlay, modal, header, footer, or any other element should use black (#000000), near-black (#111, #1a1a1a, #0a0a0a, or equivalent dark OKLCH values close to 0% lightness). Audit frontend/src/index.css, frontend/index.css, and tailwind.config.js for any dark-mode or base rules that produce black surfaces or black text and replace them with appropriate light alternatives from the chosen warm palette.",
         "status": "implemented",
         "plannedFiles": [
           "frontend/src/index.css",
-          "frontend/tailwind.config.js",
-          "frontend/src/components/Layout.tsx",
-          "frontend/src/components/YearSelectionModal.tsx",
-          "frontend/src/pages/About.tsx",
-          "frontend/index.html"
+          "frontend/index.css",
+          "frontend/tailwind.config.js"
         ],
         "matchedFiles": [
           "frontend/src/index.css",
-          "frontend/tailwind.config.js",
-          "frontend/src/components/Layout.tsx",
-          "frontend/src/components/YearSelectionModal.tsx",
-          "frontend/src/pages/About.tsx",
-          "frontend/index.html"
+          "frontend/tailwind.config.js"
         ]
       },
       {
-        "id": "REQ-39",
-        "summary": "Increase the visibility of the existing dot-grid background pattern so it is clearly perceptible without overwhelming content. Raise the dot opacity from ~0.15 to approximately 0.35–0.45, increase the dot size slightly (from ~1px to ~2px), and reduce the grid spacing slightly so more dots are visible. Apply this updated pattern as the fixed full-viewport background layer in Layout.tsx (or via the body rule in index.css), ensuring it still sits below all card, modal, and overlay z-indices.",
+        "id": "REQ-51",
+        "summary": "Redesign the global colour palette to a warm, bright, friendly theme using one of the following combos (or a harmonious combination): warm brown/skin-tone (e.g. sandy #F5CBA7, warm beige #FAE5D3, terracotta #E8956D accents) paired with off-white backgrounds, OR a blue/white palette (sky blue #60A5FA family, white #FFFFFF, soft blue-grey #EFF6FF). Choose the palette that gives the most clarity and cheerfulness, remove the current dark/lavender-heavy or any near-black OKLCH tokens, and apply the new palette consistently across: header, footer, navigation pills, active-route indicator, cards, buttons (primary, secondary), badges, banners, modals (YearSelectionModal), the dot-grid background dots, and the SparkParticles pills. Update tailwind.config.js design tokens and frontend/src/index.css CSS custom properties to reflect the new palette. Ensure every page (Home, Share, PostDetail, Dashboard, About, Wishlist) uses the updated tokens.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/index.css"
+          "frontend/tailwind.config.js",
+          "frontend/src/index.css",
+          "frontend/index.css",
+          "frontend/src/components/Layout.tsx",
+          "frontend/src/components/PostCard.tsx",
+          "frontend/src/components/YearSelectionModal.tsx",
+          "frontend/src/pages/Home.tsx",
+          "frontend/src/pages/Share.tsx",
+          "frontend/src/pages/PostDetail.tsx",
+          "frontend/src/pages/Dashboard.tsx",
+          "frontend/src/pages/About.tsx",
+          "frontend/src/pages/Wishlist.tsx",
+          "frontend/src/components/CollegeConnectForm.tsx",
+          "frontend/src/components/CollegeConnectList.tsx",
+          "frontend/src/components/ShareButtons.tsx"
         ],
         "matchedFiles": [
-          "frontend/src/index.css"
+          "frontend/tailwind.config.js",
+          "frontend/src/index.css",
+          "frontend/src/components/Layout.tsx",
+          "frontend/src/components/PostCard.tsx",
+          "frontend/src/components/YearSelectionModal.tsx",
+          "frontend/src/pages/Home.tsx",
+          "frontend/src/pages/PostDetail.tsx",
+          "frontend/src/pages/Dashboard.tsx",
+          "frontend/src/pages/About.tsx",
+          "frontend/src/pages/Wishlist.tsx",
+          "frontend/src/components/CollegeConnectForm.tsx",
+          "frontend/src/components/CollegeConnectList.tsx",
+          "frontend/src/components/ShareButtons.tsx"
         ]
       },
       {
-        "id": "REQ-40",
-        "summary": "Add floating spark/particle animations scattered across the background layer of the app. Each spark displays one of four year-label phrases: 'I'm 1st Year', 'I'm 2nd Year', 'I'm 3rd Year', 'I'm 4th Year'. Implement this as a React component (e.g. SparkParticles) rendered inside Layout.tsx, positioned fixed and full-viewport below content z-index. Generate 12–20 spark instances, each assigned a random year label, random starting position, random animation duration (6s–14s), and a gentle floating/drifting upward keyframe animation with fade-in and fade-out. Style each spark as a small pill or badge — soft lavender/violet background, rounded corners, tiny font (10–11px), low base opacity (~0.55) that pulses slightly. Add a subtle glint/sparkle icon (✦ or ✨) before the label text. Sparks must not block pointer events on any interactive element (pointer-events: none on the container and all spark elements).",
+        "id": "REQ-52",
+        "summary": "Fix the SparkParticles component (frontend/src/components/SparkParticles.tsx) so that the 12–20 floating year-label pills ('I'm 1st Year', 'I'm 2nd Year', 'I'm 3rd Year', 'I'm 4th Year') are distributed evenly across the entire viewport — both horizontally (0%–95% of viewport width) and vertically (starting positions spread across 0%–90% of viewport height). The current seeded-random positioning is producing clustering in certain areas; replace the position calculation so particles are spread across a well-distributed grid-like or stratified random layout covering the full screen. Each of the 16 instances should start at a distinct, well-separated position. Also ensure the particles' colours are updated to match the new warm palette (REQ-51) so they do not appear dark or purple.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/components/SparkParticles.tsx",
-          "frontend/src/index.css",
-          "frontend/tailwind.config.js",
-          "frontend/src/components/Layout.tsx"
+          "frontend/src/components/SparkParticles.tsx"
         ],
         "matchedFiles": [
-          "frontend/src/components/SparkParticles.tsx",
-          "frontend/src/index.css",
-          "frontend/tailwind.config.js",
-          "frontend/src/components/Layout.tsx"
+          "frontend/src/components/SparkParticles.tsx"
         ]
       }
     ]
@@ -66,12 +79,20 @@
     "feature_evidence.json",
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
-    "frontend/index.html",
+    "frontend/src/components/CollegeConnectForm.tsx",
+    "frontend/src/components/CollegeConnectList.tsx",
     "frontend/src/components/Layout.tsx",
+    "frontend/src/components/PostCard.tsx",
+    "frontend/src/components/ShareButtons.tsx",
     "frontend/src/components/SparkParticles.tsx",
     "frontend/src/components/YearSelectionModal.tsx",
     "frontend/src/index.css",
     "frontend/src/pages/About.tsx",
+    "frontend/src/pages/Dashboard.tsx",
+    "frontend/src/pages/Home.tsx",
+    "frontend/src/pages/PostDetail.tsx",
+    "frontend/src/pages/ShareExperience.tsx",
+    "frontend/src/pages/Wishlist.tsx",
     "frontend/tailwind.config.js",
     "project_state.json",
     "scratch/component-selection.json",

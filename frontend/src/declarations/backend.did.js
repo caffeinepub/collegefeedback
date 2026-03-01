@@ -25,6 +25,13 @@ export const Category = IDL.Variant({
   'internships' : IDL.Null,
   'general' : IDL.Null,
 });
+export const CollegeConnect = IDL.Record({
+  'id' : IDL.Nat,
+  'tip' : IDL.Text,
+  'collegeName' : IDL.Text,
+  'createdAt' : IDL.Int,
+  'year' : IDL.Text,
+});
 export const Post = IDL.Record({
   'id' : IDL.Nat,
   'upvotes' : IDL.Nat,
@@ -68,10 +75,19 @@ export const idlService = IDL.Service({
       [],
     ),
   '_caffeineStorageUpdateGatewayPrincipals' : IDL.Func([], [], []),
+  'addToWishlist' : IDL.Func([IDL.Text, IDL.Nat], [], []),
   'createPost' : IDL.Func([IDL.Text, IDL.Text, Category], [IDL.Nat], []),
+  'getAllCollegeConnects' : IDL.Func([], [IDL.Vec(CollegeConnect)], ['query']),
   'getAllPosts' : IDL.Func([], [IDL.Vec(Post)], ['query']),
   'getPostsByCategory' : IDL.Func([Category], [IDL.Vec(Post)], ['query']),
   'getStats' : IDL.Func([], [PostStats], ['query']),
+  'getWishlist' : IDL.Func([IDL.Text], [IDL.Vec(IDL.Nat)], ['query']),
+  'removeFromWishlist' : IDL.Func([IDL.Text, IDL.Nat], [], []),
+  'submitCollegeConnect' : IDL.Func(
+      [IDL.Text, IDL.Text, IDL.Text],
+      [IDL.Nat],
+      [],
+    ),
 });
 
 export const idlInitArgs = [];
@@ -93,6 +109,13 @@ export const idlFactory = ({ IDL }) => {
     'hackathons' : IDL.Null,
     'internships' : IDL.Null,
     'general' : IDL.Null,
+  });
+  const CollegeConnect = IDL.Record({
+    'id' : IDL.Nat,
+    'tip' : IDL.Text,
+    'collegeName' : IDL.Text,
+    'createdAt' : IDL.Int,
+    'year' : IDL.Text,
   });
   const Post = IDL.Record({
     'id' : IDL.Nat,
@@ -137,10 +160,23 @@ export const idlFactory = ({ IDL }) => {
         [],
       ),
     '_caffeineStorageUpdateGatewayPrincipals' : IDL.Func([], [], []),
+    'addToWishlist' : IDL.Func([IDL.Text, IDL.Nat], [], []),
     'createPost' : IDL.Func([IDL.Text, IDL.Text, Category], [IDL.Nat], []),
+    'getAllCollegeConnects' : IDL.Func(
+        [],
+        [IDL.Vec(CollegeConnect)],
+        ['query'],
+      ),
     'getAllPosts' : IDL.Func([], [IDL.Vec(Post)], ['query']),
     'getPostsByCategory' : IDL.Func([Category], [IDL.Vec(Post)], ['query']),
     'getStats' : IDL.Func([], [PostStats], ['query']),
+    'getWishlist' : IDL.Func([IDL.Text], [IDL.Vec(IDL.Nat)], ['query']),
+    'removeFromWishlist' : IDL.Func([IDL.Text, IDL.Nat], [], []),
+    'submitCollegeConnect' : IDL.Func(
+        [IDL.Text, IDL.Text, IDL.Text],
+        [IDL.Nat],
+        [],
+      ),
   });
 };
 

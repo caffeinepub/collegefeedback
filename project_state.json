@@ -1,17 +1,19 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 23,
+  "projectStateVersion": 29,
   "summary": "A college feedback-sharing platform with a frictionless, anonymous workflow: users enter the site, select their college year, type a lesson or feedback, submit it, browse others' feedback, and can connect with anyone — all without sign-in or personal details. The platform is being built to be implementation-ready with multiple pages, custom fonts, emojis, dashboards, and polished UI. New direction includes: multi-language support (Telugu + English combo), social sharing options, a rebranded name ('Memu Nerchunnavi' style English-Telugu combo), a cute/innovative but simple color palette and fonts, and a customizable website/platform name per college.",
   "architectural_notes": [
     "Core purpose: seniors share real college experience feedback to guide juniors on internships, hackathons, and courses",
     "User flow: Enter site → Select college year → Write lesson/feedback → Submit → Browse all feedback → Connect with anyone → Exit (no sign-in or personal details required)",
     "Platform should be implementation-ready: multi-page navigation, rich UI with fonts/emojis, dashboard, and polished UX so it can be used immediately",
-    "Platform should support Telugu-English bilingual UI and be easily adoptable by other colleges with minimal setup"
+    "Platform should support Telugu-English bilingual UI and be easily adoptable by other colleges with minimal setup",
+    "Color theme must never use black or dark tones — use warm combos like brown/skin-tone, blue/white, or pastel palettes only"
   ],
   "known_issues": [
-    "Dashboard page fails to load in the deployed version (Version 6)"
+    "Dashboard page fails to load in the deployed version (Version 6)",
+    "SparkParticles (year label popups) only appear in certain areas of the viewport instead of being evenly distributed across the full background"
   ],
-  "isFixRequest": false,
+  "isFixRequest": true,
   "existing_features": [
     {
       "id": "feature-build-a-home-feed-page-that-displays-all-senior-feedback-posts-sorted-by-recency-and-upvotes-showing-the-post-title-category-badge-a-snippet-of-the-content-author-name-and-upvote-count-include-a-top-banner-communicating-the-platform-s-motto-learn-from-seniors-start-early-make-every-semester-count",
@@ -300,6 +302,86 @@
         "REQ-40"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-update-the-sparkparticles-component-frontend-src-components-sparkparticles-tsx-so-each-spark-pill-alternates-cycles-through-all-four-phrases-in-a-more-visually-dynamic-blast-style-briefly-scaling-up-with-a-pop-animation-before-drifting-upward-to-make-the-year-labels-feel-energetic-rather-than-quietly-floating-ensure-the-phrases-remain-i-m-1st-year-i-m-2nd-year-i-m-3rd-year-i-m-4th-year-and-are-evenly-distributed-across-the-12-20-instances",
+      "title": "Update the SparkParticles component (frontend/src/components/SparkParticles.tsx) so each spark pill alternates/cycles through all four phrases in a more visually dynamic 'blast' style — briefly scaling up with a pop animation before drifting upward — to make the year labels feel energetic rather than quietly floating. Ensure the phrases remain 'I'm 1st Year', 'I'm 2nd Year', 'I'm 3rd Year', 'I'm 4th Year' and are evenly distributed across the 12–20 instances.",
+      "reqIds": [
+        "REQ-41"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-replace-or-update-the-existing-hero-illustration-on-the-home-page-and-the-about-page-banner-image-with-college-themed-flat-illustrations-the-home-page-banner-should-depict-students-on-a-campus-with-buildings-notebooks-and-laptops-in-the-background-the-about-page-banner-should-depict-a-diverse-group-of-students-in-a-college-courtyard-setting-both-images-must-maintain-the-soft-pastel-violet-mint-colour-palette-of-the-app",
+      "title": "Replace or update the existing hero illustration on the Home page and the About page banner image with college-themed flat illustrations: the Home page banner should depict students on a campus with buildings, notebooks, and laptops in the background; the About page banner should depict a diverse group of students in a college courtyard setting. Both images must maintain the soft pastel violet/mint colour palette of the app.",
+      "reqIds": [
+        "REQ-42"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-react-query-hooks-for-the-wishlist-backend-functions-in-frontend-src-hooks-usequeries-ts-usegetwishlist-sessionkey-that-fetches-the-list-of-saved-post-ids-and-mutation-hooks-useaddtowishlist-and-useremovefromwishlist-that-call-the-corresponding-backend-functions-and-invalidate-the-wishlist-query-on-success",
+      "title": "Add React Query hooks for the wishlist backend functions in frontend/src/hooks/useQueries.ts: useGetWishlist(sessionKey) that fetches the list of saved post IDs, and mutation hooks useAddToWishlist and useRemoveFromWishlist that call the corresponding backend functions and invalidate the wishlist query on success.",
+      "reqIds": [
+        "REQ-44"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-save-to-wishlist-bookmark-button-to-each-postcard-in-frontend-src-components-postcard-tsx-and-on-the-post-detail-page-frontend-src-pages-postdetail-tsx-a-client-generated-sessionkey-uuid-stored-in-sessionstorage-identifies-the-user-s-wishlist-session-when-clicked-the-button-calls-addtowishlist-or-removefromwishlist-and-toggles-its-active-state-add-a-wishlist-route-and-page-that-lists-all-posts-the-user-has-bookmarked-fetched-by-joining-getwishlist-ids-with-getallposts-data-link-to-the-wishlist-page-from-the-main-navigation-as-saved",
+      "title": "Add a 'Save to Wishlist' bookmark button (🔖) to each PostCard in frontend/src/components/PostCard.tsx and on the Post Detail page (frontend/src/pages/PostDetail.tsx). A client-generated sessionKey (UUID stored in sessionStorage) identifies the user's wishlist session. When clicked, the button calls addToWishlist or removeFromWishlist and toggles its active state. Add a '/wishlist' route and page that lists all posts the user has bookmarked, fetched by joining getWishlist IDs with getAllPosts data. Link to the Wishlist page from the main navigation as '🔖 Saved'.",
+      "reqIds": [
+        "REQ-45"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-connect-with-other-colleges-section-to-the-dashboard-page-dashboard-as-a-sidebar-panel-or-clearly-separated-card-section-it-must-include-a-free-text-submission-form-with-three-fields-your-college-name-your-year-dropdown-1st-year-2nd-year-3rd-year-4th-year-and-a-tip-or-message-short-textarea-max-200-characters-on-submission-store-the-entry-in-the-backend-and-display-it-in-a-live-scrollable-list-beneath-the-form-as-a-compact-card-showing-college-name-year-badge-and-the-tip-this-acts-as-a-lightweight-college-to-college-connection-board",
+      "title": "Add a 'Connect with Other Colleges' section to the Dashboard page (/dashboard) as a sidebar panel or clearly separated card section. It must include a free-text submission form with three fields: 'Your College Name', 'Your Year' (dropdown: 1st Year, 2nd Year, 3rd Year, 4th Year), and 'A Tip or Message' (short textarea, max 200 characters). On submission, store the entry in the backend and display it in a live scrollable list beneath the form as a compact card showing college name, year badge, and the tip. This acts as a lightweight college-to-college connection board.",
+      "reqIds": [
+        "REQ-46"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-remove-the-blocking-behaviour-of-the-yearselectionmodal-so-that-new-visitors-can-freely-browse-the-entire-site-home-feed-about-dashboard-post-detail-pages-without-being-forced-to-select-a-college-year-first-the-year-selection-modal-should-only-be-triggered-when-a-user-attempts-to-submit-a-new-post-on-the-share-experience-page-if-a-user-navigates-to-the-share-experience-page-without-having-selected-a-year-show-the-year-selection-modal-at-that-point-all-other-pages-must-be-fully-accessible-without-a-year-being-set",
+      "title": "Remove the blocking behaviour of the YearSelectionModal so that new visitors can freely browse the entire site (Home feed, About, Dashboard, Post Detail pages) without being forced to select a college year first. The year selection modal should only be triggered when a user attempts to submit a new post on the Share Experience page. If a user navigates to the Share Experience page without having selected a year, show the year selection modal at that point. All other pages must be fully accessible without a year being set.",
+      "reqIds": [
+        "REQ-48"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-display-the-second-part-of-the-platform-brand-name-the-telugu-script-for-nerchukunnavi-in-telugu-script-wherever-the-full-brand-name-appears-in-the-ui-specifically-update-the-layout-header-logo-e-g-memu-the-yearselectionmodal-title-the-about-page-hero-heading-the-footer-tagline-and-the-html-title-in-index-html-the-telugu-portion-should-use-the-existing-font-brand-class-script-cursive-font-consistent-with-the-current-brand-name-styling",
+      "title": "Display the second part of the platform brand name — 'నేర్చుకున్నవి' (the Telugu script for NERCHUKUNNAVI) — in Telugu script wherever the full brand name appears in the UI. Specifically update: the Layout header logo (e.g. 'Memu నేర్చుకున్నవి'), the YearSelectionModal title, the About page hero heading, the footer tagline, and the HTML <title> in index.html. The Telugu portion should use the existing `font-brand` class (script/cursive font) consistent with the current brand name styling.",
+      "reqIds": [
+        "REQ-49"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-completely-remove-all-black-and-near-black-colours-from-the-entire-app-ui-no-background-card-button-badge-text-border-overlay-modal-header-footer-or-any-other-element-should-use-black-000000-near-black-111-1a1a1a-0a0a0a-or-equivalent-dark-oklch-values-close-to-0-lightness-audit-frontend-src-index-css-frontend-index-css-and-tailwind-config-js-for-any-dark-mode-or-base-rules-that-produce-black-surfaces-or-black-text-and-replace-them-with-appropriate-light-alternatives-from-the-chosen-warm-palette",
+      "title": "Completely remove all black and near-black colours from the entire app UI. No background, card, button, badge, text, border, overlay, modal, header, footer, or any other element should use black (#000000), near-black (#111, #1a1a1a, #0a0a0a, or equivalent dark OKLCH values close to 0% lightness). Audit frontend/src/index.css, frontend/index.css, and tailwind.config.js for any dark-mode or base rules that produce black surfaces or black text and replace them with appropriate light alternatives from the chosen warm palette.",
+      "reqIds": [
+        "REQ-50"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-redesign-the-global-colour-palette-to-a-warm-bright-friendly-theme-using-one-of-the-following-combos-or-a-harmonious-combination-warm-brown-skin-tone-e-g-sandy-f5cba7-warm-beige-fae5d3-terracotta-e8956d-accents-paired-with-off-white-backgrounds-or-a-blue-white-palette-sky-blue-60a5fa-family-white-ffffff-soft-blue-grey-eff6ff-choose-the-palette-that-gives-the-most-clarity-and-cheerfulness-remove-the-current-dark-lavender-heavy-or-any-near-black-oklch-tokens-and-apply-the-new-palette-consistently-across-header-footer-navigation-pills-active-route-indicator-cards-buttons-primary-secondary-badges-banners-modals-yearselectionmodal-the-dot-grid-background-dots-and-the-sparkparticles-pills-update-tailwind-config-js-design-tokens-and-frontend-src-index-css-css-custom-properties-to-reflect-the-new-palette-ensure-every-page-home-share-postdetail-dashboard-about-wishlist-uses-the-updated-tokens",
+      "title": "Redesign the global colour palette to a warm, bright, friendly theme using one of the following combos (or a harmonious combination): warm brown/skin-tone (e.g. sandy #F5CBA7, warm beige #FAE5D3, terracotta #E8956D accents) paired with off-white backgrounds, OR a blue/white palette (sky blue #60A5FA family, white #FFFFFF, soft blue-grey #EFF6FF). Choose the palette that gives the most clarity and cheerfulness, remove the current dark/lavender-heavy or any near-black OKLCH tokens, and apply the new palette consistently across: header, footer, navigation pills, active-route indicator, cards, buttons (primary, secondary), badges, banners, modals (YearSelectionModal), the dot-grid background dots, and the SparkParticles pills. Update tailwind.config.js design tokens and frontend/src/index.css CSS custom properties to reflect the new palette. Ensure every page (Home, Share, PostDetail, Dashboard, About, Wishlist) uses the updated tokens.",
+      "reqIds": [
+        "REQ-51"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fix-the-sparkparticles-component-frontend-src-components-sparkparticles-tsx-so-that-the-12-20-floating-year-label-pills-i-m-1st-year-i-m-2nd-year-i-m-3rd-year-i-m-4th-year-are-distributed-evenly-across-the-entire-viewport-both-horizontally-0-95-of-viewport-width-and-vertically-starting-positions-spread-across-0-90-of-viewport-height-the-current-seeded-random-positioning-is-producing-clustering-in-certain-areas-replace-the-position-calculation-so-particles-are-spread-across-a-well-distributed-grid-like-or-stratified-random-layout-covering-the-full-screen-each-of-the-16-instances-should-start-at-a-distinct-well-separated-position-also-ensure-the-particles-colours-are-updated-to-match-the-new-warm-palette-req-51-so-they-do-not-appear-dark-or-purple",
+      "title": "Fix the SparkParticles component (frontend/src/components/SparkParticles.tsx) so that the 12–20 floating year-label pills ('I'm 1st Year', 'I'm 2nd Year', 'I'm 3rd Year', 'I'm 4th Year') are distributed evenly across the entire viewport — both horizontally (0%–95% of viewport width) and vertically (starting positions spread across 0%–90% of viewport height). The current seeded-random positioning is producing clustering in certain areas; replace the position calculation so particles are spread across a well-distributed grid-like or stratified random layout covering the full screen. Each of the 16 instances should start at a distinct, well-separated position. Also ensure the particles' colours are updated to match the new warm palette (REQ-51) so they do not appear dark or purple.",
+      "reqIds": [
+        "REQ-52"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -476,6 +558,52 @@
     {
       "id": "AR-35",
       "summary": "Add floating spark/particle animations between the grid that display year labels ('I'm 1st Year', '2nd Year', '3rd Year', '4th Year') scattered across the background",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-36",
+      "summary": "Make images/illustrations more college-themed (campus, students, academic settings) throughout the app",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-37",
+      "summary": "Add a 'Wishlist / Saved Guidance' feature that allows users to bookmark/save feedback posts they find useful for later reference",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-38",
+      "summary": "Add a college connection feature: allow users to type their college name + year + tips in a sidebar or dashboard section to make it easy to discover and connect with students from other colleges",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-41",
+      "summary": "Add a backend 'Wishlist' feature: extend the Motoko actor in backend/main.mo to support saving and retrieving wishlisted post IDs per anonymous session key (a client-generated string). Add three functions: addToWishlist(sessionKey: Text, postId: Nat) : async (), removeFromWishlist(sessionKey: Text, postId: Nat) : async (), and getWishlist(sessionKey: Text) : async [Nat]. Store wishlist data in a stable in-memory Map keyed by sessionKey.",
+      "reqIds": [
+        "REQ-43"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-45",
+      "summary": "Extend the Motoko backend actor in backend/main.mo to support the College Connect board: add a CollegeConnect record type with fields id (Nat), collegeName (Text), year (Text), tip (Text), and createdAt (Int). Add two functions: submitCollegeConnect(collegeName: Text, year: Text, tip: Text) : async Nat (returns the new entry id) and getAllCollegeConnects() : async [CollegeConnect] (returns all entries sorted by most recent first). Store entries in a stable in-memory Map.",
+      "reqIds": [
+        "REQ-47"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-46",
+      "summary": "Allow users to browse/view the website (home feed, about, etc.) before being required to select their college year — year selection should not block initial browsing, only required when submitting feedback",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-47",
+      "summary": "Display 'NERCHUKUNNAVI' (the second part of the platform name) in Telugu script (నేర్చుకున్నవి) in the header logo, year selection modal, about page, and wherever the brand name appears",
       "reqIds": [],
       "status": "pending"
     }

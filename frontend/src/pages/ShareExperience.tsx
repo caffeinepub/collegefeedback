@@ -1,273 +1,270 @@
-import { useState } from 'react';
-import { useNavigate } from '@tanstack/react-router';
-import { Loader2, GraduationCap } from 'lucide-react';
-import { Link } from '@tanstack/react-router';
-import { Button } from '@/components/ui/button';
-import { Textarea } from '@/components/ui/textarea';
-import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { useCreatePost } from '../hooks/useQueries';
-import { useYearSelection } from '../hooks/useYearSelection';
-import { Category } from '../backend';
-import { useLanguage } from '../contexts/LanguageContext';
-import { playBubblePop, playTypingTick } from '../utils/sounds';
+import React, { useState } from "react";
+import { useNavigate } from "@tanstack/react-router";
+import { useCreatePost } from "../hooks/useQueries";
+import { useYearSelection } from "../hooks/useYearSelection";
+import YearSelectionModal from "../components/YearSelectionModal";
+import { Category } from "../backend";
+import { playBubblePop, playTypingTick } from "../utils/sounds";
 
-interface FormState {
-  category: string;
-  content: string;
-}
+const CATEGORIES = [
+  { value: Category.internships, label: "💼 Internships" },
+  { value: Category.hackathons, label: "⚡ Hackathons" },
+  { value: Category.courses, label: "📚 Courses" },
+  { value: Category.general, label: "💬 General" },
+];
 
-interface FormErrors {
-  category?: string;
-  content?: string;
-}
+const MAX_CHARS = 1000;
 
-const MAX_CHARS = 500;
-
-export default function ShareExperience() {
+const ShareExperience: React.FC = () => {
   const navigate = useNavigate();
-  const createPost = useCreatePost();
-  const { year } = useYearSelection();
-  const { t } = useLanguage();
+  // useYearSelection returns { year, hasSelected, setYear, ... }
+  const { year, hasSelected } = useYearSelection();
+  const [showYearModal, setShowYearModal] = useState(!hasSelected);
+
+  const [category, setCategory] = useState<Category>(Category.general);
+  const [content, setContent] = useState("");
   const [submitted, setSubmitted] = useState(false);
-  const [submittedCategory, setSubmittedCategory] = useState('');
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
-  const [form, setForm] = useState<FormState>({
-    category: '',
-    content: '',
-  });
+  const { mutate, isPending } = useCreatePost();
 
-  const [errors, setErrors] = useState<FormErrors>({});
-
-  const categoryOptions = [
-    {
-      value: Category.internships,
-      label: `💼 ${t('catInternships')}`,
-      helper: t('catHelperInternships'),
-    },
-    {
-      value: Category.hackathons,
-      label: `💡 ${t('catHackathons')}`,
-      helper: t('catHelperHackathons'),
-    },
-    {
-      value: Category.courses,
-      label: `📚 ${t('catCourses')}`,
-      helper: t('catHelperCourses'),
-    },
-    {
-      value: Category.general,
-      label: `🎓 ${t('catGeneral')}`,
-      helper: t('catHelperGeneral'),
-    },
-  ];
-
-  const validate = (): boolean => {
-    const newErrors: FormErrors = {};
-    if (!form.category) newErrors.category = t('shareErrCategory');
-    if (!form.content.trim()) newErrors.content = t('shareErrContent');
-    else if (form.content.trim().length < 20) newErrors.content = t('shareErrContentMin');
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+  const validate = () => {
+    const e: Record<string, string> = {};
+    if (!content.trim()) e.content = "Please write something before sharing.";
+    if (content.length > MAX_CHARS) e.content = `Max ${MAX_CHARS} characters allowed.`;
+    return e;
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!validate()) return;
-
-    try {
-      await createPost.mutateAsync({
-        content: form.content.trim(),
-        authorYear: year ?? 'Unknown',
-        category: form.category as Category,
-      });
-      playBubblePop();
-      setSubmittedCategory(form.category);
-      setSubmitted(true);
-    } catch (err) {
-      console.error('Failed to create post:', err);
+    const errs = validate();
+    if (Object.keys(errs).length > 0) {
+      setErrors(errs);
+      return;
     }
-  };
-
-  const updateField = (field: keyof FormState, value: string) => {
-    setForm(prev => ({ ...prev, [field]: value }));
-    if (errors[field as keyof FormErrors]) {
-      setErrors(prev => ({ ...prev, [field]: undefined }));
-    }
-  };
-
-  const handleShareAnother = () => {
-    setForm({ category: '', content: '' });
     setErrors({});
-    setSubmitted(false);
-    setSubmittedCategory('');
+    mutate(
+      {
+        content: content.trim(),
+        authorYear: year ?? "Unknown",
+        category,
+      },
+      {
+        onSuccess: () => {
+          playBubblePop();
+          setSubmitted(true);
+          setContent("");
+        },
+      }
+    );
   };
 
-  const selectedCategoryOption = categoryOptions.find(o => o.value === form.category);
-  const submittedCategoryOption = categoryOptions.find(o => o.value === submittedCategory);
-  const charCount = form.content.length;
-  const isOverLimit = charCount > MAX_CHARS;
-
-  if (submitted) {
+  if (showYearModal) {
     return (
-      <div className="container mx-auto px-4 max-w-lg py-16 flex flex-col items-center text-center gap-6 animate-fade-in">
-        <div className="text-7xl">🎉</div>
-        <div>
-          <h2 className="font-heading font-extrabold text-3xl text-foreground mb-3">
-            {t('shareSuccessTitle')}
-          </h2>
-          <p className="text-muted-foreground font-body text-base leading-relaxed max-w-sm mx-auto">
-            {t('shareSuccessDesc')}
-          </p>
-        </div>
-
-        {/* Submitted details */}
-        <div className="flex items-center gap-3 flex-wrap justify-center">
-          <div className="flex items-center gap-1.5 bg-primary/10 text-primary text-sm font-heading font-bold px-3 py-1.5 rounded-full border border-primary/20">
-            <GraduationCap className="w-4 h-4" />
-            {year ?? 'Unknown'} 🎓
-          </div>
-          {submittedCategoryOption && (
-            <div className="text-sm font-heading font-bold px-3 py-1.5 rounded-full border border-border bg-muted">
-              {submittedCategoryOption.label}
-            </div>
-          )}
-        </div>
-
-        {/* CTA buttons */}
-        <div className="flex flex-col sm:flex-row gap-3 w-full max-w-xs">
-          <Link to="/" className="flex-1">
-            <Button
-              size="lg"
-              className="w-full bg-primary text-primary-foreground hover:bg-primary/90 font-heading font-bold rounded-full"
-            >
-              {t('shareGoFeed')}
-            </Button>
-          </Link>
-          <Button
-            size="lg"
-            variant="outline"
-            onClick={handleShareAnother}
-            className="flex-1 font-heading font-bold rounded-full border-primary/30 text-primary hover:bg-primary/5"
-          >
-            {t('shareAnother')}
-          </Button>
-        </div>
-      </div>
+      <YearSelectionModal
+        onClose={() => setShowYearModal(false)}
+      />
     );
   }
 
   return (
-    <div className="container mx-auto px-4 max-w-2xl py-10">
-      {/* Page header */}
-      <div className="mb-8">
-        <div className="inline-flex items-center gap-2 bg-primary/10 text-primary text-xs font-heading font-bold px-3 py-1.5 rounded-full mb-3">
-          ✍️ {t('sharePageTitle')}
-        </div>
-        <h1 className="font-heading font-extrabold text-3xl sm:text-4xl text-foreground mb-2">
-          {t('sharePageTitle')} ✍️
-        </h1>
-        <p className="text-muted-foreground font-body text-base">
-          {t('sharePageSubtitle')}
-        </p>
-      </div>
+    <div className="max-w-2xl mx-auto px-4 py-8">
+      <h1
+        className="font-heading text-2xl font-bold mb-2"
+        style={{ color: "oklch(0.35 0.08 48)" }}
+      >
+        Share Your Experience ✍️
+      </h1>
+      <p className="text-sm mb-6" style={{ color: "oklch(0.52 0.05 50)" }}>
+        Help fellow students by sharing what you've learned.
+      </p>
 
-      <Card className="border border-border shadow-card">
-        <CardHeader className="pb-0 pt-6 px-6">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-2xl bg-primary/15 flex items-center justify-center">
-              <GraduationCap className="w-4 h-4 text-primary" />
-            </div>
-            <div>
-              <p className="font-heading font-bold text-sm text-foreground">
-                {year ?? 'Unknown'} 🎓
-              </p>
-              <p className="text-xs text-muted-foreground font-body">Sharing anonymously</p>
+      {submitted ? (
+        <div
+          className="rounded-2xl border p-8 text-center"
+          style={{
+            background: "oklch(0.96 0.025 58)",
+            borderColor: "oklch(0.88 0.025 55)",
+          }}
+        >
+          <p className="text-4xl mb-3">🎉</p>
+          <p
+            className="text-lg font-bold mb-1"
+            style={{ color: "oklch(0.38 0.07 48)" }}
+          >
+            Experience Shared!
+          </p>
+          <p className="text-sm mb-5" style={{ color: "oklch(0.52 0.05 50)" }}>
+            Your experience has been posted to the feed.
+          </p>
+          <div className="flex gap-3 justify-center flex-wrap">
+            <button
+              onClick={() => setSubmitted(false)}
+              className="px-4 py-2 rounded-full text-sm font-semibold border transition-all"
+              style={{
+                background: "oklch(0.97 0.012 60)",
+                color: "oklch(0.42 0.06 50)",
+                borderColor: "oklch(0.88 0.025 55)",
+              }}
+            >
+              Share Another
+            </button>
+            <button
+              onClick={() => navigate({ to: "/" })}
+              className="px-4 py-2 rounded-full text-sm font-semibold transition-all"
+              style={{
+                background: "oklch(0.55 0.12 42)",
+                color: "oklch(0.99 0.005 58)",
+              }}
+            >
+              Go to Feed →
+            </button>
+          </div>
+        </div>
+      ) : (
+        <form
+          onSubmit={handleSubmit}
+          className="rounded-2xl border p-6 flex flex-col gap-5"
+          style={{
+            background: "oklch(0.98 0.015 60)",
+            borderColor: "oklch(0.88 0.025 55)",
+          }}
+        >
+          {/* Category */}
+          <div>
+            <label
+              className="block text-sm font-semibold mb-2"
+              style={{ color: "oklch(0.38 0.06 48)" }}
+            >
+              Category
+            </label>
+            <div className="flex gap-2 flex-wrap">
+              {CATEGORIES.map((cat) => (
+                <button
+                  key={cat.value}
+                  type="button"
+                  onClick={() => setCategory(cat.value)}
+                  className="px-3 py-1.5 rounded-full text-sm font-semibold border transition-all"
+                  style={
+                    category === cat.value
+                      ? {
+                          background: "oklch(0.55 0.12 42)",
+                          color: "oklch(0.99 0.005 58)",
+                          borderColor: "oklch(0.55 0.12 42)",
+                        }
+                      : {
+                          background: "oklch(0.96 0.015 58)",
+                          color: "oklch(0.42 0.06 50)",
+                          borderColor: "oklch(0.88 0.025 55)",
+                        }
+                  }
+                >
+                  {cat.label}
+                </button>
+              ))}
             </div>
           </div>
-        </CardHeader>
 
-        <CardContent className="px-6 pb-6 pt-5">
-          <form onSubmit={handleSubmit} className="space-y-5">
-            {/* Category */}
-            <div className="space-y-1.5">
-              <Label className="font-heading font-bold text-sm text-foreground">
-                {t('shareCategory')} <span className="text-destructive">*</span>
-              </Label>
-              <Select value={form.category} onValueChange={v => updateField('category', v)}>
-                <SelectTrigger className={`rounded-2xl font-body ${errors.category ? 'border-destructive' : ''}`}>
-                  <SelectValue placeholder={t('shareCategoryPlaceholder')} />
-                </SelectTrigger>
-                <SelectContent>
-                  {categoryOptions.map(opt => (
-                    <SelectItem key={opt.value} value={opt.value} className="font-body">
-                      {opt.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              {errors.category && (
-                <p className="text-xs text-destructive font-body">{errors.category}</p>
+          {/* Content */}
+          <div>
+            <label
+              className="block text-sm font-semibold mb-2"
+              style={{ color: "oklch(0.38 0.06 48)" }}
+            >
+              Your Experience
+            </label>
+            <textarea
+              value={content}
+              onChange={(e) => {
+                setContent(e.target.value);
+                playTypingTick();
+              }}
+              placeholder="Share what you learned — an internship tip, a hackathon story, a course recommendation…"
+              rows={6}
+              maxLength={MAX_CHARS}
+              className="w-full px-4 py-3 rounded-xl text-sm leading-relaxed outline-none transition-colors resize-none"
+              style={{
+                background: "oklch(0.97 0.012 60)",
+                border: `1.5px solid ${errors.content ? "oklch(0.55 0.18 25)" : "oklch(0.88 0.025 55)"}`,
+                color: "oklch(0.30 0.04 50)",
+              }}
+              onFocus={(e) => {
+                e.currentTarget.style.borderColor = "oklch(0.62 0.10 42)";
+              }}
+              onBlur={(e) => {
+                e.currentTarget.style.borderColor = errors.content
+                  ? "oklch(0.55 0.18 25)"
+                  : "oklch(0.88 0.025 55)";
+              }}
+            />
+            <div className="flex justify-between items-center mt-1">
+              {errors.content ? (
+                <p className="text-xs" style={{ color: "oklch(0.55 0.18 25)" }}>
+                  {errors.content}
+                </p>
+              ) : (
+                <span />
               )}
-              {selectedCategoryOption && !errors.category && (
-                <p className="text-xs text-muted-foreground font-body">{selectedCategoryOption.helper}</p>
-              )}
-            </div>
-
-            {/* Content */}
-            <div className="space-y-1.5">
-              <Label className="font-heading font-bold text-sm text-foreground">
-                {t('shareContent')} <span className="text-destructive">*</span>
-              </Label>
-              <Textarea
-                value={form.content}
-                onChange={e => updateField('content', e.target.value)}
-                onKeyDown={() => playTypingTick()}
-                placeholder={t('shareContentPlaceholder')}
-                rows={6}
-                className={`resize-none font-body rounded-2xl ${errors.content ? 'border-destructive' : ''}`}
-              />
-              <div className="flex items-center justify-between">
-                {errors.content ? (
-                  <p className="text-xs text-destructive font-body">{errors.content}</p>
-                ) : (
-                  <span />
-                )}
-                <span className={`text-xs font-heading font-bold ml-auto ${isOverLimit ? 'text-destructive' : 'text-muted-foreground'}`}>
-                  {charCount}/{MAX_CHARS} {t('shareCharLimit')}
-                </span>
-              </div>
-            </div>
-
-            {/* Submit */}
-            <div className="flex gap-3 pt-2">
-              <Button
-                type="submit"
-                disabled={createPost.isPending || isOverLimit}
-                className="flex-1 bg-primary text-primary-foreground hover:bg-primary/90 font-heading font-extrabold rounded-full"
+              <span
+                className="text-xs"
+                style={{
+                  color:
+                    content.length > MAX_CHARS * 0.9
+                      ? "oklch(0.55 0.18 25)"
+                      : "oklch(0.62 0.04 50)",
+                }}
               >
-                {createPost.isPending ? (
-                  <>
-                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                    {t('shareSubmitting')}
-                  </>
-                ) : (
-                  t('shareSubmit')
-                )}
-              </Button>
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => navigate({ to: '/' })}
-                className="font-heading font-bold rounded-full border-border hover:bg-muted"
-              >
-                {t('shareCancel')}
-              </Button>
+                {content.length}/{MAX_CHARS}
+              </span>
             </div>
-          </form>
-        </CardContent>
-      </Card>
+          </div>
+
+          {/* Year display */}
+          <div
+            className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm"
+            style={{
+              background: "oklch(0.93 0.025 55)",
+              color: "oklch(0.42 0.06 50)",
+            }}
+          >
+            <span>📅</span>
+            <span>
+              Posting as <strong>{year ?? "Unknown"}</strong>
+            </span>
+            <button
+              type="button"
+              onClick={() => setShowYearModal(true)}
+              className="ml-auto text-xs underline"
+              style={{ color: "oklch(0.50 0.08 48)" }}
+            >
+              Change
+            </button>
+          </div>
+
+          {/* Submit */}
+          <button
+            type="submit"
+            disabled={isPending}
+            className="w-full py-3 rounded-xl text-sm font-bold transition-all duration-200 flex items-center justify-center gap-2"
+            style={{
+              background: isPending ? "oklch(0.75 0.06 52)" : "oklch(0.55 0.12 42)",
+              color: "oklch(0.99 0.005 58)",
+              cursor: isPending ? "not-allowed" : "pointer",
+            }}
+          >
+            {isPending ? (
+              <>
+                <span className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />
+                Sharing…
+              </>
+            ) : (
+              "Share Experience 🚀"
+            )}
+          </button>
+        </form>
+      )}
     </div>
   );
-}
+};
+
+export default ShareExperience;

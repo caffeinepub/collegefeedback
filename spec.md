@@ -1,11 +1,13 @@
 # Specification
 
 ## Summary
-**Goal:** Enhance the visual identity of the app with a cursive brand font, a more visible dot-grid background, and floating year-label spark animations.
+**Goal:** Remove all black/near-black colours from the UI, apply a warm bright palette (sandy/beige/terracotta or sky blue/white), and fix SparkParticles distribution across the full viewport.
 
 **Planned changes:**
-- Import a script/cursive Google Font (Dancing Script or Pacifico) and add a `fontFamily.brand` token in `tailwind.config.js`; apply it via a `font-brand` CSS class to all instances of the "Memu Nerchukunnavi" brand name (Layout header, YearSelectionModal title, About page hero heading)
-- Increase dot-grid background visibility by raising dot opacity to ~0.35–0.45, enlarging dots to ~2px, and tightening grid spacing; keep the pattern fixed and below all content z-indices
-- Create a `SparkParticles` React component that renders 12–20 floating pill/badge sparks across the full viewport, each displaying one of "I'm 1st Year", "I'm 2nd Year", "I'm 3rd Year", "I'm 4th Year" with a sparkle prefix icon, randomized positions and animation durations (6s–14s), soft lavender/violet styling, and `pointer-events: none`; mount it inside `Layout.tsx`
+- Audit and remove all black and near-black colours (#000–#222, dark OKLCH values) from `index.css`, `tailwind.config.js`, and any dark-mode rules throughout the frontend
+- Redesign the global colour palette to a warm brown/skin-tone (sandy #F5CBA7, beige #FAE5D3, terracotta #E8956D) or blue/white (sky blue #60A5FA, white #FFFFFF, soft blue-grey #EFF6FF) theme, applied consistently to header, footer, navigation, cards, buttons, badges, modals, dot-grid, and SparkParticles
+- Update Tailwind config colour tokens and CSS custom properties to reflect the new warm palette
+- Fix `SparkParticles.tsx` so the 16 floating year-label pills are distributed evenly across the full viewport (0–95% width, 0–90% height) using a stratified/grid-like layout instead of the current clustered seeded-random positions
+- Update SparkParticles pill colours to match the new warm palette (no dark or purple tones)
 
-**User-visible outcome:** The brand name appears in a decorative cursive font, the dot-grid background is clearly visible across all pages, and soft floating year-label sparks drift upward in the background without interfering with any interactive elements.
+**User-visible outcome:** The entire app displays in a warm, bright, readable colour scheme with no black surfaces or text anywhere, and the floating year-label particles appear spread across the whole screen on all pages.
