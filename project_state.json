@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 13,
+  "projectStateVersion": 15,
   "summary": "A college feedback-sharing platform with a frictionless, anonymous workflow: users enter the site, select their college year, type a lesson or feedback, submit it, browse others' feedback, and can connect with anyone — all without sign-in or personal details. The platform is being built to be implementation-ready with multiple pages, custom fonts, emojis, dashboards, and polished UI. New direction includes: multi-language support (Telugu + English combo), social sharing options, a rebranded name ('Memu Nerchunnavi' style English-Telugu combo), a cute/innovative but simple color palette and fonts, and a customizable website/platform name per college.",
   "architectural_notes": [
     "Core purpose: seniors share real college experience feedback to guide juniors on internships, hackathons, and courses",
@@ -8,8 +8,10 @@
     "Platform should be implementation-ready: multi-page navigation, rich UI with fonts/emojis, dashboard, and polished UX so it can be used immediately",
     "Platform should support Telugu-English bilingual UI and be easily adoptable by other colleges with minimal setup"
   ],
-  "known_issues": [],
-  "isFixRequest": false,
+  "known_issues": [
+    "Dashboard page fails to load in the deployed version (Version 6)"
+  ],
+  "isFixRequest": true,
   "existing_features": [
     {
       "id": "feature-build-a-home-feed-page-that-displays-all-senior-feedback-posts-sorted-by-recency-and-upvotes-showing-the-post-title-category-badge-a-snippet-of-the-content-author-name-and-upvote-count-include-a-top-banner-communicating-the-platform-s-motto-learn-from-seniors-start-early-make-every-semester-count",
@@ -232,6 +234,22 @@
       "title": "On the Year Selection modal (first-launch screen), add an optional text input field labelled 'Your College Name (optional)' that allows the user to enter their college's name. Store this value in sessionStorage alongside the selected year using the existing useYearSelection hook.",
       "reqIds": [
         "REQ-31"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fix-the-dashboard-page-dashboard-so-it-loads-correctly-in-the-deployed-version-investigate-and-resolve-any-runtime-errors-that-prevent-the-page-from-rendering-this-includes-handling-cases-where-the-usegetstats-hook-returns-undefined-null-or-an-error-state-where-backend-getstats-call-fails-or-times-out-or-where-the-actor-is-not-yet-initialized-when-the-dashboard-mounts-add-proper-loading-spinners-and-error-boundary-fallback-ui-so-the-page-always-renders-without-crashing",
+      "title": "Fix the Dashboard page (/dashboard) so it loads correctly in the deployed version. Investigate and resolve any runtime errors that prevent the page from rendering — this includes handling cases where the useGetStats hook returns undefined, null, or an error state, where backend getStats call fails or times out, or where the actor is not yet initialized when the Dashboard mounts. Add proper loading spinners and error boundary/fallback UI so the page always renders without crashing.",
+      "reqIds": [
+        "REQ-33"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-audit-the-usegetstats-hook-in-frontend-src-hooks-usequeries-ts-to-ensure-it-correctly-calls-the-backend-getstats-function-using-the-anonymous-actor-from-useactor-handles-actor-initialization-delay-actor-may-be-undefined-on-first-render-and-returns-a-stable-loading-error-data-structure-compatible-with-react-query-ensure-the-query-does-not-throw-an-unhandled-promise-rejection-if-the-actor-is-not-yet-ready",
+      "title": "Audit the useGetStats hook in frontend/src/hooks/useQueries.ts to ensure it correctly calls the backend getStats function using the anonymous actor from useActor, handles actor initialization delay (actor may be undefined on first render), and returns a stable loading/error/data structure compatible with React Query. Ensure the query does not throw an unhandled promise rejection if the actor is not yet ready.",
+      "reqIds": [
+        "REQ-34"
       ],
       "version": 1
     }

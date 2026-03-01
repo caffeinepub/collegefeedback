@@ -51,10 +51,21 @@ export function useGetStats() {
   return useQuery<PostStats>({
     queryKey: ['stats'],
     queryFn: async () => {
-      if (!actor) throw new Error('Actor not initialized');
+      if (!actor) {
+        // Return a safe default rather than throwing to avoid unhandled rejections
+        return {
+          totalPosts: BigInt(0),
+          categoryCounts: [],
+          topUpvotedPosts: [],
+          topConnectedPosts: [],
+        } as PostStats;
+      }
       return actor.getStats();
     },
     enabled: !!actor && !isFetching,
+    // Retry on failure with a short delay
+    retry: 2,
+    retryDelay: 1000,
   });
 }
 

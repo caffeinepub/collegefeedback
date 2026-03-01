@@ -1,13 +1,13 @@
 # Specification
 
 ## Summary
-**Goal:** Add an optional college/platform name customisation feature so users can personalise the app with their college name during the year selection flow.
+**Goal:** Fix the Dashboard page (`/dashboard`) so it loads correctly without crashing or showing a blank page.
 
 **Planned changes:**
-- Add an optional text input labelled "Your College Name (optional)" to the Year Selection modal, beneath the year selection buttons
-- Store the entered college name in sessionStorage alongside the selected year via the existing `useYearSelection` hook
-- Display the college name as a small subtitle beneath the "Memu Nerchunnavi" platform name in the sticky header on all pages, only when a value was provided
-- Style the subtitle in a smaller, muted font consistent with the pastel violet/DM Sans theme
-- If no college name is entered, the subtitle is not rendered and the header layout remains unchanged
+- Audit and fix the `useGetStats` hook in `frontend/src/hooks/useQueries.ts` to guard against undefined actor on first render, enable the query only when the actor is available (`enabled: !!actor`), and prevent unhandled promise rejections
+- Ensure `useGetStats` returns a stable `{ data, isLoading, isError }` shape compatible with React Query
+- Add a loading spinner to the Dashboard while stats data is being fetched
+- Add an error fallback UI to the Dashboard when the `getStats` backend call fails
+- Handle undefined/empty stats data gracefully with zero-state messaging so the page never crashes
 
-**User-visible outcome:** Users can optionally enter their college name during the initial year selection modal; if provided, it appears as a subtitle under the platform name in the header throughout the session.
+**User-visible outcome:** Navigating to `/dashboard` always renders the page — showing a loading state while fetching, a friendly error message on failure, and all stat cards/sections correctly once data is available.

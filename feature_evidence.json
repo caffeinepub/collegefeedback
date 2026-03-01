@@ -2,10 +2,10 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-on-the-year-selection-modal-first-launch-screen-add-an-optional-text-input-field-labelled-your-college-name-optional-that-allows-the-user-to-enter-their-college-s-name-store-this-value-in-sessionstorage-alongside-the-selected-year-using-the-existing-useyearselection-hook",
-      "featureTitle": "On the Year Selection modal (first-launch screen), add an optional text input field labelled 'Your College Name (optional)' that allows the user to enter their college's name. Store this value in sessionStorage alongside the selected year using the existing useYearSelection hook.",
+      "featureId": "feature-fix-the-dashboard-page-dashboard-so-it-loads-correctly-in-the-deployed-version-investigate-and-resolve-any-runtime-errors-that-prevent-the-page-from-rendering-this-includes-handling-cases-where-the-usegetstats-hook-returns-undefined-null-or-an-error-state-where-backend-getstats-call-fails-or-times-out-or-where-the-actor-is-not-yet-initialized-when-the-dashboard-mounts-add-proper-loading-spinners-and-error-boundary-fallback-ui-so-the-page-always-renders-without-crashing",
+      "featureTitle": "Fix the Dashboard page (/dashboard) so it loads correctly in the deployed version. Investigate and resolve any runtime errors that prevent the page from rendering — this includes handling cases where the useGetStats hook returns undefined, null, or an error state, where backend getStats call fails or times out, or where the actor is not yet initialized when the Dashboard mounts. Add proper loading spinners and error boundary/fallback UI so the page always renders without crashing.",
       "files": [
-        "frontend/src/components/YearSelectionModal.tsx"
+        "frontend/src/pages/Dashboard.tsx"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -16,7 +16,26 @@
         "blob-storage@4.0.0"
       ],
       "testIds": [
-        "REQ-31"
+        "REQ-33"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-audit-the-usegetstats-hook-in-frontend-src-hooks-usequeries-ts-to-ensure-it-correctly-calls-the-backend-getstats-function-using-the-anonymous-actor-from-useactor-handles-actor-initialization-delay-actor-may-be-undefined-on-first-render-and-returns-a-stable-loading-error-data-structure-compatible-with-react-query-ensure-the-query-does-not-throw-an-unhandled-promise-rejection-if-the-actor-is-not-yet-ready",
+      "featureTitle": "Audit the useGetStats hook in frontend/src/hooks/useQueries.ts to ensure it correctly calls the backend getStats function using the anonymous actor from useActor, handles actor initialization delay (actor may be undefined on first render), and returns a stable loading/error/data structure compatible with React Query. Ensure the query does not throw an unhandled promise rejection if the actor is not yet ready.",
+      "files": [
+        "frontend/src/hooks/useQueries.ts"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "blob-storage@4.0.0"
+      ],
+      "testIds": [
+        "REQ-34"
       ],
       "confidence": "high"
     }

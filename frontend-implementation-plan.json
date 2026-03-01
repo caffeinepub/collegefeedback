@@ -1,44 +1,40 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Add college/platform name customisation feature",
+  "title": "Fix Dashboard page failing to load",
   "requirements": [
     {
-      "id": "REQ-31",
-      "summary": "Add an optional 'Your College Name (optional)' text input field to the Year Selection modal that stores the entered value in sessionStorage via useYearSelection",
+      "id": "REQ-33",
+      "summary": "Fix the Dashboard page (/dashboard) to load correctly by handling undefined/null/error states from useGetStats, adding proper loading spinners and error boundaries so the page never crashes",
       "acceptanceCriteria": [
-        "The Year Selection modal displays an optional text input labelled 'Your College Name (optional)' beneath the year selection buttons",
-        "The input is not required — users can proceed without filling it in",
-        "On confirmation, the college name value is stored in sessionStorage via useYearSelection alongside the selected year",
-        "If the user leaves the field blank, no college name subtitle is shown in the header"
+        "Navigating to /dashboard no longer results in a blank page or crash in the deployed version",
+        "The Dashboard renders a loading state while stats data is being fetched",
+        "If the backend getStats call fails, the Dashboard shows a user-friendly error message instead of crashing",
+        "If stats data is undefined or empty, the Dashboard still renders gracefully with zero-state messaging",
+        "All stat cards, category breakdown, top posts lists, and year distribution sections render correctly once data is available"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/components/YearSelectionModal.tsx",
+          "path": "frontend/src/pages/Dashboard.tsx",
           "operation": "modify",
-          "description": "Add a text input field labelled 'Your College Name (optional)' beneath the year selection buttons. Wire the input value to local state and pass it to useYearSelection.setSelection when the user confirms their choice. Ensure the modal allows progression even if the field is left empty."
-        },
-        {
-          "path": "frontend/src/hooks/useYearSelection.ts",
-          "operation": "modify",
-          "description": "Extend the useYearSelection hook to read and write a college name value from/to sessionStorage alongside the existing year value. Update the getSelection, setSelection, and hasSelection methods to handle the optional college name field."
+          "description": "Add comprehensive error handling and loading states for useGetStats data. Wrap all stat rendering logic in conditional checks to handle undefined, null, or empty data gracefully. Add a loading spinner component that displays while isLoading is true. Add an error boundary or error state UI that displays a user-friendly message when isError is true or when the query fails. Ensure all references to stats.totalPosts, stats.categoryCounts, stats.topUpvotedPosts, and stats.topConnectedPosts are guarded with optional chaining or null checks. Add zero-state messaging for empty arrays or undefined stats. Ensure the page structure always renders (no conditional return of entire component) so navigation never results in a blank page."
         }
       ]
     },
     {
-      "id": "REQ-32",
-      "summary": "Display the user's entered college name as a small subtitle beneath the 'Memu Nerchunnavi' platform name in the Layout header, reading the value from sessionStorage via useYearSelection",
+      "id": "REQ-34",
+      "summary": "Audit and fix the useGetStats hook to handle actor initialization delay, return a stable React Query structure, and prevent unhandled promise rejections when actor is undefined",
       "acceptanceCriteria": [
-        "If the user entered a college name in the modal, it appears as a subtitle beneath the platform name in the sticky header on all pages",
-        "The subtitle is styled in a smaller, muted font consistent with the current pastel violet/DM Sans theme",
-        "If no college name was entered, the subtitle is not rendered and the header layout remains intact",
-        "The college name persists across page navigation within the same session"
+        "useGetStats does not throw when actor is undefined or not yet initialized",
+        "useGetStats correctly calls getStats on the backend actor once it is available",
+        "The hook returns { data, isLoading, isError } in a shape usable by Dashboard.tsx",
+        "The query is enabled only when the actor is available (enabled: !!actor)"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/components/Layout.tsx",
+          "path": "frontend/src/hooks/useQueries.ts",
           "operation": "modify",
-          "description": "Import the useYearSelection hook and read the college name from sessionStorage. Conditionally render a small subtitle beneath the 'Memu Nerchunnavi' logo in the header if a college name exists. Style the subtitle in a smaller, muted font (e.g., text-sm text-muted-foreground) consistent with the current pastel violet/DM Sans theme. Ensure the header layout remains intact when no college name is present."
+          "description": "Fix the useGetStats hook to guard against undefined actor by adding an enabled option (enabled: !!actor) to the useQuery configuration. Wrap the queryFn in a check that returns a promise rejection or throws a controlled error if actor is undefined, preventing unhandled promise rejections. Ensure the queryFn only calls actor.getStats() when actor is truthy. Verify the hook returns a stable { data, isLoading, isError, error } structure compatible with React Query and usable by Dashboard.tsx. Add type annotations to ensure PostStats return type matches the backend interface."
         }
       ]
     }

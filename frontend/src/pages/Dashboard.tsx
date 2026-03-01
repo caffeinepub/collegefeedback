@@ -1,8 +1,10 @@
 import { Link } from '@tanstack/react-router';
-import { BarChart2, TrendingUp, Users, BookOpen, Loader2 } from 'lucide-react';
+import { BarChart2, TrendingUp, Users, BookOpen, AlertCircle } from 'lucide-react';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { useGetStats, useGetAllPosts } from '../hooks/useQueries';
+import { useActor } from '../hooks/useActor';
 import { Category, type Post } from '../backend';
 import { categoryConfig } from '../components/PostCard';
 
@@ -27,7 +29,7 @@ function StatCard({ emoji, label, value, sub }: { emoji: string; label: string; 
 }
 
 function TopPostsList({ posts, label, countKey }: { posts: Post[]; label: string; countKey: 'upvotes' | 'connectCount' }) {
-  if (posts.length === 0) {
+  if (!posts || posts.length === 0) {
     return (
       <div className="text-sm text-muted-foreground font-body py-4 text-center">
         No posts yet 🌱
@@ -38,6 +40,7 @@ function TopPostsList({ posts, label, countKey }: { posts: Post[]; label: string
     <ul className="space-y-3">
       {posts.map((post, i) => {
         const cat = categoryConfig[post.category];
+        if (!cat) return null;
         const snippet = post.content.length > 80
           ? post.content.slice(0, 80).trimEnd() + '…'
           : post.content;
@@ -73,7 +76,7 @@ function TopPostsList({ posts, label, countKey }: { posts: Post[]; label: string
 
 function YearDistribution({ posts }: { posts: Post[] }) {
   const yearCounts: Record<string, number> = {};
-  posts.forEach(p => {
+  (posts ?? []).forEach(p => {
     yearCounts[p.authorYear] = (yearCounts[p.authorYear] ?? 0) + 1;
   });
 
@@ -110,44 +113,69 @@ function YearDistribution({ posts }: { posts: Post[] }) {
   );
 }
 
-export default function Dashboard() {
-  const { data: stats, isLoading: statsLoading, isError: statsError } = useGetStats();
-  const { data: allPosts, isLoading: postsLoading } = useGetAllPosts();
+function DashboardSkeleton() {
+  return (
+    <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl py-10">
+      <Skeleton className="h-6 w-32 mb-3 rounded-full" />
+      <Skeleton className="h-10 w-72 mb-2" />
+      <Skeleton className="h-5 w-80 mb-10" />
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-10">
+        {Array.from({ length: 4 }).map((_, i) => (
+          <Skeleton key={i} className="h-32 rounded-xl" />
+        ))}
+      </div>
+      <Skeleton className="h-48 rounded-xl mb-6" />
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+        <Skeleton className="h-64 rounded-xl" />
+        <Skeleton className="h-64 rounded-xl" />
+      </div>
+      <Skeleton className="h-40 rounded-xl" />
+    </div>
+  );
+}
 
-  const isLoading = statsLoading || postsLoading;
+export default function Dashboard() {
+  const { actor, isFetching: actorFetching } = useActor();
+  const { data: stats, isLoading: statsLoading, isError: statsError, error: statsErrorObj } = useGetStats();
+  const { data: allPosts, isLoading: postsLoading, isError: postsError } = useGetAllPosts();
+
+  // Show loading while actor is initializing OR while queries are in flight
+  const isLoading = actorFetching || !actor || statsLoading || postsLoading;
 
   if (isLoading) {
+    return <DashboardSkeleton />;
+  }
+
+  if (statsError || postsError) {
     return (
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl py-10">
-        <Skeleton className="h-10 w-64 mb-2" />
-        <Skeleton className="h-5 w-48 mb-10" />
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-10">
-          {Array.from({ length: 4 }).map((_, i) => (
-            <Skeleton key={i} className="h-32 rounded-xl" />
-          ))}
-        </div>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <Skeleton className="h-64 rounded-xl" />
-          <Skeleton className="h-64 rounded-xl" />
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl py-20">
+        <Alert variant="destructive" className="max-w-lg mx-auto">
+          <AlertCircle className="h-4 w-4" />
+          <AlertTitle className="font-heading font-bold">Failed to load dashboard</AlertTitle>
+          <AlertDescription className="font-body">
+            {statsErrorObj instanceof Error
+              ? statsErrorObj.message
+              : 'Could not fetch community stats. Please refresh the page and try again.'}
+          </AlertDescription>
+        </Alert>
+        <div className="text-center mt-8">
+          <button
+            onClick={() => window.location.reload()}
+            className="inline-flex items-center gap-2 bg-primary text-primary-foreground hover:bg-primary/90 font-heading font-semibold px-6 py-2.5 rounded-full transition-colors shadow-sm"
+          >
+            🔄 Refresh Page
+          </button>
         </div>
       </div>
     );
   }
 
-  if (statsError) {
-    return (
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl py-20 text-center">
-        <div className="text-5xl mb-4">😕</div>
-        <h2 className="font-heading font-bold text-2xl text-foreground mb-2">Failed to load dashboard</h2>
-        <p className="text-muted-foreground font-body">Please refresh the page and try again.</p>
-      </div>
-    );
-  }
-
+  // Safe defaults for all data
   const totalPosts = stats ? Number(stats.totalPosts) : 0;
   const categoryCounts = stats?.categoryCounts ?? [];
   const topUpvoted = stats?.topUpvotedPosts ?? [];
   const topConnected = stats?.topConnectedPosts ?? [];
+  const safeAllPosts = allPosts ?? [];
 
   // Build category count map
   const catCountMap: Record<string, number> = {};
@@ -158,9 +186,9 @@ export default function Dashboard() {
   const maxCatCount = Math.max(...categoryOrder.map(c => catCountMap[c] ?? 0), 1);
 
   // Total unique contributors (unique authorYears is a proxy)
-  const uniqueYears = new Set(allPosts?.map(p => p.authorYear) ?? []).size;
-  const totalUpvotes = allPosts?.reduce((sum, p) => sum + Number(p.upvotes), 0) ?? 0;
-  const totalConnects = allPosts?.reduce((sum, p) => sum + Number(p.connectCount), 0) ?? 0;
+  const uniqueYears = new Set(safeAllPosts.map(p => p.authorYear)).size;
+  const totalUpvotes = safeAllPosts.reduce((sum, p) => sum + Number(p.upvotes), 0);
+  const totalConnects = safeAllPosts.reduce((sum, p) => sum + Number(p.connectCount), 0);
 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl py-10">
@@ -193,26 +221,34 @@ export default function Dashboard() {
           <p className="text-sm text-muted-foreground font-body">How wisdom is distributed across topics</p>
         </CardHeader>
         <CardContent className="px-6 pb-6">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {categoryOrder.map(cat => {
-              const cfg = categoryConfig[cat];
-              const count = catCountMap[cat] ?? 0;
-              const pct = Math.round((count / maxCatCount) * 100);
-              return (
-                <div key={cat} className={`rounded-xl border p-4 ${cfg.className}`}>
-                  <div className="text-3xl mb-2">{cfg.emoji}</div>
-                  <div className="font-heading font-bold text-2xl mb-0.5">{count}</div>
-                  <div className="font-heading font-semibold text-sm mb-3">{cfg.label}</div>
-                  <div className="bg-black/10 rounded-full h-1.5 overflow-hidden">
-                    <div
-                      className="h-full bg-current rounded-full opacity-60 transition-all duration-500"
-                      style={{ width: `${pct}%` }}
-                    />
+          {totalPosts === 0 ? (
+            <div className="text-center py-8 text-muted-foreground font-body">
+              <div className="text-4xl mb-2">🌱</div>
+              <p>No posts yet — be the first to share!</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {categoryOrder.map(cat => {
+                const cfg = categoryConfig[cat];
+                if (!cfg) return null;
+                const count = catCountMap[cat] ?? 0;
+                const pct = Math.round((count / maxCatCount) * 100);
+                return (
+                  <div key={cat} className={`rounded-xl border p-4 ${cfg.className}`}>
+                    <div className="text-3xl mb-2">{cfg.emoji}</div>
+                    <div className="font-heading font-bold text-2xl mb-0.5">{count}</div>
+                    <div className="font-heading font-semibold text-sm mb-3">{cfg.label}</div>
+                    <div className="bg-black/10 rounded-full h-1.5 overflow-hidden">
+                      <div
+                        className="h-full bg-current rounded-full opacity-60 transition-all duration-500"
+                        style={{ width: `${pct}%` }}
+                      />
+                    </div>
                   </div>
-                </div>
-              );
-            })}
-          </div>
+                );
+              })}
+            </div>
+          )}
         </CardContent>
       </Card>
 
@@ -246,7 +282,7 @@ export default function Dashboard() {
       </div>
 
       {/* Year distribution */}
-      {allPosts && allPosts.length > 0 && (
+      {safeAllPosts.length > 0 && (
         <Card className="border border-border shadow-card mb-8">
           <CardHeader className="pb-2 pt-6 px-6">
             <h2 className="font-heading font-bold text-lg text-foreground flex items-center gap-2">
@@ -256,7 +292,7 @@ export default function Dashboard() {
             <p className="text-xs text-muted-foreground font-body">Which year groups are sharing the most</p>
           </CardHeader>
           <CardContent className="px-6 pb-6">
-            <YearDistribution posts={allPosts} />
+            <YearDistribution posts={safeAllPosts} />
           </CardContent>
         </Card>
       )}

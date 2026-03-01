@@ -1,57 +1,57 @@
 {
   "kind": "build_request",
-  "title": "Add college/platform name customisation feature",
+  "title": "Fix Dashboard page failing to load",
   "projectName": "Memu Nerchunnavi",
-  "priority": "normal",
+  "priority": "high",
   "requirements": [
     {
-      "id": "REQ-31",
-      "text": "On the Year Selection modal (first-launch screen), add an optional text input field labelled 'Your College Name (optional)' that allows the user to enter their college's name. Store this value in sessionStorage alongside the selected year using the existing useYearSelection hook.",
+      "id": "REQ-33",
+      "text": "Fix the Dashboard page (/dashboard) so it loads correctly in the deployed version. Investigate and resolve any runtime errors that prevent the page from rendering — this includes handling cases where the useGetStats hook returns undefined, null, or an error state, where backend getStats call fails or times out, or where the actor is not yet initialized when the Dashboard mounts. Add proper loading spinners and error boundary/fallback UI so the page always renders without crashing.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-3"
+          "msg-4"
         ],
         "quotes": [
-          "make the final one"
+          "it didnt load dashoards"
         ]
       },
       "acceptanceCriteria": [
-        "The Year Selection modal displays an optional text input labelled 'Your College Name (optional)' beneath the year selection buttons",
-        "The input is not required — users can proceed without filling it in",
-        "On confirmation, the college name value is stored in sessionStorage via useYearSelection alongside the selected year",
-        "If the user leaves the field blank, no college name subtitle is shown in the header"
+        "Navigating to /dashboard no longer results in a blank page or crash in the deployed version",
+        "The Dashboard renders a loading state while stats data is being fetched",
+        "If the backend getStats call fails, the Dashboard shows a user-friendly error message instead of crashing",
+        "If stats data is undefined or empty, the Dashboard still renders gracefully with zero-state messaging",
+        "All stat cards, category breakdown, top posts lists, and year distribution sections render correctly once data is available"
       ]
     },
     {
-      "id": "REQ-32",
-      "text": "In the Layout header, display the user's entered college name as a small subtitle directly beneath the 'Memu Nerchunnavi' logo/platform name (e.g. 'JNTU Hyderabad'). Read the value from sessionStorage via the useYearSelection hook. Only show this subtitle if a college name was provided.",
+      "id": "REQ-34",
+      "text": "Audit the useGetStats hook in frontend/src/hooks/useQueries.ts to ensure it correctly calls the backend getStats function using the anonymous actor from useActor, handles actor initialization delay (actor may be undefined on first render), and returns a stable loading/error/data structure compatible with React Query. Ensure the query does not throw an unhandled promise rejection if the actor is not yet ready.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-3"
+          "msg-4"
         ],
         "quotes": [
-          "make the final one"
+          "it didnt load dashoards"
         ]
       },
       "acceptanceCriteria": [
-        "If the user entered a college name in the modal, it appears as a subtitle beneath the platform name in the sticky header on all pages",
-        "The subtitle is styled in a smaller, muted font consistent with the current pastel violet/DM Sans theme",
-        "If no college name was entered, the subtitle is not rendered and the header layout remains intact",
-        "The college name persists across page navigation within the same session"
+        "useGetStats does not throw when actor is undefined or not yet initialized",
+        "useGetStats correctly calls getStats on the backend actor once it is available",
+        "The hook returns { data, isLoading, isError } in a shape usable by Dashboard.tsx",
+        "The query is enabled only when the actor is available (enabled: !!actor)"
       ]
     }
   ],
   "constraints": [
-    "Do not modify files listed in frontend.immutablePaths",
-    "All state must be stored in sessionStorage — no backend changes required",
-    "The college name input must remain optional; do not block progression if it is empty"
+    "Do not modify files under frontend/src/hooks/useActor.ts or frontend/src/hooks/useInternetIdentity.ts",
+    "Do not change the backend getStats function signature or return type"
   ],
   "nonGoals": [
-    "Persisting the college name beyond the current session (e.g. localStorage or backend)",
-    "Allowing the college name to be edited after the initial modal submission",
-    "Any backend schema changes"
+    "Adding new stats or metrics to the Dashboard beyond what already exists",
+    "Changing the visual design or layout of the Dashboard",
+    "Modifying the backend actor logic"
   ],
   "imageRequirements": {
     "required": [],
