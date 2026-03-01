@@ -43,23 +43,24 @@ export default function About() {
         />
       </div>
 
-      {/* Section 1: What is SeniorCompass */}
+      {/* Section 1: What is Memu Nerchukunnavi */}
       <section className="mb-14">
         <div className="inline-flex items-center gap-2 bg-primary/10 text-primary text-xs font-heading font-semibold px-3 py-1.5 rounded-full mb-4">
           🎓 Our Mission
         </div>
-        <h1 className="font-heading font-bold text-3xl sm:text-4xl text-foreground mb-4">
-          What is SeniorCompass? 🎓
+        {/* Brand name in script/cursive font */}
+        <h1 className="font-brand text-4xl sm:text-5xl text-foreground mb-2">
+          Memu <span className="text-primary">Nerchukunnavi</span> 🎓
         </h1>
         <div className="prose prose-sm max-w-none text-muted-foreground font-body leading-relaxed space-y-4">
           <p className="text-base text-foreground/80">
-            SeniorCompass is a peer-to-peer campus wisdom platform where students share the lessons they wish they'd known earlier — and help the next generation start sooner.
+            Memu Nerchukunnavi is a peer-to-peer campus wisdom platform where students share the lessons they wish they'd known earlier — and help the next generation start sooner.
           </p>
           <p>
             Too much valuable knowledge stays locked in the heads of graduating seniors. The student who discovered a life-changing internship in 1st year, the one who found the perfect course sequence, the one who built a startup at a hackathon — their stories rarely reach the freshers who need them most.
           </p>
           <p>
-            We're changing that. SeniorCompass is a living, growing library of real student experiences, organized by category and year, accessible to anyone on campus — no sign-in required.
+            We're changing that. Memu Nerchukunnavi is a living, growing library of real student experiences, organized by category and year, accessible to anyone on campus — no sign-in required.
           </p>
         </div>
       </section>
@@ -70,7 +71,7 @@ export default function About() {
           How It Works ⚙️
         </h2>
         <p className="text-muted-foreground font-body mb-8">
-          Four simple steps to get the most out of SeniorCompass.
+          Four simple steps to get the most out of Memu Nerchukunnavi.
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
           {steps.map(step => (
@@ -92,7 +93,7 @@ export default function About() {
           Why It Matters 💡
         </h2>
         <p className="text-muted-foreground font-body mb-8 leading-relaxed">
-          The gap between students who thrive and those who struggle is often just information. The right advice at the right time can change everything — which internship to apply for, which course to take early, which hackathon to join. SeniorCompass exists to close that gap.
+          The gap between students who thrive and those who struggle is often just information. The right advice at the right time can change everything — which internship to apply for, which course to take early, which hackathon to join. Memu Nerchukunnavi exists to close that gap.
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           {values.map(v => (
@@ -112,7 +113,7 @@ export default function About() {
             "The best time to learn from a senior was four years ago. The second best time is right now."
           </p>
           <footer className="text-sm text-muted-foreground font-heading font-semibold mt-2">
-            — The SeniorCompass Community 🎓
+            — The Memu Nerchukunnavi Community 🎓
           </footer>
         </blockquote>
       </section>
@@ -120,7 +121,7 @@ export default function About() {
       {/* CTA */}
       <section className="rounded-2xl bg-primary shadow-card-hover px-8 py-10 text-center">
         <div className="text-5xl mb-4">🚀</div>
-        <h2 className="font-heading font-bold text-2xl sm:text-3xl text-primary-foreground mb-3">
+        <h2 className="font-brand text-3xl sm:text-4xl text-primary-foreground mb-3">
           Ready to start?
         </h2>
         <p className="text-primary-foreground/80 font-body text-sm sm:text-base mb-6 max-w-sm mx-auto">

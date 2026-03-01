@@ -1,23 +1,52 @@
 {
   "kind": "spec_vs_diff_report",
   "version": "1.0",
-  "generatedAt": "2026-03-01T15:09:42.839Z",
-  "summary": "The diff implements automatic retry/polling for the Dashboard's stats fetch (REQ-35) through changes to useQueries.ts and Dashboard.tsx. The implementation includes aggressive retry logic, refetchInterval polling, skeleton/spinner loading states, and a non-crashing error fallback without a manual reload button. All acceptance criteria appear to be addressed.",
-  "missing_requirements": [],
-  "hallucinated_features": [
+  "generatedAt": "2026-03-01T17:57:58.710Z",
+  "summary": "All three requirements (REQ-38, REQ-39, REQ-40) are substantially implemented. Dancing Script is imported, fontFamily.brand token added to tailwind.config.js, font-brand applied in Layout header, YearSelectionModal, and About page. Dot-grid is updated to 2px dots at 0.40 opacity fixed to viewport. SparkParticles component with 16 sparks, year labels, pointer-events:none, and upward float animations is created and mounted in Layout.tsx. One minor gap: the index.html title tag shows the brand name as plain text without a script font.",
+  "missing_requirements": [
     {
-      "description": "useGetAllPosts and useGetPostsByCategory hooks were also modified with retry/refetchInterval logic",
-      "reason": "The build request explicitly scopes changes to Dashboard.tsx and the useGetStats hook in useQueries.ts as non-goals include changes to any page other than Dashboard.tsx and the useGetStats hook. The diff also modifies useGetAllPosts (retry: 10, refetchInterval polling) and useGetPostsByCategory (retry: 5) which are outside the stated scope.",
+      "id": "REQ-38",
+      "requirement": "Apply script/cursive font to 'Memu Nerchukunnavi' in index.html <title> display",
+      "reason": "The index.html <title> is 'Memu Nerchukunnavi | మేము నేర్చుకున్నవి' as plain text. Browser tab titles cannot use CSS font styling, and the diff shows no special handling such as a styled page-title overlay to address this specific requirement location called out in REQ-38.",
       "evidence": [
-        "frontend/src/hooks/useQueries.ts"
+        "frontend/index.html"
       ]
     }
   ],
-  "confidence": 0.85,
+  "hallucinated_features": [
+    {
+      "description": "Multiple additional spark color classes beyond soft lavender/violet, including sky-blue, teal, emerald, and pink variants",
+      "reason": "REQ-40 specifies sparks should use soft lavender/violet background styling only. The implementation adds sky-200, teal-200, emerald-200, and pink-200 color classes that were not requested.",
+      "evidence": [
+        "frontend/src/components/SparkParticles.tsx"
+      ]
+    },
+    {
+      "description": "Four distinct spark animation variants randomly assigned per spark",
+      "reason": "REQ-40 only specifies a gentle floating/drifting upward keyframe animation. Multiple named animation variants (spark-float-sway, spark-float-fast, spark-float-slow) were not requested.",
+      "evidence": [
+        "frontend/src/components/SparkParticles.tsx",
+        "frontend/tailwind.config.js"
+      ]
+    },
+    {
+      "description": "Mute/unmute sound toggle button with Bell/BellOff icons in the Layout header",
+      "reason": "No requirement in the build request mentions sound functionality or a mute toggle in the header. This feature is unrelated to REQ-38, REQ-39, or REQ-40.",
+      "evidence": [
+        "frontend/src/components/Layout.tsx"
+      ]
+    }
+  ],
+  "confidence": 0.82,
   "changed_files": [
     "frontend-file-summaries.txt",
-    "frontend/src/hooks/useQueries.ts",
-    "frontend/src/pages/Dashboard.tsx",
+    "frontend/index.html",
+    "frontend/src/components/Layout.tsx",
+    "frontend/src/components/SparkParticles.tsx",
+    "frontend/src/components/YearSelectionModal.tsx",
+    "frontend/src/index.css",
+    "frontend/src/pages/About.tsx",
+    "frontend/tailwind.config.js",
     "project_state.json"
   ]
 }

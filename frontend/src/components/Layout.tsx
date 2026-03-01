@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link, useLocation } from '@tanstack/react-router';
 import { GraduationCap, Heart, Globe, Bell, BellOff } from 'lucide-react';
 import { useYearSelection } from '../hooks/useYearSelection';
 import { useLanguage } from '../contexts/LanguageContext';
 import { getMuted, setMuted } from '../utils/sounds';
+import SparkParticles from './SparkParticles';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const location = useLocation();
@@ -31,6 +32,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
+      {/* Spark particles — rendered below all content */}
+      <SparkParticles />
+
       {/* Header */}
       <header className="sticky top-0 z-50 bg-card/95 backdrop-blur-sm border-b border-border shadow-xs">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
@@ -41,8 +45,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 <GraduationCap className="w-5 h-5 text-primary-foreground" />
               </div>
               <div className="flex flex-col leading-none">
-                <span className="font-heading font-extrabold text-lg text-foreground tracking-tight">
-                  Memu <span className="text-primary">Nerchunnavi</span>
+                <span className="font-brand text-xl text-foreground tracking-tight">
+                  Memu <span className="text-primary">Nerchukunnavi</span>
                 </span>
                 {collegeName ? (
                   <span className="text-xs text-primary font-heading font-semibold hidden sm:block">
@@ -129,12 +133,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       </header>
 
       {/* Main */}
-      <main className="flex-1">
+      <main className="flex-1 relative z-10">
         {children}
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-border bg-card mt-16">
+      <footer className="border-t border-border bg-card mt-16 relative z-10">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl py-10">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mb-8">
             {/* Brand */}
@@ -143,8 +147,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 <div className="w-7 h-7 rounded-xl bg-primary flex items-center justify-center">
                   <GraduationCap className="w-4 h-4 text-primary-foreground" />
                 </div>
-                <span className="font-heading font-extrabold text-foreground">
-                  Memu <span className="text-primary">Nerchunnavi</span>
+                <span className="font-brand text-xl text-foreground">
+                  Memu <span className="text-primary">Nerchukunnavi</span>
                 </span>
               </div>
               <p className="text-sm text-muted-foreground font-body leading-relaxed">
@@ -182,7 +186,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 <Heart className="w-3.5 h-3.5 fill-primary text-primary" />{' '}
                 using{' '}
                 <a
-                  href={`https://caffeine.ai/?utm_source=Caffeine-footer&utm_medium=referral&utm_content=${encodeURIComponent(typeof window !== 'undefined' ? window.location.hostname : 'memu-nerchunnavi')}`}
+                  href={`https://caffeine.ai/?utm_source=Caffeine-footer&utm_medium=referral&utm_content=${encodeURIComponent(typeof window !== 'undefined' ? window.location.hostname : 'memu-nerchukunnavi')}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-primary hover:underline font-medium"

@@ -1,28 +1,100 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Auto-reload the Dashboard page on data fetch failure",
+  "title": "Cursive logo font, visible dot-grid background, and year-label spark animations",
   "requirements": [
     {
-      "id": "REQ-35",
-      "summary": "On the Dashboard page, automatically retry fetching stats data when the actor is not initialized or the fetch fails, without requiring manual user refresh. Replace manual reload prompts with an automatic retry mechanism using React Query options or polling, showing a loading indicator during retries.",
+      "id": "REQ-38",
+      "summary": "Apply script/cursive Google Font to 'Memu Nerchukunnavi' brand name across all logo and heading instances while preserving existing font stack for all other text",
       "acceptanceCriteria": [
-        "When the Dashboard page mounts and the actor is not yet ready, the page automatically retries the stats fetch at a short interval without user interaction.",
-        "A loading spinner or skeleton is shown while the retry is in progress.",
-        "Once the backend actor is initialized and getStats returns data, the Dashboard renders the stats without requiring a manual page refresh.",
-        "No manual 'Reload' or 'Retry' button is required — recovery is fully automatic.",
-        "If the fetch ultimately fails after retries, a non-crashing fallback error UI is shown."
+        "The text 'Memu Nerchukunnavi' in the Layout header renders in a script/cursive Google Font (Dancing Script or Pacifico).",
+        "The same script font is applied to the brand name in YearSelectionModal and About page hero heading.",
+        "All other text (navigation, body, badges) continues to use Bricolage Grotesque / DM Sans.",
+        "tailwind.config.js contains a fontFamily.brand token referencing the chosen script font.",
+        "Google Font import for the script font is present in frontend/src/index.css."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/hooks/useQueries.ts",
+          "path": "frontend/src/index.css",
           "operation": "modify",
-          "description": "Modify the useGetStats hook to enable automatic retry with React Query options. Configure retry: 10, retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 10000), and refetchInterval: 3000 to automatically poll and recover when the backend actor becomes available. Ensure the hook returns { data, isLoading, isError, error } so the Dashboard can render appropriate loading and error states during automatic retries."
+          "description": "Add Google Fonts import for Dancing Script (or Pacifico) at the top of the file alongside existing font imports. Import weights 400 and 700 to support regular and bold brand name display."
         },
         {
-          "path": "frontend/src/pages/Dashboard.tsx",
+          "path": "frontend/tailwind.config.js",
           "operation": "modify",
-          "description": "Update the Dashboard page to consume the enhanced useGetStats hook. Remove any manual reload or retry button. While isLoading is true, display a loading spinner or skeleton UI. Once data is successfully fetched, render the analytics dashboard (total posts, category breakdown, top posts, year distribution chart). If isError remains true after all retries, show a non-crashing fallback error message without blocking the UI. Ensure the page automatically recovers and displays stats as soon as the backend actor is initialized, without requiring user interaction."
+          "description": "Add a new 'brand' key to the fontFamily object in theme.extend, mapping to ['Dancing Script', 'cursive'] (or ['Pacifico', 'cursive']). This creates the font-brand utility class for Tailwind."
+        },
+        {
+          "path": "frontend/src/components/Layout.tsx",
+          "operation": "modify",
+          "description": "Apply the font-brand class to the 'Memu Nerchukunnavi' text element in the header logo. Ensure no other navigation or UI elements receive this class; they should retain existing font stack."
+        },
+        {
+          "path": "frontend/src/components/YearSelectionModal.tsx",
+          "operation": "modify",
+          "description": "Apply the font-brand class to the modal title 'Memu Nerchukunnavi' (or whichever heading displays the brand name). Keep all other modal text (instructions, buttons, labels) in the existing font stack."
+        },
+        {
+          "path": "frontend/src/pages/About.tsx",
+          "operation": "modify",
+          "description": "Apply the font-brand class to the hero heading that displays 'Memu Nerchukunnavi' or the brand name. Ensure the mission statement, how-it-works steps, and values text continue using the existing font stack."
+        },
+        {
+          "path": "frontend/index.html",
+          "operation": "modify",
+          "description": "Update the <title> tag content from 'Meme Nerchukunnavi' to 'Memu Nerchukunnavi' (correct spelling). Note: HTML title elements do not support custom fonts, so no font class is applied here; this is a text correction only."
+        }
+      ]
+    },
+    {
+      "id": "REQ-39",
+      "summary": "Increase dot-grid background visibility by raising dot opacity to 0.35–0.45, increasing dot size to ~2px, and reducing grid spacing",
+      "acceptanceCriteria": [
+        "The dot-grid background is clearly visible on all pages without a magnifying glass.",
+        "Dot opacity is between 0.35 and 0.45.",
+        "Dots are approximately 2px in size.",
+        "Cards, modals, and navigation overlays render above the background without visual bleed.",
+        "Background does not shift or scroll with page content (position: fixed)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/index.css",
+          "operation": "modify",
+          "description": "Locate the existing dot-grid background pattern definition (likely in a body or .dot-grid rule using radial-gradient). Increase the radial-gradient circle size from ~1px to ~2px. Raise the RGBA or OKLCH alpha channel for the dot color from approximately 0.15 to a value between 0.35 and 0.45. Reduce the background-size property (grid spacing) by approximately 20–30% to display more dots per viewport. Ensure the rule includes position: fixed, top: 0, left: 0, width: 100vw, height: 100vh, and z-index below content layers (e.g., z-index: -1 or z-index: 0 with content layers at z-index: 1+)."
+        }
+      ]
+    },
+    {
+      "id": "REQ-40",
+      "summary": "Create floating spark particle animations displaying year labels ('I'm 1st Year', 'I'm 2nd Year', 'I'm 3rd Year', 'I'm 4th Year') scattered across the background with gentle upward drift, fade-in/fade-out, and non-blocking pointer events",
+      "acceptanceCriteria": [
+        "Between 12 and 20 spark badges float across the background on every page.",
+        "Each spark shows one of: 'I'm 1st Year', 'I'm 2nd Year', 'I'm 3rd Year', 'I'm 4th Year' with a sparkle prefix.",
+        "Sparks animate upward with a fade-in/fade-out loop; animation durations vary per spark.",
+        "No spark intercepts click or touch events on buttons, cards, or navigation (pointer-events: none).",
+        "Sparks are rendered below all page content in z-index.",
+        "The SparkParticles component is mounted inside Layout.tsx so it appears on all pages."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/SparkParticles.tsx",
+          "operation": "create",
+          "description": "Create a React component that renders 12–20 floating spark badge elements. Each spark displays one of four year labels: 'I'm 1st Year', 'I'm 2nd Year', 'I'm 3rd Year', 'I'm 4th Year', prefixed with a sparkle icon (✦ or ✨). Use a state or constant array to generate spark instances with randomized properties: starting x/y positions (spread across viewport), animation duration (6s–14s), and assigned year label. Style each spark as a small pill (border-radius: 9999px or similar) with soft lavender/violet background (e.g., bg-purple-200/55 or a custom OKLCH token), tiny font size (text-[10px] or text-[11px]), and low base opacity (~0.55) that pulses slightly via CSS animation. Apply pointer-events: none to the container div and all spark elements so they never block interactions. Position the container as fixed, full viewport (inset-0), with z-index below content layers (e.g., z-index: 0 or z-index: 1, ensuring Layout content sits at z-index: 10+). Implement CSS keyframe animations (or Tailwind animate utilities) for upward floating drift with fade-in at start and fade-out at end of each loop. Animation should be infinite with randomized delays per spark for staggered effect."
+        },
+        {
+          "path": "frontend/src/index.css",
+          "operation": "modify",
+          "description": "Add CSS @keyframes definitions for the spark floating animation: a gentle upward translateY drift (e.g., from translateY(0) to translateY(-100vh) or similar) combined with opacity fade-in (0% to 20%: opacity 0 to 0.55) and fade-out (80% to 100%: opacity 0.55 to 0). Optionally add a subtle horizontal sway (translateX oscillation) for more organic motion. Name the keyframe (e.g., @keyframes spark-float) and ensure it can be referenced from the SparkParticles component via Tailwind animate or inline style."
+        },
+        {
+          "path": "frontend/tailwind.config.js",
+          "operation": "modify",
+          "description": "Extend the animation section in theme.extend to register the spark-float keyframe animation with appropriate duration and easing (e.g., 'spark-float': 'spark-float 10s ease-in-out infinite'). This allows using animate-spark-float in the SparkParticles component. If multiple durations are needed, register variants (spark-float-fast, spark-float-slow) or apply inline duration overrides in the component."
+        },
+        {
+          "path": "frontend/src/components/Layout.tsx",
+          "operation": "modify",
+          "description": "Import and render the SparkParticles component as the first child inside the Layout component's outermost wrapper (before the header and main content), ensuring it appears on all pages. Verify that the Layout's content layers have explicit z-index values higher than the SparkParticles container (e.g., header at z-index: 10, main at z-index: 5) so sparks render below interactive UI elements."
         }
       ]
     }

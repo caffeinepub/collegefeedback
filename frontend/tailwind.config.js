@@ -18,9 +18,10 @@ export default {
       fontFamily: {
         display: ['Bricolage Grotesque', 'sans-serif'],
         body: ['DM Sans', 'sans-serif'],
-        // Bricolage Grotesque for headings — loaded via Google Fonts in index.css
         heading: ['Bricolage Grotesque', 'sans-serif'],
         sans: ['DM Sans', 'sans-serif'],
+        // Script/cursive font for brand name "Memu Nerchukunnavi"
+        brand: ['Dancing Script', 'cursive'],
       },
       colors: {
         border: 'oklch(var(--border))',
@@ -99,12 +100,32 @@ export default {
         'fade-in': {
           from: { opacity: '0', transform: 'translateY(8px)' },
           to: { opacity: '1', transform: 'translateY(0)' }
-        }
+        },
+        'spark-float': {
+          '0%': { opacity: '0', transform: 'translateY(0) translateX(0)' },
+          '10%': { opacity: '0.6' },
+          '45%': { opacity: '0.55', transform: 'translateY(-45vh) translateX(12px)' },
+          '55%': { opacity: '0.55', transform: 'translateY(-55vh) translateX(-8px)' },
+          '85%': { opacity: '0.3' },
+          '100%': { opacity: '0', transform: 'translateY(-100vh) translateX(6px)' },
+        },
+        'spark-float-sway': {
+          '0%': { opacity: '0', transform: 'translateY(0) translateX(0) rotate(-2deg)' },
+          '12%': { opacity: '0.55' },
+          '40%': { opacity: '0.5', transform: 'translateY(-40vh) translateX(-14px) rotate(2deg)' },
+          '70%': { opacity: '0.4', transform: 'translateY(-70vh) translateX(10px) rotate(-1deg)' },
+          '90%': { opacity: '0.15' },
+          '100%': { opacity: '0', transform: 'translateY(-100vh) translateX(-4px) rotate(1deg)' },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
-        'fade-in': 'fade-in 0.3s ease-out'
+        'fade-in': 'fade-in 0.3s ease-out',
+        'spark-float': 'spark-float 10s ease-in-out infinite',
+        'spark-float-sway': 'spark-float-sway 12s ease-in-out infinite',
+        'spark-float-fast': 'spark-float 7s ease-in-out infinite',
+        'spark-float-slow': 'spark-float-sway 15s ease-in-out infinite',
       }
     }
   },

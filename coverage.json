@@ -1,26 +1,62 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-03-01T15:09:42.844Z",
+  "generatedAt": "2026-03-01T17:57:58.714Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
-    "total": 1,
-    "implemented": 1,
+    "total": 3,
+    "implemented": 3,
     "items": [
       {
-        "id": "REQ-35",
-        "summary": "On the Dashboard page (/dashboard), when the stats data fails to load or the actor is not yet initialized, automatically retry/reload the data fetch without requiring the user to manually refresh the page. Implement an automatic retry mechanism (e.g. using React Query's retry and refetchInterval options, or a useEffect-based polling approach) so that the Dashboard recovers and displays data as soon as the backend actor becomes available. Remove any hard 'Reload' or manual refresh prompt and replace it with an automatic recovery flow that shows a loading indicator while retrying.",
+        "id": "REQ-38",
+        "summary": "Apply a script/cursive font combination specifically to the 'Memu Nerchukunnavi' brand name wherever it appears as a logo or heading (Layout header, YearSelectionModal title, About page hero heading, index.html <title> display). Import a Google Font pairing — use 'Dancing Script' or 'Pacifico' (script/cursive style) for the Telugu-English brand name text. The rest of the app retains its existing Bricolage Grotesque / DM Sans font stack. Update tailwind.config.js to add a `fontFamily.brand` token pointing to the chosen script font and apply it via a dedicated CSS class (e.g. `font-brand`) on all brand-name elements.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/hooks/useQueries.ts",
-          "frontend/src/pages/Dashboard.tsx"
+          "frontend/src/index.css",
+          "frontend/tailwind.config.js",
+          "frontend/src/components/Layout.tsx",
+          "frontend/src/components/YearSelectionModal.tsx",
+          "frontend/src/pages/About.tsx",
+          "frontend/index.html"
         ],
         "matchedFiles": [
-          "frontend/src/hooks/useQueries.ts",
-          "frontend/src/pages/Dashboard.tsx"
+          "frontend/src/index.css",
+          "frontend/tailwind.config.js",
+          "frontend/src/components/Layout.tsx",
+          "frontend/src/components/YearSelectionModal.tsx",
+          "frontend/src/pages/About.tsx",
+          "frontend/index.html"
+        ]
+      },
+      {
+        "id": "REQ-39",
+        "summary": "Increase the visibility of the existing dot-grid background pattern so it is clearly perceptible without overwhelming content. Raise the dot opacity from ~0.15 to approximately 0.35–0.45, increase the dot size slightly (from ~1px to ~2px), and reduce the grid spacing slightly so more dots are visible. Apply this updated pattern as the fixed full-viewport background layer in Layout.tsx (or via the body rule in index.css), ensuring it still sits below all card, modal, and overlay z-indices.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/index.css"
+        ],
+        "matchedFiles": [
+          "frontend/src/index.css"
+        ]
+      },
+      {
+        "id": "REQ-40",
+        "summary": "Add floating spark/particle animations scattered across the background layer of the app. Each spark displays one of four year-label phrases: 'I'm 1st Year', 'I'm 2nd Year', 'I'm 3rd Year', 'I'm 4th Year'. Implement this as a React component (e.g. SparkParticles) rendered inside Layout.tsx, positioned fixed and full-viewport below content z-index. Generate 12–20 spark instances, each assigned a random year label, random starting position, random animation duration (6s–14s), and a gentle floating/drifting upward keyframe animation with fade-in and fade-out. Style each spark as a small pill or badge — soft lavender/violet background, rounded corners, tiny font (10–11px), low base opacity (~0.55) that pulses slightly. Add a subtle glint/sparkle icon (✦ or ✨) before the label text. Sparks must not block pointer events on any interactive element (pointer-events: none on the container and all spark elements).",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/SparkParticles.tsx",
+          "frontend/src/index.css",
+          "frontend/tailwind.config.js",
+          "frontend/src/components/Layout.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/components/SparkParticles.tsx",
+          "frontend/src/index.css",
+          "frontend/tailwind.config.js",
+          "frontend/src/components/Layout.tsx"
         ]
       }
     ]
@@ -30,8 +66,13 @@
     "feature_evidence.json",
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
-    "frontend/src/hooks/useQueries.ts",
-    "frontend/src/pages/Dashboard.tsx",
+    "frontend/index.html",
+    "frontend/src/components/Layout.tsx",
+    "frontend/src/components/SparkParticles.tsx",
+    "frontend/src/components/YearSelectionModal.tsx",
+    "frontend/src/index.css",
+    "frontend/src/pages/About.tsx",
+    "frontend/tailwind.config.js",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",

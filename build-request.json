@@ -1,36 +1,82 @@
 {
   "kind": "build_request",
-  "title": "Auto-reload the Dashboard page on data fetch failure",
+  "title": "Cursive logo font, visible dot-grid background, and year-label spark animations",
+  "projectName": "Memu Nerchukunnavi",
   "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-35",
-      "text": "On the Dashboard page (/dashboard), when the stats data fails to load or the actor is not yet initialized, automatically retry/reload the data fetch without requiring the user to manually refresh the page. Implement an automatic retry mechanism (e.g. using React Query's retry and refetchInterval options, or a useEffect-based polling approach) so that the Dashboard recovers and displays data as soon as the backend actor becomes available. Remove any hard 'Reload' or manual refresh prompt and replace it with an automatic recovery flow that shows a loading indicator while retrying.",
+      "id": "REQ-38",
+      "text": "Apply a script/cursive font combination specifically to the 'Memu Nerchukunnavi' brand name wherever it appears as a logo or heading (Layout header, YearSelectionModal title, About page hero heading, index.html <title> display). Import a Google Font pairing — use 'Dancing Script' or 'Pacifico' (script/cursive style) for the Telugu-English brand name text. The rest of the app retains its existing Bricolage Grotesque / DM Sans font stack. Update tailwind.config.js to add a `fontFamily.brand` token pointing to the chosen script font and apply it via a dedicated CSS class (e.g. `font-brand`) on all brand-name elements.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-4"
+          "msg-1"
         ],
         "quotes": [
-          "no make it reload"
+          "use the script -cursive combo for MEMU merchukunnavi"
         ]
       },
       "acceptanceCriteria": [
-        "When the Dashboard page mounts and the actor is not yet ready, the page automatically retries the stats fetch at a short interval without user interaction.",
-        "A loading spinner or skeleton is shown while the retry is in progress.",
-        "Once the backend actor is initialized and getStats returns data, the Dashboard renders the stats without requiring a manual page refresh.",
-        "No manual 'Reload' or 'Retry' button is required — recovery is fully automatic.",
-        "If the fetch ultimately fails after retries, a non-crashing fallback error UI is shown."
+        "The text 'Memu Nerchukunnavi' in the Layout header renders in a script/cursive Google Font (Dancing Script or Pacifico).",
+        "The same script font is applied to the brand name in YearSelectionModal and About page hero heading.",
+        "All other text (navigation, body, badges) continues to use Bricolage Grotesque / DM Sans.",
+        "tailwind.config.js contains a fontFamily.brand token referencing the chosen script font.",
+        "Google Font import for the script font is present in frontend/src/index.css."
+      ]
+    },
+    {
+      "id": "REQ-39",
+      "text": "Increase the visibility of the existing dot-grid background pattern so it is clearly perceptible without overwhelming content. Raise the dot opacity from ~0.15 to approximately 0.35–0.45, increase the dot size slightly (from ~1px to ~2px), and reduce the grid spacing slightly so more dots are visible. Apply this updated pattern as the fixed full-viewport background layer in Layout.tsx (or via the body rule in index.css), ensuring it still sits below all card, modal, and overlay z-indices.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "use grid background that is visible"
+        ]
+      },
+      "acceptanceCriteria": [
+        "The dot-grid background is clearly visible on all pages without a magnifying glass.",
+        "Dot opacity is between 0.35 and 0.45.",
+        "Dots are approximately 2px in size.",
+        "Cards, modals, and navigation overlays render above the background without visual bleed.",
+        "Background does not shift or scroll with page content (position: fixed)."
+      ]
+    },
+    {
+      "id": "REQ-40",
+      "text": "Add floating spark/particle animations scattered across the background layer of the app. Each spark displays one of four year-label phrases: 'I'm 1st Year', 'I'm 2nd Year', 'I'm 3rd Year', 'I'm 4th Year'. Implement this as a React component (e.g. SparkParticles) rendered inside Layout.tsx, positioned fixed and full-viewport below content z-index. Generate 12–20 spark instances, each assigned a random year label, random starting position, random animation duration (6s–14s), and a gentle floating/drifting upward keyframe animation with fade-in and fade-out. Style each spark as a small pill or badge — soft lavender/violet background, rounded corners, tiny font (10–11px), low base opacity (~0.55) that pulses slightly. Add a subtle glint/sparkle icon (✦ or ✨) before the label text. Sparks must not block pointer events on any interactive element (pointer-events: none on the container and all spark elements).",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "little sparks in between saying im first year /second year/third/fourth"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Between 12 and 20 spark badges float across the background on every page.",
+        "Each spark shows one of: 'I'm 1st Year', 'I'm 2nd Year', 'I'm 3rd Year', 'I'm 4th Year' with a sparkle prefix.",
+        "Sparks animate upward with a fade-in/fade-out loop; animation durations vary per spark.",
+        "No spark intercepts click or touch events on buttons, cards, or navigation (pointer-events: none).",
+        "Sparks are rendered below all page content in z-index.",
+        "The SparkParticles component is mounted inside Layout.tsx so it appears on all pages."
       ]
     }
   ],
   "constraints": [
-    "Do not edit files listed in frontend.immutablePaths.",
-    "All Motoko logic must remain in the single main actor file."
+    "Do not modify any file under frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useActor.ts, frontend/src/main.tsx, or frontend/src/components/ui.",
+    "The script/cursive font must only apply to the brand name 'Memu Nerchukunnavi' — no other text elements.",
+    "Spark particles must use pointer-events: none so they never block interactive UI elements.",
+    "Background layers (dot-grid and sparks) must remain below all card, modal, and overlay z-indices."
   ],
   "nonGoals": [
-    "Adding new backend endpoints or changing the getStats function signature.",
-    "Changes to any page other than Dashboard.tsx and the useGetStats hook in useQueries.ts."
+    "Changing the overall color palette or existing font stack for non-brand-name text.",
+    "Adding new backend functionality.",
+    "Modifying the navigation structure or adding new pages.",
+    "Using external audio or animation libraries beyond CSS keyframes and React state."
   ],
   "imageRequirements": {
     "required": [],

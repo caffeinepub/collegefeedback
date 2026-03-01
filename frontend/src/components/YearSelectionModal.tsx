@@ -47,11 +47,19 @@ export default function YearSelectionModal({ onYearSelected }: YearSelectionModa
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-3xl bg-primary/15 mb-4">
             <GraduationCap className="w-8 h-8 text-primary" />
           </div>
-          <h1 className="font-heading font-extrabold text-2xl sm:text-3xl text-foreground mb-2">
-            {t('yearModalWelcome')}
+          {/* Brand name in script/cursive font */}
+          <h1 className="font-brand text-3xl sm:text-4xl text-foreground mb-1">
+            Memu <span className="text-primary">Nerchukunnavi</span>
           </h1>
+          <p className="font-heading font-extrabold text-lg sm:text-xl text-foreground mb-2">
+            {t('yearModalWelcome')}
+          </p>
           <p className="text-muted-foreground font-body text-sm sm:text-base leading-relaxed">
             {t('yearModalSubtitle')}
+          </p>
+          {/* Motivational Telugu quote */}
+          <p className="mt-3 text-xs sm:text-sm italic text-muted-foreground/70 font-body leading-relaxed">
+            "నేను కూడా ఒకప్పుడు మీ year ఎ"
           </p>
         </div>
 

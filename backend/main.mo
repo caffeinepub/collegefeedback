@@ -7,10 +7,8 @@ import Iter "mo:core/Iter";
 import MixinStorage "blob-storage/Mixin";
 import Storage "blob-storage/Storage";
 
-
 // Use MixinStorage for blob storage capabilities.
 // Specify migration module in actor definition.
-
 actor {
   include MixinStorage();
 

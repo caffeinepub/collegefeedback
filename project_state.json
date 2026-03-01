@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 17,
+  "projectStateVersion": 23,
   "summary": "A college feedback-sharing platform with a frictionless, anonymous workflow: users enter the site, select their college year, type a lesson or feedback, submit it, browse others' feedback, and can connect with anyone — all without sign-in or personal details. The platform is being built to be implementation-ready with multiple pages, custom fonts, emojis, dashboards, and polished UI. New direction includes: multi-language support (Telugu + English combo), social sharing options, a rebranded name ('Memu Nerchunnavi' style English-Telugu combo), a cute/innovative but simple color palette and fonts, and a customizable website/platform name per college.",
   "architectural_notes": [
     "Core purpose: seniors share real college experience feedback to guide juniors on internships, hackathons, and courses",
@@ -11,7 +11,7 @@
   "known_issues": [
     "Dashboard page fails to load in the deployed version (Version 6)"
   ],
-  "isFixRequest": true,
+  "isFixRequest": false,
   "existing_features": [
     {
       "id": "feature-build-a-home-feed-page-that-displays-all-senior-feedback-posts-sorted-by-recency-and-upvotes-showing-the-post-title-category-badge-a-snippet-of-the-content-author-name-and-upvote-count-include-a-top-banner-communicating-the-platform-s-motto-learn-from-seniors-start-early-make-every-semester-count",
@@ -260,6 +260,46 @@
         "REQ-35"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-update-the-deployed-application-s-url-slug-canister-name-to-meme-nerchukunnavi-this-should-be-reflected-in-the-project-configuration-e-g-dfx-json-canister-name-or-any-deployment-config-that-controls-the-url-identifier-so-the-app-is-accessible-at-a-url-containing-meme-nerchukunnavi",
+      "title": "Update the deployed application's URL slug/canister name to 'meme-nerchukunnavi'. This should be reflected in the project configuration (e.g. dfx.json canister name or any deployment config that controls the URL identifier) so the app is accessible at a URL containing 'meme-nerchukunnavi'.",
+      "reqIds": [
+        "REQ-36"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-on-the-year-selection-modal-first-launch-screen-add-a-motivational-quote-displayed-in-italicised-quotation-marks-year-meaning-i-was-also-in-your-year-once-display-it-as-a-styled-subtitle-or-inspirational-line-beneath-the-modal-s-main-prompt-heading-using-the-app-s-body-font-and-a-muted-secondary-text-colour-so-it-feels-atmospheric-rather-than-dominant",
+      "title": "On the Year Selection modal (first-launch screen), add a motivational quote displayed in italicised quotation marks: \"నేను కూడా ఒకప్పుడు మీ year ఎ\" (meaning: 'I was also in your year once'). Display it as a styled subtitle or inspirational line beneath the modal's main prompt heading, using the app's body font and a muted/secondary text colour so it feels atmospheric rather than dominant.",
+      "reqIds": [
+        "REQ-37"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-a-script-cursive-font-combination-specifically-to-the-memu-nerchukunnavi-brand-name-wherever-it-appears-as-a-logo-or-heading-layout-header-yearselectionmodal-title-about-page-hero-heading-index-html-title-display-import-a-google-font-pairing-use-dancing-script-or-pacifico-script-cursive-style-for-the-telugu-english-brand-name-text-the-rest-of-the-app-retains-its-existing-bricolage-grotesque-dm-sans-font-stack-update-tailwind-config-js-to-add-a-fontfamily-brand-token-pointing-to-the-chosen-script-font-and-apply-it-via-a-dedicated-css-class-e-g-font-brand-on-all-brand-name-elements",
+      "title": "Apply a script/cursive font combination specifically to the 'Memu Nerchukunnavi' brand name wherever it appears as a logo or heading (Layout header, YearSelectionModal title, About page hero heading, index.html <title> display). Import a Google Font pairing — use 'Dancing Script' or 'Pacifico' (script/cursive style) for the Telugu-English brand name text. The rest of the app retains its existing Bricolage Grotesque / DM Sans font stack. Update tailwind.config.js to add a `fontFamily.brand` token pointing to the chosen script font and apply it via a dedicated CSS class (e.g. `font-brand`) on all brand-name elements.",
+      "reqIds": [
+        "REQ-38"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-increase-the-visibility-of-the-existing-dot-grid-background-pattern-so-it-is-clearly-perceptible-without-overwhelming-content-raise-the-dot-opacity-from-0-15-to-approximately-0-35-0-45-increase-the-dot-size-slightly-from-1px-to-2px-and-reduce-the-grid-spacing-slightly-so-more-dots-are-visible-apply-this-updated-pattern-as-the-fixed-full-viewport-background-layer-in-layout-tsx-or-via-the-body-rule-in-index-css-ensuring-it-still-sits-below-all-card-modal-and-overlay-z-indices",
+      "title": "Increase the visibility of the existing dot-grid background pattern so it is clearly perceptible without overwhelming content. Raise the dot opacity from ~0.15 to approximately 0.35–0.45, increase the dot size slightly (from ~1px to ~2px), and reduce the grid spacing slightly so more dots are visible. Apply this updated pattern as the fixed full-viewport background layer in Layout.tsx (or via the body rule in index.css), ensuring it still sits below all card, modal, and overlay z-indices.",
+      "reqIds": [
+        "REQ-39"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-floating-spark-particle-animations-scattered-across-the-background-layer-of-the-app-each-spark-displays-one-of-four-year-label-phrases-i-m-1st-year-i-m-2nd-year-i-m-3rd-year-i-m-4th-year-implement-this-as-a-react-component-e-g-sparkparticles-rendered-inside-layout-tsx-positioned-fixed-and-full-viewport-below-content-z-index-generate-12-20-spark-instances-each-assigned-a-random-year-label-random-starting-position-random-animation-duration-6s-14s-and-a-gentle-floating-drifting-upward-keyframe-animation-with-fade-in-and-fade-out-style-each-spark-as-a-small-pill-or-badge-soft-lavender-violet-background-rounded-corners-tiny-font-10-11px-low-base-opacity-0-55-that-pulses-slightly-add-a-subtle-glint-sparkle-icon-or-before-the-label-text-sparks-must-not-block-pointer-events-on-any-interactive-element-pointer-events-none-on-the-container-and-all-spark-elements",
+      "title": "Add floating spark/particle animations scattered across the background layer of the app. Each spark displays one of four year-label phrases: 'I'm 1st Year', 'I'm 2nd Year', 'I'm 3rd Year', 'I'm 4th Year'. Implement this as a React component (e.g. SparkParticles) rendered inside Layout.tsx, positioned fixed and full-viewport below content z-index. Generate 12–20 spark instances, each assigned a random year label, random starting position, random animation duration (6s–14s), and a gentle floating/drifting upward keyframe animation with fade-in and fade-out. Style each spark as a small pill or badge — soft lavender/violet background, rounded corners, tiny font (10–11px), low base opacity (~0.55) that pulses slightly. Add a subtle glint/sparkle icon (✦ or ✨) before the label text. Sparks must not block pointer events on any interactive element (pointer-events: none on the container and all spark elements).",
+      "reqIds": [
+        "REQ-40"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -407,6 +447,36 @@
       "reqIds": [
         "REQ-32"
       ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-31",
+      "summary": "Change the app/site URL slug to 'meme-nerchukunnavi' (or similar based on the platform name)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-32",
+      "summary": "Add a motivational quote/tagline on the platform (possibly on the year selection modal or home page) with the Telugu phrase 'నేను కూడా ఒకప్పుడు మీ year ఎ' (I was also in your year once) displayed in quotes.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-33",
+      "summary": "Use a script/cursive font combo specifically for the 'Memu Nerchukunnavi' logo/brand name in the header",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-34",
+      "summary": "Make the dot-grid background more visible (higher opacity/contrast than the current subtle version)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-35",
+      "summary": "Add floating spark/particle animations between the grid that display year labels ('I'm 1st Year', '2nd Year', '3rd Year', '4th Year') scattered across the background",
+      "reqIds": [],
       "status": "pending"
     }
   ],
