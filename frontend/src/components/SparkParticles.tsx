@@ -13,16 +13,16 @@ interface ColorScheme {
   border: string;
 }
 
-// Warm palette pill colors (no dark/black tones)
+// Violet / Pink / Yellow pill colors
 const PILL_COLORS: ColorScheme[] = [
-  { bg: "#FAE5D3", text: "#8B4513", border: "#E8956D" },
-  { bg: "#FFF3E0", text: "#7B5E2A", border: "#F4A460" },
-  { bg: "#FDE8D8", text: "#A0522D", border: "#CD853F" },
-  { bg: "#FFF8F0", text: "#6B4226", border: "#DEB887" },
-  { bg: "#FAEBD7", text: "#8B6914", border: "#DAA520" },
-  { bg: "#FFF0E6", text: "#9B4400", border: "#E07B39" },
-  { bg: "#F5E6D3", text: "#7A4419", border: "#C8874A" },
-  { bg: "#FEF3E2", text: "#855A1A", border: "#E8A838" },
+  { bg: "#EDE0FF", text: "#4B0082", border: "#9B59B6" },   // light violet
+  { bg: "#FFD6EC", text: "#7B0050", border: "#E91E8C" },   // pink
+  { bg: "#FFF9C4", text: "#5A4000", border: "#F4C430" },   // yellow
+  { bg: "#D8B4FE", text: "#3B0764", border: "#7C3AED" },   // medium violet
+  { bg: "#FECDD3", text: "#881337", border: "#F43F5E" },   // rose pink
+  { bg: "#FEF08A", text: "#713F12", border: "#EAB308" },   // bright yellow
+  { bg: "#F3E8FF", text: "#581C87", border: "#A855F7" },   // soft violet
+  { bg: "#FCE7F3", text: "#831843", border: "#EC4899" },   // hot pink
 ];
 
 interface Particle {
@@ -119,7 +119,7 @@ const SparkParticles: React.FC = () => {
               color: p.colorScheme.text,
               border: `1.5px solid ${p.colorScheme.border}`,
               whiteSpace: "nowrap",
-              boxShadow: "0 2px 8px rgba(139,69,19,0.12)",
+              boxShadow: "0 2px 8px rgba(75,0,130,0.15)",
               letterSpacing: "0.01em",
             }}
           >

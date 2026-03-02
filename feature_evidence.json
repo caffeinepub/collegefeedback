@@ -2,13 +2,10 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-update-the-app-s-brand-name-throughout-the-frontend-to-memu-nerchukunnam-this-includes-the-site-title-in-index-html-the-header-navbar-brand-display-in-layout-tsx-the-about-page-hero-and-any-other-locations-where-the-current-platform-name-appears",
-      "featureTitle": "Update the app's brand name throughout the frontend to 'Memu Nerchukunnam' (మేము నేర్చుకున్నాం). This includes the site title in index.html, the header/navbar brand display in Layout.tsx, the About page hero, and any other locations where the current platform name appears.",
+      "featureId": "feature-update-the-global-css-custom-properties-in-frontend-src-index-css-to-use-a-violet-and-black-color-combo-set-the-primary-accent-colors-to-violet-tones-set-the-main-background-color-to-pink-and-update-the-grid-background-utility-colors-to-yellow-ensure-both-light-and-dark-theme-tokens-reflect-this-new-palette-consistently",
+      "featureTitle": "Update the global CSS custom properties in frontend/src/index.css to use a violet and black color combo: set the primary/accent colors to violet tones, set the main background color to pink, and update the grid background utility colors to yellow. Ensure both light and dark theme tokens reflect this new palette consistently.",
       "files": [
-        "frontend/index.html",
-        "frontend/src/components/Layout.tsx",
-        "frontend/src/pages/About.tsx",
-        "frontend/src/pages/Home.tsx"
+        "frontend/src/index.css"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -16,7 +13,8 @@
         "build-template-react@1.0.0",
         "initial-app@1.0.0",
         "github-export-icp-cli@1.0.0",
-        "blob-storage@4.0.0"
+        "blob-storage@4.0.0",
+        "authorization@4.0.0"
       ],
       "testIds": [
         "REQ-1"
@@ -24,12 +22,10 @@
       "confidence": "high"
     },
     {
-      "featureId": "feature-add-a-prominent-share-this-website-section-or-button-on-the-home-page-and-about-page-that-allows-visitors-to-share-the-platform-url-via-whatsapp-copy-link-to-clipboard-and-the-native-web-share-api-so-any-user-can-easily-spread-the-site-to-others",
-      "featureTitle": "Add a prominent 'Share This Website' section or button on the Home page and About page that allows visitors to share the platform URL via WhatsApp, copy link to clipboard, and the native Web Share API — so any user can easily spread the site to others.",
+      "featureId": "feature-update-frontend-tailwind-config-js-color-tokens-to-align-with-the-new-violet-black-pink-yellow-palette-ensuring-tailwind-utility-classes-used-across-components-badges-cards-buttons-year-badges-navigation-pick-up-the-updated-theme-colors",
+      "featureTitle": "Update frontend/tailwind.config.js color tokens to align with the new violet/black/pink/yellow palette, ensuring Tailwind utility classes used across components (badges, cards, buttons, year badges, navigation) pick up the updated theme colors.",
       "files": [
-        "frontend/src/components/ShareWebsiteButtons.tsx",
-        "frontend/src/pages/About.tsx",
-        "frontend/src/pages/Home.tsx"
+        "frontend/tailwind.config.js"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -37,7 +33,8 @@
         "build-template-react@1.0.0",
         "initial-app@1.0.0",
         "github-export-icp-cli@1.0.0",
-        "blob-storage@4.0.0"
+        "blob-storage@4.0.0",
+        "authorization@4.0.0"
       ],
       "testIds": [
         "REQ-2"
@@ -45,10 +42,10 @@
       "confidence": "high"
     },
     {
-      "featureId": "feature-remove-or-make-optional-the-year-selection-onboarding-modal-yearselectionmodal-so-that-first-time-visitors-who-arrive-via-a-shared-link-can-immediately-browse-all-posts-without-being-blocked-by-a-required-gate-year-selection-should-remain-accessible-but-non-blocking-e-g-as-an-optional-profile-step",
-      "featureTitle": "Remove or make optional the year-selection onboarding modal (YearSelectionModal) so that first-time visitors who arrive via a shared link can immediately browse all posts without being blocked by a required gate. Year selection should remain accessible but non-blocking (e.g., as an optional profile step).",
+      "featureId": "feature-update-the-sparkparticles-component-frontend-src-components-sparkparticles-tsx-to-use-the-new-violet-pink-yellow-color-schemes-for-the-floating-pill-particles-instead-of-the-existing-warm-brown-skin-tone-schemes",
+      "featureTitle": "Update the SparkParticles component (frontend/src/components/SparkParticles.tsx) to use the new violet/pink/yellow color schemes for the floating pill particles instead of the existing warm brown/skin-tone schemes.",
       "files": [
-        "frontend/src/pages/Home.tsx"
+        "frontend/src/components/SparkParticles.tsx"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -56,29 +53,11 @@
         "build-template-react@1.0.0",
         "initial-app@1.0.0",
         "github-export-icp-cli@1.0.0",
-        "blob-storage@4.0.0"
+        "blob-storage@4.0.0",
+        "authorization@4.0.0"
       ],
       "testIds": [
         "REQ-3"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-update-the-english-and-telugu-translation-strings-in-frontend-src-translations-index-ts-to-reflect-the-new-brand-name-memu-nerchukunnam-and-update-the-tagline-description-copy-on-the-home-and-about-pages-to-emphasize-that-this-is-an-open-community-shared-learning-platform-for-all-students",
-      "featureTitle": "Update the English and Telugu translation strings in frontend/src/translations/index.ts to reflect the new brand name 'Memu Nerchukunnam' and update the tagline/description copy on the Home and About pages to emphasize that this is an open, community-shared learning platform for all students.",
-      "files": [
-        "frontend/src/translations/index.ts"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0",
-        "blob-storage@4.0.0"
-      ],
-      "testIds": [
-        "REQ-4"
       ],
       "confidence": "high"
     }

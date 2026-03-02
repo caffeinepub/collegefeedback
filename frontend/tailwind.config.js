@@ -53,13 +53,22 @@ export default {
           border: "oklch(var(--sidebar-border) / <alpha-value>)",
           ring: "oklch(var(--sidebar-ring) / <alpha-value>)",
         },
-        warm: {
-          sand: "var(--warm-sand)",
-          terracotta: "var(--warm-terracotta)",
-          peach: "var(--warm-peach)",
-          cream: "var(--warm-cream)",
-          brown: "var(--warm-brown)",
-          sienna: "var(--warm-sienna)",
+        // New violet/pink/yellow/black palette tokens
+        violet: {
+          deep: "var(--violet-deep)",
+          mid: "var(--violet-mid)",
+          light: "var(--violet-light)",
+        },
+        pink: {
+          soft: "var(--pink-soft)",
+          mid: "var(--pink-mid)",
+        },
+        yellow: {
+          bright: "var(--yellow-bright)",
+          soft: "var(--yellow-soft)",
+        },
+        black: {
+          rich: "var(--black-rich)",
         },
       },
       borderRadius: {

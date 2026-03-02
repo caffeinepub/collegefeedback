@@ -9,6 +9,8 @@ const NAV_LINKS = [
   { to: "/", label: "Home" },
   { to: "/share", label: "Share" },
   { to: "/dashboard", label: "Dashboard" },
+  { to: "/available-students", label: "Students" },
+  { to: "/community-chat", label: "Chat" },
   { to: "/wishlist", label: "Wishlist" },
   { to: "/about", label: "About" },
 ];
@@ -26,11 +28,11 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   };
 
   const appId = encodeURIComponent(
-    typeof window !== "undefined" ? window.location.hostname : "memu-nerchukunnam"
+    typeof window !== "undefined" ? window.location.hostname : "memu-nerchukunnavi"
   );
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: "oklch(0.98 0.012 60)" }}>
+    <div className="min-h-screen flex flex-col app-grid-bg">
       <SparkParticles />
 
       {/* Header */}
@@ -47,7 +49,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           <Link to="/" className="flex items-center gap-2 group">
             <img
               src="/assets/generated/memu-logo.dim_256x256.png"
-              alt="Memu Nerchukunnam logo"
+              alt="Memu Nerchukunnavi logo"
               className="w-8 h-8 rounded-full object-cover"
               style={{ border: "1.5px solid oklch(0.82 0.06 52)" }}
             />
@@ -55,7 +57,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
               className="font-brand text-xl leading-none"
               style={{ color: "oklch(0.45 0.10 42)" }}
             >
-              Memu Nerchukunnam
+              Memu Nerchukunnavi
             </span>
             {hasSelected && year && (
               <span
@@ -178,7 +180,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
               className="font-brand text-base"
               style={{ color: "oklch(0.45 0.10 42)" }}
             >
-              Memu Nerchukunnam
+              Memu Nerchukunnavi
             </span>
             <span className="text-xs" style={{ color: "oklch(0.55 0.05 50)" }}>
               © {new Date().getFullYear()}

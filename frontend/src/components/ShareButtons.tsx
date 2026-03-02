@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Share2, Copy, Check } from "lucide-react";
 import { SiWhatsapp } from "react-icons/si";
+import { useToast } from "../hooks/useToast";
+import { playBubblePop } from "../utils/sounds";
 
 interface ShareButtonsProps {
   postId: bigint;
@@ -9,6 +11,7 @@ interface ShareButtonsProps {
 
 const ShareButtons: React.FC<ShareButtonsProps> = ({ postId, content }) => {
   const [copied, setCopied] = useState(false);
+  const { showToast } = useToast();
 
   const url = `${window.location.origin}/post/${postId}`;
   const text = `Check out this experience: "${content.slice(0, 80)}…" ${url}`;
@@ -19,7 +22,9 @@ const ShareButtons: React.FC<ShareButtonsProps> = ({ postId, content }) => {
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(url);
+    playBubblePop();
     setCopied(true);
+    showToast("🔗 Link copied to clipboard!", "success");
     setTimeout(() => setCopied(false), 2000);
   };
 

@@ -1,107 +1,54 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Rebrand platform as 'Memu Nerchukunnam' with shareable public access",
+  "title": "Update color scheme to violet/black with pink background and yellow grids",
   "requirements": [
     {
       "id": "REQ-1",
-      "summary": "Update the app's brand name throughout the frontend to 'Memu Nerchukunnam' (మేము నేర్చుకున్నాం)",
+      "summary": "Update global CSS custom properties to violet/black/pink/yellow palette",
       "acceptanceCriteria": [
-        "The browser tab title reads 'Memu Nerchukunnam'",
-        "The sticky header displays 'Memu Nerchukunnam' as the brand name",
-        "The About page hero section reflects the new brand name",
-        "All instances of the old platform name are replaced consistently"
+        "Primary/accent CSS tokens are violet (e.g., oklch values in the violet range)",
+        "Background CSS token is pink",
+        "Grid background utility (defined in index.css) renders yellow grid lines",
+        "Black is used for text/foreground contrast tokens",
+        "All existing pages and components visually reflect the new palette without layout breakage"
       ],
       "file_operations": [
         {
-          "path": "frontend/index.html",
+          "path": "frontend/src/index.css",
           "operation": "modify",
-          "description": "Update the <title> tag to 'Memu Nerchukunnam' and ensure the meta description reflects the new brand name and community-sharing mission."
-        },
-        {
-          "path": "frontend/src/components/Layout.tsx",
-          "operation": "modify",
-          "description": "Replace the brand name in the sticky header with 'Memu Nerchukunnam'. Wire in the generated logo image at frontend/public/assets/generated/memu-logo.dim_256x256.png alongside the brand text for visual identity."
-        },
-        {
-          "path": "frontend/src/pages/About.tsx",
-          "operation": "modify",
-          "description": "Update the hero banner and mission statement to prominently feature 'Memu Nerchukunnam' as the platform name. Reference the generated logo at frontend/public/assets/generated/memu-logo.dim_256x256.png in the hero section."
-        },
-        {
-          "path": "frontend/src/pages/Home.tsx",
-          "operation": "modify",
-          "description": "Update the hero banner heading to reflect 'Memu Nerchukunnam' and ensure the tagline emphasizes the open, community-shared learning platform theme."
+          "description": "Update all CSS custom properties in the :root and .dark selectors to implement the violet/black/pink/yellow color scheme. Set primary and accent tokens to violet OKLCH values, background to pink, foreground/text tokens to black for contrast, and grid background utilities to yellow. Ensure both light and dark theme variants reflect the new palette consistently."
         }
       ]
     },
     {
       "id": "REQ-2",
-      "summary": "Add a prominent 'Share This Website' section on Home and About pages allowing visitors to share via WhatsApp, copy link, and native Web Share API",
+      "summary": "Update Tailwind config color tokens to align with violet/black/pink/yellow palette",
       "acceptanceCriteria": [
-        "A 'Share This Website' UI element is visible on the Home page",
-        "A 'Share This Website' UI element is visible on the About page",
-        "WhatsApp share opens a pre-filled message with the site URL and name",
-        "Copy link button copies the root URL to clipboard and shows a confirmation",
-        "Native Web Share API is triggered on supported devices"
+        "Tailwind config color tokens for primary, background, accent, and grid reference the new violet/pink/yellow/black values",
+        "Year badges, nav links, and card components display the updated colors",
+        "No hardcoded color classes conflict with the new palette"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/components/ShareWebsiteButtons.tsx",
-          "operation": "create",
-          "description": "Create a new component that renders share buttons for the entire website (not a single post). Include WhatsApp share with a pre-filled message containing 'Memu Nerchukunnam' and the root URL, a copy-to-clipboard button showing confirmation feedback, and a native Web Share API trigger button. Style consistently with the warm OKLCH theme."
-        },
-        {
-          "path": "frontend/src/pages/Home.tsx",
+          "path": "frontend/tailwind.config.js",
           "operation": "modify",
-          "description": "Add the ShareWebsiteButtons component prominently near the hero section or after the category filter tabs, ensuring it is visible to first-time visitors arriving via shared links."
-        },
-        {
-          "path": "frontend/src/pages/About.tsx",
-          "operation": "modify",
-          "description": "Add the ShareWebsiteButtons component in a visible location on the About page, such as after the mission statement or feature grid, inviting visitors to share the platform."
+          "description": "Update the theme.extend.colors section to reference the new violet, pink, yellow, and black CSS custom properties defined in index.css. Ensure that color tokens for primary, background, accent, foreground, card, and other semantic colors align with the updated palette so that Tailwind utility classes (used in badges, cards, buttons, navigation) pick up the new theme automatically."
         }
       ]
     },
     {
       "id": "REQ-3",
-      "summary": "Remove or make optional the year-selection onboarding modal so first-time visitors can browse all posts without being blocked",
+      "summary": "Update SparkParticles component to use violet/pink/yellow color schemes",
       "acceptanceCriteria": [
-        "A user who opens the site via a shared link can browse posts without being forced to select a year first",
-        "Year selection is still available (e.g., as a banner prompt or optional modal trigger)",
-        "Existing users who have already selected a year are not affected"
+        "Floating pill particles use violet, pink, and yellow color variants",
+        "No warm brown or skin-tone colors remain in the particle animation"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/App.tsx",
+          "path": "frontend/src/components/SparkParticles.tsx",
           "operation": "modify",
-          "description": "Remove the YearSelectionModal from the main app layout or make it conditional so it does not block first-time visitors. Ensure the modal can still be triggered optionally (e.g., from the user profile or a settings menu)."
-        },
-        {
-          "path": "frontend/src/pages/Home.tsx",
-          "operation": "modify",
-          "description": "Add an optional, dismissible banner or inline prompt inviting visitors to select their year for a personalized experience, but do not block browsing if they decline."
-        },
-        {
-          "path": "frontend/src/pages/ShareExperience.tsx",
-          "operation": "modify",
-          "description": "Keep the year-selection gate for the Share Experience form (since posting requires a year), but ensure browsing is never blocked on public pages."
-        }
-      ]
-    },
-    {
-      "id": "REQ-4",
-      "summary": "Update English and Telugu translation strings to reflect 'Memu Nerchukunnam' and emphasize the open, community-shared learning platform theme",
-      "acceptanceCriteria": [
-        "Translation keys referencing the old brand name are updated to 'Memu Nerchukunnam'",
-        "Home page hero tagline reflects the community/open-sharing theme",
-        "About page mission statement mentions open access for all students"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/translations/index.ts",
-          "operation": "modify",
-          "description": "Replace all translation keys that reference the old platform name with 'Memu Nerchukunnam'. Update the Home page hero tagline and About page mission statement copy to emphasize that this is an open, shareable, community-driven learning platform accessible to all students."
+          "description": "Replace the existing warm brown/skin-tone color schemes in the floating pill particles with violet, pink, and yellow color variants. Update the background color and border color values in the particle elements to use the new palette while preserving the animation and layout logic."
         }
       ]
     }

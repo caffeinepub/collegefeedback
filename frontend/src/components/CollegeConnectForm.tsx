@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useSubmitCollegeConnect } from "../hooks/useQueries";
 import { playBubblePop } from "../utils/sounds";
+import { useToast } from "../hooks/useToast";
 
 const YEARS = ["1st Year", "2nd Year", "3rd Year", "4th Year"];
 
@@ -10,6 +11,7 @@ const CollegeConnectForm: React.FC = () => {
   const [tip, setTip] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitted, setSubmitted] = useState(false);
+  const { showToast } = useToast();
 
   const { mutate, isPending } = useSubmitCollegeConnect();
 
@@ -27,6 +29,7 @@ const CollegeConnectForm: React.FC = () => {
     const errs = validate();
     if (Object.keys(errs).length > 0) {
       setErrors(errs);
+      showToast("Please fix the errors before submitting.", "error");
       return;
     }
     setErrors({});
@@ -35,11 +38,15 @@ const CollegeConnectForm: React.FC = () => {
       {
         onSuccess: () => {
           playBubblePop();
+          showToast("🤝 Tip shared successfully!", "success");
           setSubmitted(true);
           setCollegeName("");
           setYear("");
           setTip("");
           setTimeout(() => setSubmitted(false), 3000);
+        },
+        onError: () => {
+          showToast("Failed to share tip. Please try again.", "error");
         },
       }
     );

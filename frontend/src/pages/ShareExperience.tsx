@@ -5,6 +5,7 @@ import { useYearSelection } from "../hooks/useYearSelection";
 import YearSelectionModal from "../components/YearSelectionModal";
 import { Category } from "../backend";
 import { playBubblePop, playTypingTick } from "../utils/sounds";
+import { useToast } from "../hooks/useToast";
 
 const CATEGORIES = [
   { value: Category.internships, label: "💼 Internships" },
@@ -17,9 +18,9 @@ const MAX_CHARS = 1000;
 
 const ShareExperience: React.FC = () => {
   const navigate = useNavigate();
-  // useYearSelection returns { year, hasSelected, setYear, ... }
   const { year, hasSelected } = useYearSelection();
   const [showYearModal, setShowYearModal] = useState(!hasSelected);
+  const { showToast } = useToast();
 
   const [category, setCategory] = useState<Category>(Category.general);
   const [content, setContent] = useState("");
@@ -40,6 +41,7 @@ const ShareExperience: React.FC = () => {
     const errs = validate();
     if (Object.keys(errs).length > 0) {
       setErrors(errs);
+      showToast("Please fix the errors before submitting.", "error");
       return;
     }
     setErrors({});
@@ -52,8 +54,12 @@ const ShareExperience: React.FC = () => {
       {
         onSuccess: () => {
           playBubblePop();
+          showToast("🎉 Experience shared successfully!", "success");
           setSubmitted(true);
           setContent("");
+        },
+        onError: () => {
+          showToast("Failed to share experience. Please try again.", "error");
         },
       }
     );
@@ -143,7 +149,10 @@ const ShareExperience: React.FC = () => {
                 <button
                   key={cat.value}
                   type="button"
-                  onClick={() => setCategory(cat.value)}
+                  onClick={() => {
+                    playBubblePop();
+                    setCategory(cat.value);
+                  }}
                   className="px-3 py-1.5 rounded-full text-sm font-semibold border transition-all"
                   style={
                     category === cat.value

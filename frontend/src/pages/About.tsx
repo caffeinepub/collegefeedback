@@ -42,7 +42,7 @@ const About: React.FC = () => {
           <div className="flex items-center gap-3 mb-2">
             <img
               src="/assets/generated/memu-logo.dim_256x256.png"
-              alt="Memu Nerchukunnam"
+              alt="Memu Nerchukunnavi"
               className="w-10 h-10 rounded-full object-cover shadow-md"
               style={{ border: "2px solid oklch(0.99 0.005 58 / 0.7)" }}
             />
@@ -50,14 +50,14 @@ const About: React.FC = () => {
               className="font-brand text-3xl sm:text-4xl drop-shadow-sm"
               style={{ color: "oklch(0.99 0.005 58)" }}
             >
-              Memu Nerchukunnam
+              Memu Nerchukunnavi
             </h1>
           </div>
           <p
             className="text-sm sm:text-base font-medium drop-shadow-sm"
             style={{ color: "oklch(0.97 0.010 58)" }}
           >
-            మేము నేర్చుకున్నాం — What We Learned Together
+            మేము నేర్చుకున్నవి — What We Learned Together
           </p>
         </div>
       </div>
@@ -73,7 +73,7 @@ const About: React.FC = () => {
         <p className="text-base leading-relaxed mb-3" style={{ color: "oklch(0.38 0.04 50)" }}>
           College is full of lessons that no textbook teaches — the internship that changed
           everything, the hackathon that pushed your limits, the course that opened new doors.
-          <strong style={{ color: "oklch(0.45 0.10 42)" }}> Memu Nerchukunnam</strong> is a
+          <strong style={{ color: "oklch(0.45 0.10 42)" }}> Memu Nerchukunnavi</strong> is a
           free, open platform where students share these real experiences so others can learn,
           grow, and navigate college life better.
         </p>
@@ -175,7 +175,7 @@ const About: React.FC = () => {
           This platform runs entirely on the Internet Computer Protocol (ICP) — a decentralized
           blockchain network. Your posts and data are stored on-chain, ensuring transparency,
           permanence, and censorship-resistance without relying on traditional cloud servers.
-          This means Memu Nerchukunnam stays accessible to everyone, always.
+          This means Memu Nerchukunnavi stays accessible to everyone, always.
         </p>
       </section>
     </div>

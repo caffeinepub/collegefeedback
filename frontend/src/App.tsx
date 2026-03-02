@@ -5,6 +5,7 @@ import {
   createRootRoute,
   RouterProvider,
   Outlet,
+  useRouterState,
 } from '@tanstack/react-router';
 import { ThemeProvider } from 'next-themes';
 import { Toaster } from '@/components/ui/sonner';
@@ -15,12 +16,34 @@ import PostDetail from './pages/PostDetail';
 import Dashboard from './pages/Dashboard';
 import About from './pages/About';
 import Wishlist from './pages/Wishlist';
+import AvailableStudents from './pages/AvailableStudents';
+import CommunityChat from './pages/CommunityChat';
+import { ToastProvider } from './hooks/useToast';
+import ToastContainer from './components/ToastContainer';
+import { useEffect, useRef } from 'react';
+import { playBubblePop } from './utils/sounds';
 
 const queryClient = new QueryClient();
+
+function RouteChangeSound() {
+  const routerState = useRouterState();
+  const prevPathRef = useRef<string | null>(null);
+
+  useEffect(() => {
+    const currentPath = routerState.location.pathname;
+    if (prevPathRef.current !== null && prevPathRef.current !== currentPath) {
+      playBubblePop();
+    }
+    prevPathRef.current = currentPath;
+  }, [routerState.location.pathname]);
+
+  return null;
+}
 
 function AppShell() {
   return (
     <Layout>
+      <RouteChangeSound />
       <Outlet />
     </Layout>
   );
@@ -66,6 +89,18 @@ const wishlistRoute = createRoute({
   component: Wishlist,
 });
 
+const availableStudentsRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/available-students',
+  component: AvailableStudents,
+});
+
+const communityChatRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/community-chat',
+  component: CommunityChat,
+});
+
 const routeTree = rootRoute.addChildren([
   homeRoute,
   shareRoute,
@@ -73,6 +108,8 @@ const routeTree = rootRoute.addChildren([
   dashboardRoute,
   aboutRoute,
   wishlistRoute,
+  availableStudentsRoute,
+  communityChatRoute,
 ]);
 
 const router = createRouter({ routeTree });
@@ -87,8 +124,11 @@ export default function App() {
   return (
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
       <QueryClientProvider client={queryClient}>
-        <RouterProvider router={router} />
-        <Toaster />
+        <ToastProvider>
+          <RouterProvider router={router} />
+          <ToastContainer />
+          <Toaster />
+        </ToastProvider>
       </QueryClientProvider>
     </ThemeProvider>
   );

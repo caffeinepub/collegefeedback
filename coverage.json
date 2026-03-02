@@ -1,93 +1,58 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-03-01T19:05:42.978Z",
+  "generatedAt": "2026-03-02T12:15:43.728Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
-    "total": 5,
-    "implemented": 4,
+    "total": 3,
+    "implemented": 3,
     "items": [
       {
         "id": "REQ-1",
-        "summary": "Update the app's brand name throughout the frontend to 'Memu Nerchukunnam' (మేము నేర్చుకున్నాం). This includes the site title in index.html, the header/navbar brand display in Layout.tsx, the About page hero, and any other locations where the current platform name appears.",
+        "summary": "Update the global CSS custom properties in frontend/src/index.css to use a violet and black color combo: set the primary/accent colors to violet tones, set the main background color to pink, and update the grid background utility colors to yellow. Ensure both light and dark theme tokens reflect this new palette consistently.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/index.html",
-          "frontend/src/components/Layout.tsx",
-          "frontend/src/pages/About.tsx",
-          "frontend/src/pages/Home.tsx"
+          "frontend/src/index.css"
         ],
         "matchedFiles": [
-          "frontend/index.html",
-          "frontend/src/components/Layout.tsx",
-          "frontend/src/pages/About.tsx",
-          "frontend/src/pages/Home.tsx"
+          "frontend/src/index.css"
         ]
       },
       {
         "id": "REQ-2",
-        "summary": "Add a prominent 'Share This Website' section or button on the Home page and About page that allows visitors to share the platform URL via WhatsApp, copy link to clipboard, and the native Web Share API — so any user can easily spread the site to others.",
+        "summary": "Update frontend/tailwind.config.js color tokens to align with the new violet/black/pink/yellow palette, ensuring Tailwind utility classes used across components (badges, cards, buttons, year badges, navigation) pick up the updated theme colors.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/components/ShareWebsiteButtons.tsx",
-          "frontend/src/pages/Home.tsx",
-          "frontend/src/pages/About.tsx"
+          "frontend/tailwind.config.js"
         ],
         "matchedFiles": [
-          "frontend/src/components/ShareWebsiteButtons.tsx",
-          "frontend/src/pages/Home.tsx",
-          "frontend/src/pages/About.tsx"
+          "frontend/tailwind.config.js"
         ]
       },
       {
         "id": "REQ-3",
-        "summary": "Remove or make optional the year-selection onboarding modal (YearSelectionModal) so that first-time visitors who arrive via a shared link can immediately browse all posts without being blocked by a required gate. Year selection should remain accessible but non-blocking (e.g., as an optional profile step).",
+        "summary": "Update the SparkParticles component (frontend/src/components/SparkParticles.tsx) to use the new violet/pink/yellow color schemes for the floating pill particles instead of the existing warm brown/skin-tone schemes.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/App.tsx",
-          "frontend/src/pages/Home.tsx",
-          "frontend/src/pages/ShareExperience.tsx"
+          "frontend/src/components/SparkParticles.tsx"
         ],
         "matchedFiles": [
-          "frontend/src/pages/Home.tsx"
+          "frontend/src/components/SparkParticles.tsx"
         ]
-      },
-      {
-        "id": "REQ-4",
-        "summary": "Update the English and Telugu translation strings in frontend/src/translations/index.ts to reflect the new brand name 'Memu Nerchukunnam' and update the tagline/description copy on the Home and About pages to emphasize that this is an open, community-shared learning platform for all students.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/translations/index.ts"
-        ],
-        "matchedFiles": [
-          "frontend/src/translations/index.ts"
-        ]
-      },
-      {
-        "id": "REQ-5",
-        "summary": "Ensure the backend actor in backend/main.mo does not require any form of authentication to read posts or college connect tips. All read (query) functions — getAllPosts, getPostsByCategory, getStats, getAllCollegeConnects — must be publicly accessible without Internet Identity login.",
-        "status": "unknown",
-        "plannedFiles": [],
-        "matchedFiles": []
       }
     ]
   },
   "changedFiles": [
-    "backend/main.mo",
     "build-request.json",
     "feature_evidence.json",
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
-    "frontend/index.html",
-    "frontend/public/assets/generated/memu-logo.dim_256x256.png",
-    "frontend/src/components/Layout.tsx",
-    "frontend/src/components/ShareWebsiteButtons.tsx",
-    "frontend/src/pages/About.tsx",
-    "frontend/src/pages/Home.tsx",
-    "frontend/src/translations/index.ts",
+    "frontend/src/components/SparkParticles.tsx",
+    "frontend/src/index.css",
+    "frontend/tailwind.config.js",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",

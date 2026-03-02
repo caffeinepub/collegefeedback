@@ -14,12 +14,30 @@ export type Category = { 'courses' : null } |
   { 'hackathons' : null } |
   { 'internships' : null } |
   { 'general' : null };
+export interface ChatMessage {
+  'authorName' : string,
+  'collegeYear' : string,
+  'message' : string,
+  'timestamp' : bigint,
+}
 export interface CollegeConnect {
   'id' : bigint,
   'tip' : string,
   'collegeName' : string,
   'createdAt' : bigint,
   'year' : string,
+}
+export interface DMMessage {
+  'recipient' : string,
+  'sender' : string,
+  'message' : string,
+  'timestamp' : bigint,
+}
+export interface FeedbackEntry {
+  'authorName' : string,
+  'collegeYear' : string,
+  'feedback' : string,
+  'timestamp' : bigint,
 }
 export interface Post {
   'id' : bigint,
@@ -36,6 +54,20 @@ export interface PostStats {
   'topConnectedPosts' : Array<Post>,
   'totalPosts' : bigint,
 }
+export interface StudentProfile {
+  'availableForDM' : boolean,
+  'collegeName' : string,
+  'name' : string,
+  'collegeYear' : string,
+}
+export interface UserProfile {
+  'collegeName' : string,
+  'name' : string,
+  'collegeYear' : string,
+}
+export type UserRole = { 'admin' : null } |
+  { 'user' : null } |
+  { 'guest' : null };
 export interface _CaffeineStorageCreateCertificateResult {
   'method' : string,
   'blob_hash' : string,
@@ -63,15 +95,34 @@ export interface _SERVICE {
     _CaffeineStorageRefillResult
   >,
   '_caffeineStorageUpdateGatewayPrincipals' : ActorMethod<[], undefined>,
+  '_initializeAccessControlWithSecret' : ActorMethod<[string], undefined>,
   'addToWishlist' : ActorMethod<[string, bigint], undefined>,
+  'assignCallerUserRole' : ActorMethod<[Principal, UserRole], undefined>,
+  'createOrUpdateStudentProfile' : ActorMethod<
+    [string, string, string, boolean],
+    undefined
+  >,
   'createPost' : ActorMethod<[string, string, Category], bigint>,
   'getAllCollegeConnects' : ActorMethod<[], Array<CollegeConnect>>,
+  'getAllFeedbackEntries' : ActorMethod<[], Array<FeedbackEntry>>,
   'getAllPosts' : ActorMethod<[], Array<Post>>,
+  'getAvailableStudents' : ActorMethod<[], Array<StudentProfile>>,
+  'getCallerUserProfile' : ActorMethod<[], [] | [UserProfile]>,
+  'getCallerUserRole' : ActorMethod<[], UserRole>,
+  'getConversation' : ActorMethod<[string, string], Array<DMMessage>>,
+  'getLatestChatMessages' : ActorMethod<[bigint], Array<ChatMessage>>,
   'getPostsByCategory' : ActorMethod<[Category], Array<Post>>,
   'getStats' : ActorMethod<[], PostStats>,
+  'getUserProfile' : ActorMethod<[Principal], [] | [UserProfile]>,
   'getWishlist' : ActorMethod<[string], Array<bigint>>,
+  'isCallerAdmin' : ActorMethod<[], boolean>,
+  'isStudentAvailableForDM' : ActorMethod<[string], boolean>,
+  'postChatMessage' : ActorMethod<[string, string, string], undefined>,
   'removeFromWishlist' : ActorMethod<[string, bigint], undefined>,
+  'saveCallerUserProfile' : ActorMethod<[UserProfile], undefined>,
+  'sendDM' : ActorMethod<[string, string, string], undefined>,
   'submitCollegeConnect' : ActorMethod<[string, string, string], bigint>,
+  'submitFeedback' : ActorMethod<[string, string, string], undefined>,
 }
 export declare const idlService: IDL.ServiceClass;
 export declare const idlInitArgs: IDL.Type[];

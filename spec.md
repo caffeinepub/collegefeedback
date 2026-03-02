@@ -1,13 +1,11 @@
 # Specification
 
 ## Summary
-**Goal:** Rebrand the platform as "Memu Nerchukunnam" (మేము నేర్చుకున్నాం), make it publicly accessible without login barriers, and add easy sharing features.
+**Goal:** Update the application's color scheme to a violet/black combination with a pink background and yellow grid lines.
 
 **Planned changes:**
-- Update all instances of the old platform name to "Memu Nerchukunnam" across the frontend (browser tab title, navbar, About page hero, translation strings)
-- Update Home and About page taglines/descriptions to emphasize open, community-shared learning for all students
-- Add a "Share This Website" section/button on the Home and About pages with WhatsApp share, copy link to clipboard, and native Web Share API support
-- Make the year-selection onboarding modal non-blocking so new visitors can browse posts immediately without being forced to select a year; keep year selection available as an optional step
-- Ensure backend query functions (getAllPosts, getPostsByCategory, getStats, getAllCollegeConnects) are publicly accessible without requiring Internet Identity login
+- Update global CSS custom properties in `index.css` to use violet for primary/accent colors, pink for the main background, yellow for grid background utilities, and black for text/foreground contrast tokens
+- Update `tailwind.config.js` color tokens to align with the new violet/black/pink/yellow palette so all Tailwind utility classes (badges, cards, buttons, year badges, navigation) reflect the updated theme
+- Update `SparkParticles.tsx` to use violet, pink, and yellow color variants for floating pill particles, replacing existing warm brown/skin-tone colors
 
-**User-visible outcome:** Anyone can open the site via a shared link and immediately browse all posts without a login or modal gate; the platform is consistently branded as "Memu Nerchukunnam"; visitors can easily share the site via WhatsApp or clipboard.
+**User-visible outcome:** All pages and components display the new violet/black/pink/yellow color scheme, with pink backgrounds, violet accents, yellow grid lines, and updated particle animations — without any layout or functionality changes.

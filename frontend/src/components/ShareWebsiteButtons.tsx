@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { Share2, Copy, Check } from "lucide-react";
 import { SiWhatsapp } from "react-icons/si";
+import { useToast } from "../hooks/useToast";
+import { playBubblePop } from "../utils/sounds";
 
 const ShareWebsiteButtons: React.FC = () => {
   const [copied, setCopied] = useState(false);
+  const { showToast } = useToast();
 
   const siteUrl = window.location.origin;
   const siteName = "Memu Nerchukunnam";
@@ -16,19 +19,18 @@ const ShareWebsiteButtons: React.FC = () => {
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(siteUrl);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2500);
     } catch {
-      // fallback
       const el = document.createElement("textarea");
       el.value = siteUrl;
       document.body.appendChild(el);
       el.select();
       document.execCommand("copy");
       document.body.removeChild(el);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2500);
     }
+    playBubblePop();
+    setCopied(true);
+    showToast("🔗 Link copied! Share it with your friends.", "success");
+    setTimeout(() => setCopied(false), 2500);
   };
 
   const handleNativeShare = async () => {

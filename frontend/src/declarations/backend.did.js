@@ -19,6 +19,11 @@ export const _CaffeineStorageRefillResult = IDL.Record({
   'success' : IDL.Opt(IDL.Bool),
   'topped_up_amount' : IDL.Opt(IDL.Nat),
 });
+export const UserRole = IDL.Variant({
+  'admin' : IDL.Null,
+  'user' : IDL.Null,
+  'guest' : IDL.Null,
+});
 export const Category = IDL.Variant({
   'courses' : IDL.Null,
   'hackathons' : IDL.Null,
@@ -32,6 +37,12 @@ export const CollegeConnect = IDL.Record({
   'createdAt' : IDL.Int,
   'year' : IDL.Text,
 });
+export const FeedbackEntry = IDL.Record({
+  'authorName' : IDL.Text,
+  'collegeYear' : IDL.Text,
+  'feedback' : IDL.Text,
+  'timestamp' : IDL.Int,
+});
 export const Post = IDL.Record({
   'id' : IDL.Nat,
   'upvotes' : IDL.Nat,
@@ -40,6 +51,29 @@ export const Post = IDL.Record({
   'authorYear' : IDL.Text,
   'connectCount' : IDL.Nat,
   'category' : Category,
+});
+export const StudentProfile = IDL.Record({
+  'availableForDM' : IDL.Bool,
+  'collegeName' : IDL.Text,
+  'name' : IDL.Text,
+  'collegeYear' : IDL.Text,
+});
+export const UserProfile = IDL.Record({
+  'collegeName' : IDL.Text,
+  'name' : IDL.Text,
+  'collegeYear' : IDL.Text,
+});
+export const DMMessage = IDL.Record({
+  'recipient' : IDL.Text,
+  'sender' : IDL.Text,
+  'message' : IDL.Text,
+  'timestamp' : IDL.Int,
+});
+export const ChatMessage = IDL.Record({
+  'authorName' : IDL.Text,
+  'collegeYear' : IDL.Text,
+  'message' : IDL.Text,
+  'timestamp' : IDL.Int,
 });
 export const PostStats = IDL.Record({
   'categoryCounts' : IDL.Vec(IDL.Tuple(Category, IDL.Nat)),
@@ -75,19 +109,51 @@ export const idlService = IDL.Service({
       [],
     ),
   '_caffeineStorageUpdateGatewayPrincipals' : IDL.Func([], [], []),
+  '_initializeAccessControlWithSecret' : IDL.Func([IDL.Text], [], []),
   'addToWishlist' : IDL.Func([IDL.Text, IDL.Nat], [], []),
+  'assignCallerUserRole' : IDL.Func([IDL.Principal, UserRole], [], []),
+  'createOrUpdateStudentProfile' : IDL.Func(
+      [IDL.Text, IDL.Text, IDL.Text, IDL.Bool],
+      [],
+      [],
+    ),
   'createPost' : IDL.Func([IDL.Text, IDL.Text, Category], [IDL.Nat], []),
   'getAllCollegeConnects' : IDL.Func([], [IDL.Vec(CollegeConnect)], ['query']),
+  'getAllFeedbackEntries' : IDL.Func([], [IDL.Vec(FeedbackEntry)], ['query']),
   'getAllPosts' : IDL.Func([], [IDL.Vec(Post)], ['query']),
+  'getAvailableStudents' : IDL.Func([], [IDL.Vec(StudentProfile)], ['query']),
+  'getCallerUserProfile' : IDL.Func([], [IDL.Opt(UserProfile)], ['query']),
+  'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
+  'getConversation' : IDL.Func(
+      [IDL.Text, IDL.Text],
+      [IDL.Vec(DMMessage)],
+      ['query'],
+    ),
+  'getLatestChatMessages' : IDL.Func(
+      [IDL.Nat],
+      [IDL.Vec(ChatMessage)],
+      ['query'],
+    ),
   'getPostsByCategory' : IDL.Func([Category], [IDL.Vec(Post)], ['query']),
   'getStats' : IDL.Func([], [PostStats], ['query']),
+  'getUserProfile' : IDL.Func(
+      [IDL.Principal],
+      [IDL.Opt(UserProfile)],
+      ['query'],
+    ),
   'getWishlist' : IDL.Func([IDL.Text], [IDL.Vec(IDL.Nat)], ['query']),
+  'isCallerAdmin' : IDL.Func([], [IDL.Bool], ['query']),
+  'isStudentAvailableForDM' : IDL.Func([IDL.Text], [IDL.Bool], ['query']),
+  'postChatMessage' : IDL.Func([IDL.Text, IDL.Text, IDL.Text], [], []),
   'removeFromWishlist' : IDL.Func([IDL.Text, IDL.Nat], [], []),
+  'saveCallerUserProfile' : IDL.Func([UserProfile], [], []),
+  'sendDM' : IDL.Func([IDL.Text, IDL.Text, IDL.Text], [], []),
   'submitCollegeConnect' : IDL.Func(
       [IDL.Text, IDL.Text, IDL.Text],
       [IDL.Nat],
       [],
     ),
+  'submitFeedback' : IDL.Func([IDL.Text, IDL.Text, IDL.Text], [], []),
 });
 
 export const idlInitArgs = [];
@@ -104,6 +170,11 @@ export const idlFactory = ({ IDL }) => {
     'success' : IDL.Opt(IDL.Bool),
     'topped_up_amount' : IDL.Opt(IDL.Nat),
   });
+  const UserRole = IDL.Variant({
+    'admin' : IDL.Null,
+    'user' : IDL.Null,
+    'guest' : IDL.Null,
+  });
   const Category = IDL.Variant({
     'courses' : IDL.Null,
     'hackathons' : IDL.Null,
@@ -117,6 +188,12 @@ export const idlFactory = ({ IDL }) => {
     'createdAt' : IDL.Int,
     'year' : IDL.Text,
   });
+  const FeedbackEntry = IDL.Record({
+    'authorName' : IDL.Text,
+    'collegeYear' : IDL.Text,
+    'feedback' : IDL.Text,
+    'timestamp' : IDL.Int,
+  });
   const Post = IDL.Record({
     'id' : IDL.Nat,
     'upvotes' : IDL.Nat,
@@ -125,6 +202,29 @@ export const idlFactory = ({ IDL }) => {
     'authorYear' : IDL.Text,
     'connectCount' : IDL.Nat,
     'category' : Category,
+  });
+  const StudentProfile = IDL.Record({
+    'availableForDM' : IDL.Bool,
+    'collegeName' : IDL.Text,
+    'name' : IDL.Text,
+    'collegeYear' : IDL.Text,
+  });
+  const UserProfile = IDL.Record({
+    'collegeName' : IDL.Text,
+    'name' : IDL.Text,
+    'collegeYear' : IDL.Text,
+  });
+  const DMMessage = IDL.Record({
+    'recipient' : IDL.Text,
+    'sender' : IDL.Text,
+    'message' : IDL.Text,
+    'timestamp' : IDL.Int,
+  });
+  const ChatMessage = IDL.Record({
+    'authorName' : IDL.Text,
+    'collegeYear' : IDL.Text,
+    'message' : IDL.Text,
+    'timestamp' : IDL.Int,
   });
   const PostStats = IDL.Record({
     'categoryCounts' : IDL.Vec(IDL.Tuple(Category, IDL.Nat)),
@@ -160,23 +260,55 @@ export const idlFactory = ({ IDL }) => {
         [],
       ),
     '_caffeineStorageUpdateGatewayPrincipals' : IDL.Func([], [], []),
+    '_initializeAccessControlWithSecret' : IDL.Func([IDL.Text], [], []),
     'addToWishlist' : IDL.Func([IDL.Text, IDL.Nat], [], []),
+    'assignCallerUserRole' : IDL.Func([IDL.Principal, UserRole], [], []),
+    'createOrUpdateStudentProfile' : IDL.Func(
+        [IDL.Text, IDL.Text, IDL.Text, IDL.Bool],
+        [],
+        [],
+      ),
     'createPost' : IDL.Func([IDL.Text, IDL.Text, Category], [IDL.Nat], []),
     'getAllCollegeConnects' : IDL.Func(
         [],
         [IDL.Vec(CollegeConnect)],
         ['query'],
       ),
+    'getAllFeedbackEntries' : IDL.Func([], [IDL.Vec(FeedbackEntry)], ['query']),
     'getAllPosts' : IDL.Func([], [IDL.Vec(Post)], ['query']),
+    'getAvailableStudents' : IDL.Func([], [IDL.Vec(StudentProfile)], ['query']),
+    'getCallerUserProfile' : IDL.Func([], [IDL.Opt(UserProfile)], ['query']),
+    'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
+    'getConversation' : IDL.Func(
+        [IDL.Text, IDL.Text],
+        [IDL.Vec(DMMessage)],
+        ['query'],
+      ),
+    'getLatestChatMessages' : IDL.Func(
+        [IDL.Nat],
+        [IDL.Vec(ChatMessage)],
+        ['query'],
+      ),
     'getPostsByCategory' : IDL.Func([Category], [IDL.Vec(Post)], ['query']),
     'getStats' : IDL.Func([], [PostStats], ['query']),
+    'getUserProfile' : IDL.Func(
+        [IDL.Principal],
+        [IDL.Opt(UserProfile)],
+        ['query'],
+      ),
     'getWishlist' : IDL.Func([IDL.Text], [IDL.Vec(IDL.Nat)], ['query']),
+    'isCallerAdmin' : IDL.Func([], [IDL.Bool], ['query']),
+    'isStudentAvailableForDM' : IDL.Func([IDL.Text], [IDL.Bool], ['query']),
+    'postChatMessage' : IDL.Func([IDL.Text, IDL.Text, IDL.Text], [], []),
     'removeFromWishlist' : IDL.Func([IDL.Text, IDL.Nat], [], []),
+    'saveCallerUserProfile' : IDL.Func([UserProfile], [], []),
+    'sendDM' : IDL.Func([IDL.Text, IDL.Text, IDL.Text], [], []),
     'submitCollegeConnect' : IDL.Func(
         [IDL.Text, IDL.Text, IDL.Text],
         [IDL.Nat],
         [],
       ),
+    'submitFeedback' : IDL.Func([IDL.Text, IDL.Text, IDL.Text], [], []),
   });
 };
 

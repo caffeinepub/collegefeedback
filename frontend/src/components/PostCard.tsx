@@ -4,6 +4,7 @@ import { ThumbsUp, Users, Bookmark, BookmarkCheck } from "lucide-react";
 import { Post, Category } from "../backend";
 import { useWishlistState } from "../hooks/useWishlist";
 import { playBubblePop } from "../utils/sounds";
+import { useToast } from "../hooks/useToast";
 
 export const categoryConfig: Record<
   Category,
@@ -53,18 +54,22 @@ interface PostCardProps {
 
 const PostCard: React.FC<PostCardProps> = ({ post }) => {
   const catConfig = categoryConfig[post.category] ?? categoryConfig[Category.general];
-  // useWishlistState returns { isSaved, toggleWishlist, isLoading }
   const { isSaved, toggleWishlist, isLoading } = useWishlistState(post.id);
+  const { showToast } = useToast();
 
   const handleBookmark = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
     playBubblePop();
+    const willSave = !isSaved;
     toggleWishlist();
+    showToast(
+      willSave ? "✨ Added to wishlist!" : "Removed from wishlist",
+      willSave ? "success" : "info"
+    );
   };
 
   return (
-    // Route param is $id per App.tsx route definition
     <Link to="/post/$id" params={{ id: String(post.id) }}>
       <article
         className="rounded-xl border p-4 transition-all duration-200 hover:shadow-md cursor-pointer group"

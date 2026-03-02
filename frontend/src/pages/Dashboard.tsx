@@ -4,6 +4,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 import PostCard from "../components/PostCard";
 import CollegeConnectForm from "../components/CollegeConnectForm";
 import CollegeConnectList from "../components/CollegeConnectList";
+import FeedbackSection from "../components/FeedbackSection";
+import FeedbackForm from "../components/FeedbackForm";
 import { Category } from "../backend";
 
 const CATEGORY_LABELS: Record<string, string> = {
@@ -24,6 +26,44 @@ const Dashboard: React.FC = () => {
       >
         📊 Dashboard
       </h1>
+
+      {/* Feedback Section — shown at the top */}
+      <section className="mb-8">
+        <div
+          className="rounded-2xl border p-5"
+          style={{
+            background: "oklch(0.97 0.018 60)",
+            borderColor: "oklch(0.88 0.025 55)",
+          }}
+        >
+          <h2
+            className="font-heading text-lg font-bold mb-4"
+            style={{ color: "oklch(0.38 0.07 48)" }}
+          >
+            💬 Student Feedback
+          </h2>
+
+          {/* Feedback list */}
+          <div className="mb-4">
+            <FeedbackSection />
+          </div>
+
+          {/* Divider */}
+          <div
+            className="my-4 border-t"
+            style={{ borderColor: "oklch(0.88 0.025 55)" }}
+          />
+
+          {/* Feedback form */}
+          <h3
+            className="font-heading text-sm font-bold mb-3"
+            style={{ color: "oklch(0.45 0.06 50)" }}
+          >
+            Share Your Feedback
+          </h3>
+          <FeedbackForm />
+        </div>
+      </section>
 
       {/* Stats Cards */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">

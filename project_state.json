@@ -1,41 +1,32 @@
 {
   "schemaVersion": "1.0.0",
   "projectStateVersion": 3,
-  "summary": "A college/education platform app with wishlist, college connect, and year popup features. User wants a shareable public website with a name like 'memu nerchukunnam' (Telugu phrase meaning 'we learned').",
+  "summary": "Project with DM system, chat, and feedback sections. User is customizing the color scheme to violet and black with a pink background and yellow color grids.",
   "architectural_notes": [],
   "known_issues": [],
   "isFixRequest": false,
-  "imageRequirements": "## Required Images\n- Warm, welcoming logo mark for 'Memu Nerchukunnam' — a stylized open book with a graduation cap and a subtle Telugu script flourish, on a transparent background (memu-logo.dim_256x256.png)",
   "existing_features": [
     {
-      "id": "feature-update-the-app-s-brand-name-throughout-the-frontend-to-memu-nerchukunnam-this-includes-the-site-title-in-index-html-the-header-navbar-brand-display-in-layout-tsx-the-about-page-hero-and-any-other-locations-where-the-current-platform-name-appears",
-      "title": "Update the app's brand name throughout the frontend to 'Memu Nerchukunnam' (మేము నేర్చుకున్నాం). This includes the site title in index.html, the header/navbar brand display in Layout.tsx, the About page hero, and any other locations where the current platform name appears.",
+      "id": "feature-update-the-global-css-custom-properties-in-frontend-src-index-css-to-use-a-violet-and-black-color-combo-set-the-primary-accent-colors-to-violet-tones-set-the-main-background-color-to-pink-and-update-the-grid-background-utility-colors-to-yellow-ensure-both-light-and-dark-theme-tokens-reflect-this-new-palette-consistently",
+      "title": "Update the global CSS custom properties in frontend/src/index.css to use a violet and black color combo: set the primary/accent colors to violet tones, set the main background color to pink, and update the grid background utility colors to yellow. Ensure both light and dark theme tokens reflect this new palette consistently.",
       "reqIds": [
         "REQ-1"
       ],
       "version": 1
     },
     {
-      "id": "feature-add-a-prominent-share-this-website-section-or-button-on-the-home-page-and-about-page-that-allows-visitors-to-share-the-platform-url-via-whatsapp-copy-link-to-clipboard-and-the-native-web-share-api-so-any-user-can-easily-spread-the-site-to-others",
-      "title": "Add a prominent 'Share This Website' section or button on the Home page and About page that allows visitors to share the platform URL via WhatsApp, copy link to clipboard, and the native Web Share API — so any user can easily spread the site to others.",
+      "id": "feature-update-frontend-tailwind-config-js-color-tokens-to-align-with-the-new-violet-black-pink-yellow-palette-ensuring-tailwind-utility-classes-used-across-components-badges-cards-buttons-year-badges-navigation-pick-up-the-updated-theme-colors",
+      "title": "Update frontend/tailwind.config.js color tokens to align with the new violet/black/pink/yellow palette, ensuring Tailwind utility classes used across components (badges, cards, buttons, year badges, navigation) pick up the updated theme colors.",
       "reqIds": [
         "REQ-2"
       ],
       "version": 1
     },
     {
-      "id": "feature-remove-or-make-optional-the-year-selection-onboarding-modal-yearselectionmodal-so-that-first-time-visitors-who-arrive-via-a-shared-link-can-immediately-browse-all-posts-without-being-blocked-by-a-required-gate-year-selection-should-remain-accessible-but-non-blocking-e-g-as-an-optional-profile-step",
-      "title": "Remove or make optional the year-selection onboarding modal (YearSelectionModal) so that first-time visitors who arrive via a shared link can immediately browse all posts without being blocked by a required gate. Year selection should remain accessible but non-blocking (e.g., as an optional profile step).",
+      "id": "feature-update-the-sparkparticles-component-frontend-src-components-sparkparticles-tsx-to-use-the-new-violet-pink-yellow-color-schemes-for-the-floating-pill-particles-instead-of-the-existing-warm-brown-skin-tone-schemes",
+      "title": "Update the SparkParticles component (frontend/src/components/SparkParticles.tsx) to use the new violet/pink/yellow color schemes for the floating pill particles instead of the existing warm brown/skin-tone schemes.",
       "reqIds": [
         "REQ-3"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-update-the-english-and-telugu-translation-strings-in-frontend-src-translations-index-ts-to-reflect-the-new-brand-name-memu-nerchukunnam-and-update-the-tagline-description-copy-on-the-home-and-about-pages-to-emphasize-that-this-is-an-open-community-shared-learning-platform-for-all-students",
-      "title": "Update the English and Telugu translation strings in frontend/src/translations/index.ts to reflect the new brand name 'Memu Nerchukunnam' and update the tagline/description copy on the Home and About pages to emphasize that this is an open, community-shared learning platform for all students.",
-      "reqIds": [
-        "REQ-4"
       ],
       "version": 1
     }
@@ -43,21 +34,13 @@
   "new_feature_requests": [
     {
       "id": "AR-1",
-      "summary": "Create a shareable, publicly accessible website with a name like 'memu nerchukunnam'",
+      "summary": "Change color scheme to violet and black combo with pink background and yellow color grids",
       "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-6",
-      "summary": "Ensure the backend actor in backend/main.mo does not require any form of authentication to read posts or college connect tips. All read (query) functions — getAllPosts, getPostsByCategory, getStats, getAllCollegeConnects — must be publicly accessible without Internet Identity login.",
-      "reqIds": [
-        "REQ-5"
-      ],
       "status": "pending"
     }
   ],
   "gameProjectType": "none",
-  "projectName": "Memu Nerchukunnam",
+  "projectName": "Mem Nerchukunnavi",
   "clarification_mode": "instant",
   "clarification_rounds": 0
 }

@@ -6,6 +6,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Category } from "../backend";
 import { useYearSelection } from "../hooks/useYearSelection";
 import YearSelectionModal from "../components/YearSelectionModal";
+import { playBubblePop } from "../utils/sounds";
 
 const CATEGORIES = [
   { value: "all" as const, label: "✨ All" },
@@ -34,6 +35,13 @@ const Home: React.FC = () => {
   const isLoading = activeCategory === "all" ? allLoading : filteredLoading;
   const isError = activeCategory === "all" ? allError : filteredError;
 
+  const handleCategoryChange = (cat: "all" | Category) => {
+    if (cat !== activeCategory) {
+      playBubblePop();
+      setActiveCategory(cat);
+    }
+  };
+
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
       {/* Year Selection Modal (optional) */}
@@ -55,7 +63,7 @@ const Home: React.FC = () => {
           <div className="flex items-center gap-3 mb-2">
             <img
               src="/assets/generated/memu-logo.dim_256x256.png"
-              alt="Memu Nerchukunnam"
+              alt="Memu Nerchukunnavi"
               className="w-10 h-10 rounded-full object-cover shadow-md"
               style={{ border: "2px solid oklch(0.99 0.005 58 / 0.7)" }}
             />
@@ -63,14 +71,14 @@ const Home: React.FC = () => {
               className="font-brand text-3xl sm:text-4xl drop-shadow-sm"
               style={{ color: "oklch(0.99 0.005 58)" }}
             >
-              Memu Nerchukunnam
+              Memu Nerchukunnavi
             </h1>
           </div>
           <p
             className="text-sm sm:text-base font-medium max-w-md drop-shadow-sm"
             style={{ color: "oklch(0.97 0.010 58)" }}
           >
-            మేము నేర్చుకున్నాం — Open to everyone, free forever 🎓
+            మేము నేర్చుకున్నవి — Open to everyone, free forever 🎓
           </p>
         </div>
       </div>
@@ -122,7 +130,7 @@ const Home: React.FC = () => {
         {CATEGORIES.map((cat) => (
           <button
             key={cat.value}
-            onClick={() => setActiveCategory(cat.value)}
+            onClick={() => handleCategoryChange(cat.value)}
             className="px-4 py-1.5 rounded-full text-sm font-semibold transition-all duration-200 border"
             style={
               activeCategory === cat.value
