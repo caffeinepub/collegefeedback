@@ -1,83 +1,59 @@
-import React, { useState } from "react";
-import { Share2, Copy, Check } from "lucide-react";
-import { SiWhatsapp } from "react-icons/si";
-import { useToast } from "../hooks/useToast";
-import { playBubblePop } from "../utils/sounds";
+import React from 'react';
+import { Share2, Copy, MessageCircle } from 'lucide-react';
+import { useToast } from '../hooks/useToast';
+import { playBubblePop } from '../utils/sounds';
 
 interface ShareButtonsProps {
-  postId: bigint;
+  postId: string;
   content: string;
 }
 
-const ShareButtons: React.FC<ShareButtonsProps> = ({ postId, content }) => {
-  const [copied, setCopied] = useState(false);
+export default function ShareButtons({ postId, content }: ShareButtonsProps) {
   const { showToast } = useToast();
-
   const url = `${window.location.origin}/post/${postId}`;
-  const text = `Check out this experience: "${content.slice(0, 80)}…" ${url}`;
-
-  const handleWhatsApp = () => {
-    window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, "_blank");
-  };
+  const text = `Check out this experience on Memu Nerchukunnavi: "${content.slice(0, 80)}..."`;
 
   const handleCopy = async () => {
-    await navigator.clipboard.writeText(url);
     playBubblePop();
-    setCopied(true);
-    showToast("🔗 Link copied to clipboard!", "success");
-    setTimeout(() => setCopied(false), 2000);
+    await navigator.clipboard.writeText(url);
+    showToast('Link copied! 🔗', 'success');
+  };
+
+  const handleWhatsApp = () => {
+    window.open(`https://wa.me/?text=${encodeURIComponent(text + ' ' + url)}`, '_blank');
   };
 
   const handleNativeShare = async () => {
-    if (navigator.share) {
-      await navigator.share({ title: "College Experience", text: content.slice(0, 100), url });
+    if ('share' in navigator) {
+      await (navigator as Navigator & { share: (data: ShareData) => Promise<void> }).share({ title: 'Memu Nerchukunnavi', text, url });
     }
   };
 
+  const canShare = 'share' in navigator;
+
   return (
     <div className="flex items-center gap-2 flex-wrap">
-      <button
-        onClick={handleWhatsApp}
-        className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all"
-        style={{
-          background: "oklch(0.88 0.10 145)",
-          color: "oklch(0.28 0.10 145)",
-          border: "1px solid oklch(0.75 0.10 145)",
-        }}
-      >
-        <SiWhatsapp size={13} />
-        WhatsApp
-      </button>
-
+      <span className="text-xs text-neutral-400 font-medium">Share:</span>
       <button
         onClick={handleCopy}
-        className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all"
-        style={{
-          background: "oklch(0.92 0.025 55)",
-          color: "oklch(0.38 0.06 48)",
-          border: "1px solid oklch(0.82 0.030 55)",
-        }}
+        className="flex items-center gap-1.5 px-3 py-1.5 bg-neutral-100 text-neutral-600 rounded-full text-xs font-medium hover:bg-violet-100 hover:text-violet-700 transition-colors"
       >
-        {copied ? <Check size={13} /> : <Copy size={13} />}
-        {copied ? "Copied!" : "Copy Link"}
+        <Copy size={12} /> Copy link
       </button>
-
-      {typeof navigator !== "undefined" && "share" in navigator && (
+      <button
+        onClick={handleWhatsApp}
+        className="flex items-center gap-1.5 px-3 py-1.5 bg-neutral-100 text-neutral-600 rounded-full text-xs font-medium hover:bg-violet-100 hover:text-violet-700 transition-colors"
+      >
+        <MessageCircle size={12} /> WhatsApp
+      </button>
+      {canShare && (
         <button
           onClick={handleNativeShare}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all"
-          style={{
-            background: "oklch(0.90 0.04 200)",
-            color: "oklch(0.35 0.10 200)",
-            border: "1px solid oklch(0.78 0.08 200)",
-          }}
+          className="flex items-center gap-1.5 px-3 py-1.5 bg-neutral-100 text-neutral-600 rounded-full text-xs font-medium hover:bg-violet-100 hover:text-violet-700 transition-colors"
         >
-          <Share2 size={13} />
-          Share
+          <Share2 size={12} /> Share
         </button>
       )}
     </div>
   );
-};
-
-export default ShareButtons;
+}

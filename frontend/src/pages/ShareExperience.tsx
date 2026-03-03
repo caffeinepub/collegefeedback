@@ -1,279 +1,140 @@
-import React, { useState } from "react";
-import { useNavigate } from "@tanstack/react-router";
-import { useCreatePost } from "../hooks/useQueries";
-import { useYearSelection } from "../hooks/useYearSelection";
-import YearSelectionModal from "../components/YearSelectionModal";
-import { Category } from "../backend";
-import { playBubblePop, playTypingTick } from "../utils/sounds";
-import { useToast } from "../hooks/useToast";
+import React, { useState } from 'react';
+import { useNavigate } from '@tanstack/react-router';
+import { Send, ChevronDown } from 'lucide-react';
+import { useCreatePost } from '../hooks/useQueries';
+import { Category } from '../backend';
+import YearSelectionModal from '../components/YearSelectionModal';
+import { useYearSelection } from '../hooks/useYearSelection';
+import { useToast } from '../hooks/useToast';
+import { playBubblePop } from '../utils/sounds';
 
 const CATEGORIES = [
-  { value: Category.internships, label: "💼 Internships" },
-  { value: Category.hackathons, label: "⚡ Hackathons" },
-  { value: Category.courses, label: "📚 Courses" },
-  { value: Category.general, label: "💬 General" },
+  { key: Category.internships, label: '💼 Internships' },
+  { key: Category.hackathons, label: '🏆 Hackathons' },
+  { key: Category.courses, label: '📚 Courses' },
+  { key: Category.general, label: '💬 General' },
 ];
 
-const MAX_CHARS = 1000;
+const YEARS = ['1st Year', '2nd Year', '3rd Year', '4th Year'] as const;
+type YearOption = typeof YEARS[number];
 
-const ShareExperience: React.FC = () => {
+export default function ShareExperience() {
   const navigate = useNavigate();
   const { year, hasSelected } = useYearSelection();
   const [showYearModal, setShowYearModal] = useState(!hasSelected);
+  const [content, setContent] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState<Category>(Category.general);
+  const [selectedYear, setSelectedYear] = useState<YearOption>((year as YearOption) || '1st Year');
+  const { mutateAsync: createPost, isPending } = useCreatePost();
   const { showToast } = useToast();
 
-  const [category, setCategory] = useState<Category>(Category.general);
-  const [content, setContent] = useState("");
-  const [submitted, setSubmitted] = useState(false);
-  const [errors, setErrors] = useState<Record<string, string>>({});
-
-  const { mutate, isPending } = useCreatePost();
-
-  const validate = () => {
-    const e: Record<string, string> = {};
-    if (!content.trim()) e.content = "Please write something before sharing.";
-    if (content.length > MAX_CHARS) e.content = `Max ${MAX_CHARS} characters allowed.`;
-    return e;
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const errs = validate();
-    if (Object.keys(errs).length > 0) {
-      setErrors(errs);
-      showToast("Please fix the errors before submitting.", "error");
-      return;
-    }
-    setErrors({});
-    mutate(
-      {
+    if (!content.trim()) return;
+    try {
+      await createPost({
         content: content.trim(),
-        authorYear: year ?? "Unknown",
-        category,
-      },
-      {
-        onSuccess: () => {
-          playBubblePop();
-          showToast("🎉 Experience shared successfully!", "success");
-          setSubmitted(true);
-          setContent("");
-        },
-        onError: () => {
-          showToast("Failed to share experience. Please try again.", "error");
-        },
-      }
-    );
+        authorYear: selectedYear,
+        category: selectedCategory,
+      });
+      playBubblePop();
+      showToast('Experience shared successfully! 🎉', 'success');
+      setContent('');
+      navigate({ to: '/' });
+    } catch {
+      showToast('Failed to share. Please try again.', 'error');
+    }
   };
-
-  if (showYearModal) {
-    return (
-      <YearSelectionModal
-        onClose={() => setShowYearModal(false)}
-      />
-    );
-  }
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-8">
-      <h1
-        className="font-heading text-2xl font-bold mb-2"
-        style={{ color: "oklch(0.35 0.08 48)" }}
-      >
-        Share Your Experience ✍️
-      </h1>
-      <p className="text-sm mb-6" style={{ color: "oklch(0.52 0.05 50)" }}>
-        Help fellow students by sharing what you've learned.
-      </p>
+    <>
+      {showYearModal && <YearSelectionModal onClose={() => setShowYearModal(false)} />}
 
-      {submitted ? (
-        <div
-          className="rounded-2xl border p-8 text-center"
-          style={{
-            background: "oklch(0.96 0.025 58)",
-            borderColor: "oklch(0.88 0.025 55)",
-          }}
-        >
-          <p className="text-4xl mb-3">🎉</p>
-          <p
-            className="text-lg font-bold mb-1"
-            style={{ color: "oklch(0.38 0.07 48)" }}
-          >
-            Experience Shared!
-          </p>
-          <p className="text-sm mb-5" style={{ color: "oklch(0.52 0.05 50)" }}>
-            Your experience has been posted to the feed.
-          </p>
-          <div className="flex gap-3 justify-center flex-wrap">
-            <button
-              onClick={() => setSubmitted(false)}
-              className="px-4 py-2 rounded-full text-sm font-semibold border transition-all"
-              style={{
-                background: "oklch(0.97 0.012 60)",
-                color: "oklch(0.42 0.06 50)",
-                borderColor: "oklch(0.88 0.025 55)",
-              }}
-            >
-              Share Another
-            </button>
-            <button
-              onClick={() => navigate({ to: "/" })}
-              className="px-4 py-2 rounded-full text-sm font-semibold transition-all"
-              style={{
-                background: "oklch(0.55 0.12 42)",
-                color: "oklch(0.99 0.005 58)",
-              }}
-            >
-              Go to Feed →
-            </button>
-          </div>
+      <div className="max-w-2xl mx-auto px-4 py-12">
+        <div className="text-center mb-10">
+          <h1 className="text-4xl font-heading font-black text-neutral-900 mb-2">
+            Share Your <span className="italic text-violet-600">Experience</span>
+          </h1>
+          <p className="text-neutral-500">Help fellow students by sharing what you've learned.</p>
         </div>
-      ) : (
-        <form
-          onSubmit={handleSubmit}
-          className="rounded-2xl border p-6 flex flex-col gap-5"
-          style={{
-            background: "oklch(0.98 0.015 60)",
-            borderColor: "oklch(0.88 0.025 55)",
-          }}
-        >
-          {/* Category */}
-          <div>
-            <label
-              className="block text-sm font-semibold mb-2"
-              style={{ color: "oklch(0.38 0.06 48)" }}
-            >
-              Category
-            </label>
-            <div className="flex gap-2 flex-wrap">
-              {CATEGORIES.map((cat) => (
-                <button
-                  key={cat.value}
-                  type="button"
-                  onClick={() => {
-                    playBubblePop();
-                    setCategory(cat.value);
-                  }}
-                  className="px-3 py-1.5 rounded-full text-sm font-semibold border transition-all"
-                  style={
-                    category === cat.value
-                      ? {
-                          background: "oklch(0.55 0.12 42)",
-                          color: "oklch(0.99 0.005 58)",
-                          borderColor: "oklch(0.55 0.12 42)",
-                        }
-                      : {
-                          background: "oklch(0.96 0.015 58)",
-                          color: "oklch(0.42 0.06 50)",
-                          borderColor: "oklch(0.88 0.025 55)",
-                        }
-                  }
+
+        <div className="bg-white rounded-2xl border border-neutral-200 p-8 shadow-card">
+          <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Category */}
+            <div>
+              <label className="block text-sm font-semibold text-neutral-700 mb-3">Category</label>
+              <div className="flex flex-wrap gap-2">
+                {CATEGORIES.map(({ key, label }) => (
+                  <button
+                    key={key}
+                    type="button"
+                    onClick={() => {
+                      playBubblePop();
+                      setSelectedCategory(key);
+                    }}
+                    className={`px-4 py-2 rounded-full text-sm font-semibold border transition-all duration-200 ${
+                      selectedCategory === key
+                        ? 'bg-violet-600 text-white border-violet-600'
+                        : 'bg-white text-neutral-600 border-neutral-200 hover:border-violet-300 hover:text-violet-700'
+                    }`}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Year */}
+            <div>
+              <label className="block text-sm font-semibold text-neutral-700 mb-2">College Year</label>
+              <div className="relative">
+                <select
+                  value={selectedYear}
+                  onChange={(e) => setSelectedYear(e.target.value as YearOption)}
+                  className="w-full appearance-none bg-neutral-50 border border-neutral-200 rounded-xl px-4 py-2.5 text-neutral-800 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-violet-400 focus:border-violet-400 pr-10"
                 >
-                  {cat.label}
-                </button>
-              ))}
+                  {YEARS.map((y) => (
+                    <option key={y} value={y}>{y}</option>
+                  ))}
+                </select>
+                <ChevronDown size={16} className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 pointer-events-none" />
+              </div>
             </div>
-          </div>
 
-          {/* Content */}
-          <div>
-            <label
-              className="block text-sm font-semibold mb-2"
-              style={{ color: "oklch(0.38 0.06 48)" }}
-            >
-              Your Experience
-            </label>
-            <textarea
-              value={content}
-              onChange={(e) => {
-                setContent(e.target.value);
-                playTypingTick();
-              }}
-              placeholder="Share what you learned — an internship tip, a hackathon story, a course recommendation…"
-              rows={6}
-              maxLength={MAX_CHARS}
-              className="w-full px-4 py-3 rounded-xl text-sm leading-relaxed outline-none transition-colors resize-none"
-              style={{
-                background: "oklch(0.97 0.012 60)",
-                border: `1.5px solid ${errors.content ? "oklch(0.55 0.18 25)" : "oklch(0.88 0.025 55)"}`,
-                color: "oklch(0.30 0.04 50)",
-              }}
-              onFocus={(e) => {
-                e.currentTarget.style.borderColor = "oklch(0.62 0.10 42)";
-              }}
-              onBlur={(e) => {
-                e.currentTarget.style.borderColor = errors.content
-                  ? "oklch(0.55 0.18 25)"
-                  : "oklch(0.88 0.025 55)";
-              }}
-            />
-            <div className="flex justify-between items-center mt-1">
-              {errors.content ? (
-                <p className="text-xs" style={{ color: "oklch(0.55 0.18 25)" }}>
-                  {errors.content}
-                </p>
-              ) : (
-                <span />
-              )}
-              <span
-                className="text-xs"
-                style={{
-                  color:
-                    content.length > MAX_CHARS * 0.9
-                      ? "oklch(0.55 0.18 25)"
-                      : "oklch(0.62 0.04 50)",
-                }}
-              >
-                {content.length}/{MAX_CHARS}
-              </span>
+            {/* Content */}
+            <div>
+              <label className="block text-sm font-semibold text-neutral-700 mb-2">Your Experience</label>
+              <textarea
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
+                placeholder="Share what you learned — an internship tip, hackathon advice, course recommendation, or general wisdom..."
+                rows={6}
+                className="w-full bg-neutral-50 border border-neutral-200 rounded-xl px-4 py-3 text-neutral-800 text-sm leading-relaxed focus:outline-none focus:ring-2 focus:ring-violet-400 focus:border-violet-400 resize-none placeholder:text-neutral-400"
+              />
+              <p className="text-xs text-neutral-400 mt-1 text-right">{content.length} characters</p>
             </div>
-          </div>
 
-          {/* Year display */}
-          <div
-            className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm"
-            style={{
-              background: "oklch(0.93 0.025 55)",
-              color: "oklch(0.42 0.06 50)",
-            }}
-          >
-            <span>📅</span>
-            <span>
-              Posting as <strong>{year ?? "Unknown"}</strong>
-            </span>
+            {/* Submit */}
             <button
-              type="button"
-              onClick={() => setShowYearModal(true)}
-              className="ml-auto text-xs underline"
-              style={{ color: "oklch(0.50 0.08 48)" }}
+              type="submit"
+              disabled={isPending || !content.trim()}
+              className="w-full flex items-center justify-center gap-2 px-6 py-3.5 bg-violet-600 text-white font-bold rounded-xl hover:bg-violet-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
             >
-              Change
+              {isPending ? (
+                <>
+                  <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  Sharing...
+                </>
+              ) : (
+                <>
+                  <Send size={16} />
+                  Share Experience
+                </>
+              )}
             </button>
-          </div>
-
-          {/* Submit */}
-          <button
-            type="submit"
-            disabled={isPending}
-            className="w-full py-3 rounded-xl text-sm font-bold transition-all duration-200 flex items-center justify-center gap-2"
-            style={{
-              background: isPending ? "oklch(0.75 0.06 52)" : "oklch(0.55 0.12 42)",
-              color: "oklch(0.99 0.005 58)",
-              cursor: isPending ? "not-allowed" : "pointer",
-            }}
-          >
-            {isPending ? (
-              <>
-                <span className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />
-                Sharing…
-              </>
-            ) : (
-              "Share Experience 🚀"
-            )}
-          </button>
-        </form>
-      )}
-    </div>
+          </form>
+        </div>
+      </div>
+    </>
   );
-};
-
-export default ShareExperience;
+}

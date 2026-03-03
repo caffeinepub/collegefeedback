@@ -1,185 +1,90 @@
-import React from "react";
-import { Link } from "@tanstack/react-router";
-import ShareWebsiteButtons from "../components/ShareWebsiteButtons";
+import React from 'react';
+import { useNavigate } from '@tanstack/react-router';
+import { BookOpen, Users, Lightbulb, Heart, ArrowRight } from 'lucide-react';
+import ShareWebsiteButtons from '../components/ShareWebsiteButtons';
 
 const FEATURES = [
   {
-    emoji: "🎓",
-    title: "Open to Everyone",
-    desc: "No sign-in required. Any student can browse, read, and share experiences — completely free, forever.",
+    icon: BookOpen,
+    title: 'Share Experiences',
+    description: 'Post your college journey — internships, hackathons, courses, and general advice for fellow students.',
   },
   {
-    emoji: "🔒",
-    title: "Decentralized & Secure",
-    desc: "Built on the Internet Computer Protocol — your data is stored on-chain, censorship-resistant.",
+    icon: Users,
+    title: 'Connect with Peers',
+    description: 'Find students from your year and college who are open to DMs and peer mentorship.',
   },
   {
-    emoji: "🤝",
-    title: "College Connect",
-    desc: "Share tips across colleges and learn from students at different institutions.",
+    icon: Lightbulb,
+    title: 'Discover Wisdom',
+    description: 'Browse curated tips filtered by category and college year to find what matters most to you.',
   },
   {
-    emoji: "📌",
-    title: "Wishlist",
-    desc: "Bookmark posts that resonate with you and revisit them anytime.",
+    icon: Heart,
+    title: 'Community First',
+    description: 'Built by students, for students. Every post is a real experience shared to help others grow.',
   },
 ];
 
-const About: React.FC = () => {
+export default function About() {
+  const navigate = useNavigate();
+
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
-      {/* Hero Banner */}
-      <div className="relative rounded-2xl overflow-hidden mb-10 shadow-md">
-        <img
-          src="/assets/generated/about-campus-banner.dim_1200x400.png"
-          alt="College campus"
-          className="w-full h-48 sm:h-64 object-cover"
-        />
-        <div
-          className="absolute inset-0 flex flex-col items-center justify-center text-center px-4"
-          style={{ background: "oklch(0.55 0.08 50 / 0.45)" }}
-        >
-          <div className="flex items-center gap-3 mb-2">
-            <img
-              src="/assets/generated/memu-logo.dim_256x256.png"
-              alt="Memu Nerchukunnavi"
-              className="w-10 h-10 rounded-full object-cover shadow-md"
-              style={{ border: "2px solid oklch(0.99 0.005 58 / 0.7)" }}
-            />
-            <h1
-              className="font-brand text-3xl sm:text-4xl drop-shadow-sm"
-              style={{ color: "oklch(0.99 0.005 58)" }}
-            >
-              Memu Nerchukunnavi
-            </h1>
-          </div>
-          <p
-            className="text-sm sm:text-base font-medium drop-shadow-sm"
-            style={{ color: "oklch(0.97 0.010 58)" }}
-          >
-            మేము నేర్చుకున్నవి — What We Learned Together
-          </p>
-        </div>
-      </div>
+    <div className="max-w-3xl mx-auto px-4 py-12">
+      {/* Hero */}
+      <section className="text-center mb-14">
+        <h1 className="text-5xl md:text-6xl font-heading font-black tracking-tight mb-4 leading-none">
+          <span className="italic text-violet-600">MEMU</span>
+          <span className="text-neutral-900">NERCHUKNNAVI</span>
+        </h1>
+        <p className="text-xl text-neutral-500 font-medium mb-2">మేము నేర్చుకున్నవి</p>
+        <p className="text-base text-neutral-600 max-w-xl mx-auto leading-relaxed">
+          "What we learned" — A collective wisdom hub for college students to help each other grow.
+        </p>
+      </section>
 
       {/* Mission */}
-      <section className="mb-8">
-        <h2
-          className="font-heading text-2xl font-bold mb-4"
-          style={{ color: "oklch(0.35 0.08 48)" }}
-        >
-          Our Mission
-        </h2>
-        <p className="text-base leading-relaxed mb-3" style={{ color: "oklch(0.38 0.04 50)" }}>
-          College is full of lessons that no textbook teaches — the internship that changed
-          everything, the hackathon that pushed your limits, the course that opened new doors.
-          <strong style={{ color: "oklch(0.45 0.10 42)" }}> Memu Nerchukunnavi</strong> is a
-          free, open platform where students share these real experiences so others can learn,
-          grow, and navigate college life better.
+      <section className="bg-white rounded-2xl border border-neutral-200 p-8 mb-8 shadow-card">
+        <h2 className="text-2xl font-heading font-bold text-neutral-900 mb-4">Our Mission</h2>
+        <p className="text-neutral-600 leading-relaxed mb-4">
+          College is full of lessons that no textbook teaches. Memu Nerchukunnavi (మేము నేర్చుకున్నవి)
+          is a platform where students share real experiences — the internships they landed, the
+          hackathons they competed in, the courses that changed their perspective, and the general
+          wisdom they wish someone had told them earlier.
         </p>
-        <p className="text-base leading-relaxed mb-3" style={{ color: "oklch(0.38 0.04 50)" }}>
-          Whether you're a fresher looking for guidance or a final-year student wanting to give
-          back — this is your space. <strong style={{ color: "oklch(0.45 0.10 42)" }}>No
-          sign-in required. Open to all students.</strong>
-        </p>
-        <p className="text-base leading-relaxed" style={{ color: "oklch(0.38 0.04 50)" }}>
-          Share this platform with your friends and classmates — the more students who
-          contribute, the richer the community knowledge becomes for everyone.
+        <p className="text-neutral-600 leading-relaxed">
+          Every post is a gift from one student to another. Together, we build a collective memory
+          of what college life really teaches us.
         </p>
       </section>
-
-      {/* Share Website Buttons */}
-      <div className="mb-10">
-        <ShareWebsiteButtons />
-      </div>
 
       {/* Features */}
-      <section className="mb-10">
-        <h2
-          className="font-heading text-2xl font-bold mb-6"
-          style={{ color: "oklch(0.35 0.08 48)" }}
-        >
-          What Makes Us Different
-        </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {FEATURES.map((f) => (
-            <div
-              key={f.title}
-              className="rounded-xl border p-5"
-              style={{
-                background: "oklch(0.97 0.015 60)",
-                borderColor: "oklch(0.88 0.025 55)",
-              }}
-            >
-              <div className="text-3xl mb-3">{f.emoji}</div>
-              <h3
-                className="font-heading font-bold text-base mb-1"
-                style={{ color: "oklch(0.38 0.07 48)" }}
-              >
-                {f.title}
-              </h3>
-              <p className="text-sm leading-relaxed" style={{ color: "oklch(0.48 0.04 50)" }}>
-                {f.desc}
-              </p>
+      <section className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
+        {FEATURES.map(({ icon: Icon, title, description }) => (
+          <div key={title} className="bg-white rounded-2xl border border-neutral-200 p-6 shadow-card hover:border-violet-200 transition-colors">
+            <div className="w-10 h-10 bg-violet-100 rounded-xl flex items-center justify-center mb-3">
+              <Icon size={20} className="text-violet-600" />
             </div>
-          ))}
-        </div>
+            <h3 className="font-heading font-bold text-neutral-900 mb-2">{title}</h3>
+            <p className="text-sm text-neutral-600 leading-relaxed">{description}</p>
+          </div>
+        ))}
       </section>
 
-      {/* College Connect */}
-      <section
-        className="rounded-2xl border p-6 mb-10"
-        style={{
-          background: "oklch(0.95 0.025 58)",
-          borderColor: "oklch(0.85 0.030 55)",
-        }}
-      >
-        <h2
-          className="font-heading text-xl font-bold mb-3"
-          style={{ color: "oklch(0.38 0.08 48)" }}
+      {/* CTA */}
+      <section className="text-center mb-10">
+        <button
+          onClick={() => navigate({ to: '/share' })}
+          className="inline-flex items-center gap-2 px-7 py-3.5 bg-violet-600 text-white font-bold rounded-2xl hover:bg-violet-700 transition-all duration-200 shadow-violet"
         >
-          🤝 College Connect
-        </h2>
-        <p className="text-sm leading-relaxed mb-4" style={{ color: "oklch(0.42 0.04 50)" }}>
-          College Connect lets students from different colleges share quick tips — about
-          placements, campus life, study strategies, and more. It's cross-campus wisdom in
-          bite-sized form. Open to all, no account needed.
-        </p>
-        <Link
-          to="/dashboard"
-          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-semibold transition-all"
-          style={{
-            background: "oklch(0.55 0.12 42)",
-            color: "oklch(0.99 0.005 58)",
-          }}
-        >
-          Explore College Connect →
-        </Link>
+          Share Your Experience <ArrowRight size={18} />
+        </button>
       </section>
 
-      {/* ICP */}
-      <section
-        className="rounded-2xl border p-6"
-        style={{
-          background: "oklch(0.94 0.020 200)",
-          borderColor: "oklch(0.82 0.030 200)",
-        }}
-      >
-        <h2
-          className="font-heading text-xl font-bold mb-3"
-          style={{ color: "oklch(0.32 0.10 200)" }}
-        >
-          🌐 Built on Internet Computer
-        </h2>
-        <p className="text-sm leading-relaxed" style={{ color: "oklch(0.38 0.06 200)" }}>
-          This platform runs entirely on the Internet Computer Protocol (ICP) — a decentralized
-          blockchain network. Your posts and data are stored on-chain, ensuring transparency,
-          permanence, and censorship-resistance without relying on traditional cloud servers.
-          This means Memu Nerchukunnavi stays accessible to everyone, always.
-        </p>
-      </section>
+      {/* Share */}
+      <div className="flex justify-center">
+        <ShareWebsiteButtons />
+      </div>
     </div>
   );
-};
-
-export default About;
+}

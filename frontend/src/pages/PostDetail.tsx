@@ -1,45 +1,50 @@
-import React from "react";
-import { useParams, Link } from "@tanstack/react-router";
-import { ThumbsUp, Users, ArrowLeft, Bookmark, BookmarkCheck } from "lucide-react";
-import { useGetAllPosts } from "../hooks/useQueries";
-import { useWishlistState } from "../hooks/useWishlist";
-import ShareButtons from "../components/ShareButtons";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Category } from "../backend";
-import { playBubblePop } from "../utils/sounds";
-import { categoryConfig, formatTimeAgo } from "../components/PostCard";
+import React from 'react';
+import { useNavigate, useParams } from '@tanstack/react-router';
+import { ArrowLeft, ThumbsUp, Link2, Bookmark, BookmarkCheck, Tag, Calendar } from 'lucide-react';
+import { useGetAllPosts } from '../hooks/useQueries';
+import { useWishlistState } from '../hooks/useWishlist';
+import { useToast } from '../hooks/useToast';
+import { playBubblePop } from '../utils/sounds';
+import { Category } from '../backend';
+import ShareButtons from '../components/ShareButtons';
 
-const PostDetail: React.FC = () => {
-  // Route is defined as /post/$id in App.tsx
-  const { id } = useParams({ from: "/post/$id" });
+const CATEGORY_LABELS: Record<string, string> = {
+  [Category.internships]: 'Internships',
+  [Category.hackathons]: 'Hackathons',
+  [Category.courses]: 'Courses',
+  [Category.general]: 'General',
+};
+
+const CATEGORY_STYLES: Record<string, string> = {
+  [Category.internships]: 'bg-violet-100 text-violet-700 border-violet-200',
+  [Category.hackathons]: 'bg-violet-50 text-violet-600 border-violet-100',
+  [Category.courses]: 'bg-neutral-100 text-neutral-600 border-neutral-200',
+  [Category.general]: 'bg-neutral-50 text-neutral-500 border-neutral-100',
+};
+
+export default function PostDetail() {
+  const { id } = useParams({ from: '/post/$id' });
+  const navigate = useNavigate();
   const { data: posts, isLoading } = useGetAllPosts();
-
   const post = posts?.find((p) => String(p.id) === id);
-  // useWishlistState returns { isSaved, toggleWishlist, isLoading }
-  const { isSaved, toggleWishlist, isLoading: wishlistLoading } = useWishlistState(
-    post?.id ?? BigInt(0)
-  );
+  const { isSaved, toggleWishlist, isLoading: wishlistLoading } = useWishlistState(post?.id ?? BigInt(0));
+  const { showToast } = useToast();
 
   const handleBookmark = () => {
     playBubblePop();
+    const willSave = !isSaved;
     toggleWishlist();
+    showToast(willSave ? 'Added to saved ✓' : 'Removed from saved', willSave ? 'success' : 'info');
   };
 
   if (isLoading) {
     return (
-      <div className="max-w-2xl mx-auto px-4 py-8">
-        <Skeleton className="h-6 w-24 mb-6" />
-        <div
-          className="rounded-2xl border p-6"
-          style={{
-            background: "oklch(0.97 0.012 60)",
-            borderColor: "oklch(0.88 0.025 55)",
-          }}
-        >
-          <Skeleton className="h-5 w-32 mb-4" />
-          <Skeleton className="h-4 w-full mb-2" />
-          <Skeleton className="h-4 w-5/6 mb-2" />
-          <Skeleton className="h-4 w-4/6" />
+      <div className="max-w-2xl mx-auto px-4 py-12">
+        <div className="bg-white rounded-2xl border border-neutral-200 p-8 animate-pulse">
+          <div className="h-6 bg-neutral-100 rounded-full w-1/3 mb-4" />
+          <div className="h-4 bg-neutral-100 rounded-full w-full mb-2" />
+          <div className="h-4 bg-neutral-100 rounded-full w-4/5 mb-2" />
+          <div className="h-4 bg-neutral-100 rounded-full w-3/5" />
         </div>
       </div>
     );
@@ -47,132 +52,81 @@ const PostDetail: React.FC = () => {
 
   if (!post) {
     return (
-      <div className="max-w-2xl mx-auto px-4 py-8 text-center">
-        <p className="text-4xl mb-3">🔍</p>
-        <p className="text-lg font-semibold mb-2" style={{ color: "oklch(0.38 0.06 48)" }}>
-          Post not found
-        </p>
-        <Link
-          to="/"
-          className="text-sm font-medium"
-          style={{ color: "oklch(0.50 0.10 42)" }}
+      <div className="max-w-2xl mx-auto px-4 py-12 text-center">
+        <div className="text-4xl mb-3">🔍</div>
+        <p className="text-neutral-500 font-medium">Post not found.</p>
+        <button
+          onClick={() => navigate({ to: '/' })}
+          className="mt-4 px-5 py-2 bg-violet-600 text-white rounded-xl font-semibold hover:bg-violet-700 transition-colors"
         >
-          ← Back to Home
-        </Link>
+          Back to Home
+        </button>
       </div>
     );
   }
 
-  const catConfig = categoryConfig[post.category] ?? categoryConfig[Category.general];
+  const catStyle = CATEGORY_STYLES[post.category as string] ?? 'bg-neutral-100 text-neutral-600 border-neutral-200';
+  const catLabel = CATEGORY_LABELS[post.category as string] ?? String(post.category);
+  const date = new Date(Number(post.createdAt) / 1_000_000);
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-8">
-      {/* Back */}
-      <Link
-        to="/"
-        className="inline-flex items-center gap-1.5 text-sm font-medium mb-6 transition-colors"
-        style={{ color: "oklch(0.50 0.08 48)" }}
+    <div className="max-w-2xl mx-auto px-4 py-12">
+      <button
+        onClick={() => navigate({ to: '/' })}
+        className="flex items-center gap-2 text-neutral-500 hover:text-violet-600 mb-6 text-sm font-medium transition-colors"
       >
-        <ArrowLeft size={16} />
-        Back to Feed
-      </Link>
+        <ArrowLeft size={16} /> Back to Home
+      </button>
 
-      {/* Post Card */}
-      <article
-        className="rounded-2xl border p-6 mb-6"
-        style={{
-          background: "oklch(0.98 0.015 60)",
-          borderColor: "oklch(0.88 0.025 55)",
-        }}
-      >
+      <article className="bg-white rounded-2xl border border-neutral-200 p-8 shadow-card">
         {/* Header */}
-        <div className="flex items-start justify-between gap-3 mb-4">
+        <div className="flex items-start justify-between gap-3 mb-6">
           <div className="flex items-center gap-2 flex-wrap">
-            <span
-              className="inline-flex items-center gap-1 text-sm font-semibold px-3 py-1 rounded-full"
-              style={{
-                background: catConfig.bg,
-                color: catConfig.color,
-              }}
-            >
-              {catConfig.emoji} {catConfig.label}
+            <span className={`text-xs font-semibold px-3 py-1 rounded-full border ${catStyle}`}>
+              <Tag size={10} className="inline mr-1" />
+              {catLabel}
             </span>
-            <span
-              className="text-sm px-3 py-1 rounded-full font-medium"
-              style={{
-                background: "oklch(0.92 0.025 55)",
-                color: "oklch(0.45 0.06 50)",
-              }}
-            >
+            <span className="text-xs font-medium px-3 py-1 rounded-full bg-violet-100 text-violet-700">
               {post.authorYear}
             </span>
           </div>
-
           <button
             onClick={handleBookmark}
             disabled={wishlistLoading}
-            className="p-2 rounded-full transition-colors flex-shrink-0"
-            style={{
-              color: isSaved ? "oklch(0.55 0.12 42)" : "oklch(0.65 0.04 50)",
-              background: isSaved ? "oklch(0.92 0.04 55)" : "transparent",
-            }}
-            title={isSaved ? "Remove from wishlist" : "Save to wishlist"}
+            className={`p-2 rounded-full transition-all duration-200 ${
+              isSaved
+                ? 'text-violet-600 bg-violet-50 hover:bg-violet-100'
+                : 'text-neutral-400 hover:text-violet-600 hover:bg-violet-50'
+            }`}
           >
-            {isSaved ? <BookmarkCheck size={20} /> : <Bookmark size={20} />}
+            {isSaved ? <BookmarkCheck size={18} /> : <Bookmark size={18} />}
           </button>
         </div>
 
         {/* Content */}
-        <p
-          className="text-base leading-relaxed mb-5 whitespace-pre-wrap"
-          style={{ color: "oklch(0.30 0.04 50)" }}
-        >
+        <p className="text-neutral-800 leading-relaxed text-base mb-6 whitespace-pre-wrap">
           {post.content}
         </p>
 
         {/* Stats */}
-        <div
-          className="flex items-center gap-4 pt-4 border-t"
-          style={{ borderColor: "oklch(0.88 0.025 55)" }}
-        >
-          <span
-            className="flex items-center gap-1.5 text-sm"
-            style={{ color: "oklch(0.52 0.05 50)" }}
-          >
-            <ThumbsUp size={15} />
+        <div className="flex items-center gap-6 text-sm text-neutral-400 mb-6 pb-6 border-b border-neutral-100">
+          <span className="flex items-center gap-1.5">
+            <ThumbsUp size={14} className="text-violet-400" />
             {String(post.upvotes)} upvotes
           </span>
-          <span
-            className="flex items-center gap-1.5 text-sm"
-            style={{ color: "oklch(0.52 0.05 50)" }}
-          >
-            <Users size={15} />
+          <span className="flex items-center gap-1.5">
+            <Link2 size={14} className="text-violet-400" />
             {String(post.connectCount)} connects
           </span>
-          <span className="ml-auto text-sm" style={{ color: "oklch(0.62 0.04 50)" }}>
-            {formatTimeAgo(post.createdAt)}
+          <span className="flex items-center gap-1.5 ml-auto">
+            <Calendar size={14} />
+            {date.toLocaleDateString()}
           </span>
         </div>
-      </article>
 
-      {/* Share */}
-      <div
-        className="rounded-2xl border p-4"
-        style={{
-          background: "oklch(0.96 0.018 58)",
-          borderColor: "oklch(0.88 0.025 55)",
-        }}
-      >
-        <p
-          className="text-sm font-semibold mb-3"
-          style={{ color: "oklch(0.38 0.06 48)" }}
-        >
-          Share this experience
-        </p>
-        <ShareButtons postId={post.id} content={post.content} />
-      </div>
+        {/* Share */}
+        <ShareButtons postId={String(post.id)} content={post.content} />
+      </article>
     </div>
   );
-};
-
-export default PostDetail;
+}

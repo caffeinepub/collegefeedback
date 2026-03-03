@@ -1,156 +1,121 @@
-import React, { useState } from "react";
-import { Link, useLocation } from "@tanstack/react-router";
-import { Menu, X, Volume2, VolumeX, Heart } from "lucide-react";
-import SparkParticles from "./SparkParticles";
-import { useYearSelection } from "../hooks/useYearSelection";
-import { getMuted, setMuted } from "../utils/sounds";
+import React, { useState } from 'react';
+import { Link, useLocation } from '@tanstack/react-router';
+import {
+  Home,
+  Share2,
+  LayoutGrid,
+  Info,
+  Users,
+  MessageCircle,
+  Volume2,
+  VolumeX,
+  BookmarkIcon,
+  BarChart2,
+  Menu,
+  X,
+} from 'lucide-react';
+import SparkParticles from './SparkParticles';
+import { getMuted, setMuted } from '../utils/sounds';
 
 const NAV_LINKS = [
-  { to: "/", label: "Home" },
-  { to: "/share", label: "Share" },
-  { to: "/dashboard", label: "Dashboard" },
-  { to: "/available-students", label: "Students" },
-  { to: "/community-chat", label: "Chat" },
-  { to: "/wishlist", label: "Wishlist" },
-  { to: "/about", label: "About" },
+  { to: '/', label: 'Home', icon: Home },
+  { to: '/share', label: 'Share', icon: Share2 },
+  { to: '/feed', label: 'Feed', icon: LayoutGrid },
+  { to: '/about', label: 'About', icon: Info },
+  { to: '/available-students', label: 'Students', icon: Users },
+  { to: '/community-chat', label: 'Chat', icon: MessageCircle },
+  { to: '/wishlist', label: 'Saved', icon: BookmarkIcon },
+  { to: '/dashboard', label: 'Stats', icon: BarChart2 },
 ];
 
-const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+interface LayoutProps {
+  children: React.ReactNode;
+}
+
+export default function Layout({ children }: LayoutProps) {
   const location = useLocation();
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [mutedState, setMutedState] = useState(getMuted());
-  const { year, hasSelected } = useYearSelection();
+  const [muted, setMutedState] = useState(getMuted());
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   const toggleMute = () => {
-    const next = !mutedState;
+    const next = !muted;
     setMuted(next);
     setMutedState(next);
   };
 
-  const appId = encodeURIComponent(
-    typeof window !== "undefined" ? window.location.hostname : "memu-nerchukunnavi"
-  );
-
   return (
-    <div className="min-h-screen flex flex-col app-grid-bg">
+    <div className="min-h-screen app-grid-bg flex flex-col relative">
       <SparkParticles />
 
       {/* Header */}
-      <header
-        className="sticky top-0 z-50 border-b"
-        style={{
-          background: "oklch(0.97 0.022 58 / 0.95)",
-          borderColor: "oklch(0.88 0.025 55)",
-          backdropFilter: "blur(12px)",
-        }}
-      >
-        <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-          {/* Brand */}
-          <Link to="/" className="flex items-center gap-2 group">
-            <img
-              src="/assets/generated/memu-logo.dim_256x256.png"
-              alt="Memu Nerchukunnavi logo"
-              className="w-8 h-8 rounded-full object-cover"
-              style={{ border: "1.5px solid oklch(0.82 0.06 52)" }}
-            />
-            <span
-              className="font-brand text-xl leading-none"
-              style={{ color: "oklch(0.45 0.10 42)" }}
-            >
-              Memu Nerchukunnavi
-            </span>
-            {hasSelected && year && (
-              <span
-                className="text-xs font-semibold px-2 py-0.5 rounded-full hidden sm:inline"
-                style={{
-                  background: "oklch(0.88 0.06 55)",
-                  color: "oklch(0.35 0.08 48)",
-                  border: "1px solid oklch(0.78 0.08 52)",
-                }}
-              >
-                {year}
-              </span>
-            )}
-          </Link>
-
-          {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center gap-1">
-            {NAV_LINKS.map((link) => {
-              const isActive = location.pathname === link.to;
+      <header className="relative z-20 pt-5 pb-2 flex flex-col items-center">
+        {/* Floating pill nav */}
+        <nav className="nav-pill px-2 py-2 flex items-center gap-1">
+          {/* Desktop nav links */}
+          <div className="hidden md:flex items-center gap-1">
+            {NAV_LINKS.map(({ to, label, icon: Icon }) => {
+              const isActive = location.pathname === to;
               return (
                 <Link
-                  key={link.to}
-                  to={link.to}
-                  className="px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-200"
-                  style={
+                  key={to}
+                  to={to}
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-200 ${
                     isActive
-                      ? {
-                          background: "oklch(0.55 0.12 42)",
-                          color: "oklch(0.99 0.005 58)",
-                        }
-                      : {
-                          color: "oklch(0.40 0.06 50)",
-                        }
-                  }
+                      ? 'bg-violet-600 text-white shadow-sm'
+                      : 'text-neutral-700 hover:bg-neutral-100 hover:text-neutral-900'
+                  }`}
                 >
-                  {link.label}
+                  <Icon size={15} />
+                  <span>{label}</span>
                 </Link>
               );
             })}
-          </nav>
+          </div>
 
-          {/* Right controls */}
-          <div className="flex items-center gap-2">
+          {/* Mobile: hamburger */}
+          <div className="flex md:hidden items-center gap-2 px-2">
+            <span className="font-heading font-bold text-sm text-neutral-900">
+              <span className="italic text-violet-600">MEMU</span>
+              <span className="font-black">NERCHUKNNAVI</span>
+            </span>
             <button
-              onClick={toggleMute}
-              className="p-2 rounded-full transition-colors"
-              style={{ color: "oklch(0.52 0.05 50)" }}
-              title={mutedState ? "Unmute sounds" : "Mute sounds"}
-            >
-              {mutedState ? <VolumeX size={18} /> : <Volume2 size={18} />}
-            </button>
-
-            {/* Mobile menu toggle */}
-            <button
-              className="md:hidden p-2 rounded-full transition-colors"
-              style={{ color: "oklch(0.40 0.06 50)" }}
-              onClick={() => setMenuOpen(!menuOpen)}
+              onClick={() => setMobileOpen(!mobileOpen)}
+              className="p-1.5 rounded-full hover:bg-neutral-100 text-neutral-700"
               aria-label="Toggle menu"
             >
-              {menuOpen ? <X size={20} /> : <Menu size={20} />}
+              {mobileOpen ? <X size={18} /> : <Menu size={18} />}
             </button>
           </div>
-        </div>
 
-        {/* Mobile Nav */}
-        {menuOpen && (
-          <div
-            className="md:hidden border-t px-4 py-3 flex flex-col gap-1"
-            style={{
-              background: "oklch(0.97 0.022 58)",
-              borderColor: "oklch(0.88 0.025 55)",
-            }}
+          {/* Mute toggle */}
+          <button
+            onClick={toggleMute}
+            className="ml-1 p-1.5 rounded-full hover:bg-neutral-100 text-neutral-500 hover:text-neutral-700 transition-colors"
+            aria-label={muted ? 'Unmute sounds' : 'Mute sounds'}
+            title={muted ? 'Unmute sounds' : 'Mute sounds'}
           >
-            {NAV_LINKS.map((link) => {
-              const isActive = location.pathname === link.to;
+            {muted ? <VolumeX size={15} /> : <Volume2 size={15} />}
+          </button>
+        </nav>
+
+        {/* Mobile dropdown */}
+        {mobileOpen && (
+          <div className="md:hidden mt-2 nav-pill px-3 py-3 flex flex-col gap-1 w-72">
+            {NAV_LINKS.map(({ to, label, icon: Icon }) => {
+              const isActive = location.pathname === to;
               return (
                 <Link
-                  key={link.to}
-                  to={link.to}
-                  onClick={() => setMenuOpen(false)}
-                  className="px-4 py-2 rounded-lg text-sm font-medium transition-colors"
-                  style={
+                  key={to}
+                  to={to}
+                  onClick={() => setMobileOpen(false)}
+                  className={`flex items-center gap-2 px-3 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
                     isActive
-                      ? {
-                          background: "oklch(0.55 0.12 42)",
-                          color: "oklch(0.99 0.005 58)",
-                        }
-                      : {
-                          color: "oklch(0.40 0.06 50)",
-                        }
-                  }
+                      ? 'bg-violet-600 text-white'
+                      : 'text-neutral-700 hover:bg-neutral-100'
+                  }`}
                 >
-                  {link.label}
+                  <Icon size={15} />
+                  <span>{label}</span>
                 </Link>
               );
             })}
@@ -159,55 +124,34 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       </header>
 
       {/* Main content */}
-      <main className="flex-1 relative z-10">{children}</main>
+      <main className="relative z-10 flex-1 w-full">
+        {children}
+      </main>
 
       {/* Footer */}
-      <footer
-        className="border-t mt-auto"
-        style={{
-          background: "oklch(0.95 0.022 58)",
-          borderColor: "oklch(0.88 0.025 55)",
-        }}
-      >
-        <div className="max-w-6xl mx-auto px-4 py-6 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <div className="flex items-center gap-2">
-            <img
-              src="/assets/generated/memu-logo.dim_256x256.png"
-              alt="logo"
-              className="w-6 h-6 rounded-full object-cover"
-            />
-            <span
-              className="font-brand text-base"
-              style={{ color: "oklch(0.45 0.10 42)" }}
-            >
-              Memu Nerchukunnavi
-            </span>
-            <span className="text-xs" style={{ color: "oklch(0.55 0.05 50)" }}>
-              © {new Date().getFullYear()}
-            </span>
+      <footer className="relative z-10 mt-16 border-t border-neutral-200 bg-white/70 backdrop-blur-sm py-8">
+        <div className="max-w-4xl mx-auto px-4 flex flex-col items-center gap-3 text-center">
+          <div className="text-lg font-heading font-bold">
+            <span className="italic text-violet-600">MEMU</span>
+            <span className="text-neutral-900 font-black">NERCHUKNNAVI</span>
           </div>
-          <p className="text-xs flex items-center gap-1" style={{ color: "oklch(0.55 0.05 50)" }}>
-            Built with{" "}
-            <Heart
-              size={12}
-              className="inline"
-              style={{ color: "oklch(0.62 0.14 42)", fill: "oklch(0.62 0.14 42)" }}
-            />{" "}
-            using{" "}
+          <p className="text-sm text-neutral-500">మేము నేర్చుకున్నవి — Collective wisdom for college students</p>
+          <p className="text-xs text-neutral-400">
+            Built with{' '}
+            <span className="text-violet-500">♥</span>
+            {' '}using{' '}
             <a
-              href={`https://caffeine.ai/?utm_source=Caffeine-footer&utm_medium=referral&utm_content=${appId}`}
+              href={`https://caffeine.ai/?utm_source=Caffeine-footer&utm_medium=referral&utm_content=${encodeURIComponent(typeof window !== 'undefined' ? window.location.hostname : 'memu-nerchuknnavi')}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="font-semibold hover:underline"
-              style={{ color: "oklch(0.50 0.10 42)" }}
+              className="text-violet-600 hover:underline font-medium"
             >
               caffeine.ai
             </a>
+            {' '}· © {new Date().getFullYear()}
           </p>
         </div>
       </footer>
     </div>
   );
-};
-
-export default Layout;
+}

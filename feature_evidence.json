@@ -2,10 +2,10 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-update-the-global-css-custom-properties-in-frontend-src-index-css-to-use-a-violet-and-black-color-combo-set-the-primary-accent-colors-to-violet-tones-set-the-main-background-color-to-pink-and-update-the-grid-background-utility-colors-to-yellow-ensure-both-light-and-dark-theme-tokens-reflect-this-new-palette-consistently",
-      "featureTitle": "Update the global CSS custom properties in frontend/src/index.css to use a violet and black color combo: set the primary/accent colors to violet tones, set the main background color to pink, and update the grid background utility colors to yellow. Ensure both light and dark theme tokens reflect this new palette consistently.",
+      "featureId": "feature-create-a-standalone-self-contained-single-html-file-frontend-public-standalone-html-that-duplicates-the-full-current-application-the-file-must-inline-all-css-tailwind-via-cdn-or-inlined-styles-all-javascript-logic-react-via-cdn-umd-builds-all-ui-content-translations-and-mock-static-data-so-it-runs-without-any-backend-canister-or-build-toolchain-all-fonts-icons-and-assets-must-be-loaded-via-cdn-links-or-inlined-as-base64-data-uris-the-file-should-be-fully-functional-as-a-static-preview-demo-with-hardcoded-sample-data-replacing-backend-calls",
+      "featureTitle": "Create a standalone, self-contained single HTML file (frontend/public/standalone.html) that duplicates the full current application. The file must inline all CSS (Tailwind via CDN or inlined styles), all JavaScript logic (React via CDN UMD builds), all UI content, translations, and mock/static data so it runs without any backend canister or build toolchain. All fonts, icons, and assets must be loaded via CDN links or inlined as base64 data URIs. The file should be fully functional as a static preview/demo with hardcoded sample data replacing backend calls.",
       "files": [
-        "frontend/src/index.css"
+        "frontend/public/standalone.html"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -18,46 +18,6 @@
       ],
       "testIds": [
         "REQ-1"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-update-frontend-tailwind-config-js-color-tokens-to-align-with-the-new-violet-black-pink-yellow-palette-ensuring-tailwind-utility-classes-used-across-components-badges-cards-buttons-year-badges-navigation-pick-up-the-updated-theme-colors",
-      "featureTitle": "Update frontend/tailwind.config.js color tokens to align with the new violet/black/pink/yellow palette, ensuring Tailwind utility classes used across components (badges, cards, buttons, year badges, navigation) pick up the updated theme colors.",
-      "files": [
-        "frontend/tailwind.config.js"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0",
-        "blob-storage@4.0.0",
-        "authorization@4.0.0"
-      ],
-      "testIds": [
-        "REQ-2"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-update-the-sparkparticles-component-frontend-src-components-sparkparticles-tsx-to-use-the-new-violet-pink-yellow-color-schemes-for-the-floating-pill-particles-instead-of-the-existing-warm-brown-skin-tone-schemes",
-      "featureTitle": "Update the SparkParticles component (frontend/src/components/SparkParticles.tsx) to use the new violet/pink/yellow color schemes for the floating pill particles instead of the existing warm brown/skin-tone schemes.",
-      "files": [
-        "frontend/src/components/SparkParticles.tsx"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0",
-        "blob-storage@4.0.0",
-        "authorization@4.0.0"
-      ],
-      "testIds": [
-        "REQ-3"
       ],
       "confidence": "high"
     }

@@ -1,11 +1,16 @@
 # Specification
 
 ## Summary
-**Goal:** Update the application's color scheme to a violet/black combination with a pink background and yellow grid lines.
+**Goal:** Create a single self-contained HTML file that is a fully functional static duplicate of the entire Mem Nerchukunnavi application, runnable in any browser without a build step or backend.
 
 **Planned changes:**
-- Update global CSS custom properties in `index.css` to use violet for primary/accent colors, pink for the main background, yellow for grid background utilities, and black for text/foreground contrast tokens
-- Update `tailwind.config.js` color tokens to align with the new violet/black/pink/yellow palette so all Tailwind utility classes (badges, cards, buttons, year badges, navigation) reflect the updated theme
-- Update `SparkParticles.tsx` to use violet, pink, and yellow color variants for floating pill particles, replacing existing warm brown/skin-tone colors
+- Create `frontend/public/standalone.html` as a single file containing all HTML, CSS (Tailwind via CDN), and JavaScript (React via CDN UMD builds) inlined
+- Implement all pages and in-page/hash-based routing: Home, About, Share Experience, Dashboard, Community Chat, Available Students, Wishlist, and Post Detail
+- Hardcode sample/mock data for posts, college connect tips, feedback, community chat messages, and student profiles
+- Inline all translations, UI content, and application logic so no backend canister calls are made (in-memory state only)
+- Load fonts and icons via CDN links
+- Include year selection modal on first load with year badges for all four years (1st–4th)
+- Add Open Graph meta tags and page title `Mem Nerchukunnavi | మేము నేర్చుకున్నవి` in the `<head>`
+- Apply the existing violet/neutral color palette and theme
 
-**User-visible outcome:** All pages and components display the new violet/black/pink/yellow color scheme, with pink backgrounds, violet accents, yellow grid lines, and updated particle animations — without any layout or functionality changes.
+**User-visible outcome:** Users can open `standalone.html` directly in a browser to see a fully populated, navigable demo of the application with no server, build tools, or backend required.

@@ -1,32 +1,18 @@
 {
   "schemaVersion": "1.0.0",
   "projectStateVersion": 3,
-  "summary": "Project with DM system, chat, and feedback sections. User is customizing the color scheme to violet and black with a pink background and yellow color grids.",
-  "architectural_notes": [],
+  "summary": "Web project with year-level popups (1st through 4th year). User requested all code consolidated into a single HTML file.",
+  "architectural_notes": [
+    "All code (HTML, CSS, JS) should be consolidated into a single HTML file"
+  ],
   "known_issues": [],
   "isFixRequest": false,
   "existing_features": [
     {
-      "id": "feature-update-the-global-css-custom-properties-in-frontend-src-index-css-to-use-a-violet-and-black-color-combo-set-the-primary-accent-colors-to-violet-tones-set-the-main-background-color-to-pink-and-update-the-grid-background-utility-colors-to-yellow-ensure-both-light-and-dark-theme-tokens-reflect-this-new-palette-consistently",
-      "title": "Update the global CSS custom properties in frontend/src/index.css to use a violet and black color combo: set the primary/accent colors to violet tones, set the main background color to pink, and update the grid background utility colors to yellow. Ensure both light and dark theme tokens reflect this new palette consistently.",
+      "id": "feature-create-a-standalone-self-contained-single-html-file-frontend-public-standalone-html-that-duplicates-the-full-current-application-the-file-must-inline-all-css-tailwind-via-cdn-or-inlined-styles-all-javascript-logic-react-via-cdn-umd-builds-all-ui-content-translations-and-mock-static-data-so-it-runs-without-any-backend-canister-or-build-toolchain-all-fonts-icons-and-assets-must-be-loaded-via-cdn-links-or-inlined-as-base64-data-uris-the-file-should-be-fully-functional-as-a-static-preview-demo-with-hardcoded-sample-data-replacing-backend-calls",
+      "title": "Create a standalone, self-contained single HTML file (frontend/public/standalone.html) that duplicates the full current application. The file must inline all CSS (Tailwind via CDN or inlined styles), all JavaScript logic (React via CDN UMD builds), all UI content, translations, and mock/static data so it runs without any backend canister or build toolchain. All fonts, icons, and assets must be loaded via CDN links or inlined as base64 data URIs. The file should be fully functional as a static preview/demo with hardcoded sample data replacing backend calls.",
       "reqIds": [
         "REQ-1"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-update-frontend-tailwind-config-js-color-tokens-to-align-with-the-new-violet-black-pink-yellow-palette-ensuring-tailwind-utility-classes-used-across-components-badges-cards-buttons-year-badges-navigation-pick-up-the-updated-theme-colors",
-      "title": "Update frontend/tailwind.config.js color tokens to align with the new violet/black/pink/yellow palette, ensuring Tailwind utility classes used across components (badges, cards, buttons, year badges, navigation) pick up the updated theme colors.",
-      "reqIds": [
-        "REQ-2"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-update-the-sparkparticles-component-frontend-src-components-sparkparticles-tsx-to-use-the-new-violet-pink-yellow-color-schemes-for-the-floating-pill-particles-instead-of-the-existing-warm-brown-skin-tone-schemes",
-      "title": "Update the SparkParticles component (frontend/src/components/SparkParticles.tsx) to use the new violet/pink/yellow color schemes for the floating pill particles instead of the existing warm brown/skin-tone schemes.",
-      "reqIds": [
-        "REQ-3"
       ],
       "version": 1
     }
@@ -34,7 +20,7 @@
   "new_feature_requests": [
     {
       "id": "AR-1",
-      "summary": "Change color scheme to violet and black combo with pink background and yellow color grids",
+      "summary": "Consolidate complete project code into a single self-contained HTML file",
       "reqIds": [],
       "status": "pending"
     }

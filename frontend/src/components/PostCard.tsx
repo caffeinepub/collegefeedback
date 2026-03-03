@@ -1,161 +1,113 @@
-import React from "react";
-import { Link } from "@tanstack/react-router";
-import { ThumbsUp, Users, Bookmark, BookmarkCheck } from "lucide-react";
-import { Post, Category } from "../backend";
-import { useWishlistState } from "../hooks/useWishlist";
-import { playBubblePop } from "../utils/sounds";
-import { useToast } from "../hooks/useToast";
-
-export const categoryConfig: Record<
-  Category,
-  { emoji: string; label: string; color: string; bg: string }
-> = {
-  [Category.internships]: {
-    emoji: "💼",
-    label: "Internships",
-    color: "oklch(0.40 0.10 42)",
-    bg: "oklch(0.92 0.04 55)",
-  },
-  [Category.hackathons]: {
-    emoji: "⚡",
-    label: "Hackathons",
-    color: "oklch(0.42 0.12 60)",
-    bg: "oklch(0.94 0.05 72)",
-  },
-  [Category.courses]: {
-    emoji: "📚",
-    label: "Courses",
-    color: "oklch(0.38 0.10 200)",
-    bg: "oklch(0.92 0.04 200)",
-  },
-  [Category.general]: {
-    emoji: "💬",
-    label: "General",
-    color: "oklch(0.40 0.08 280)",
-    bg: "oklch(0.93 0.03 280)",
-  },
-};
-
-export function formatTimeAgo(nanoseconds: bigint): string {
-  const ms = Number(nanoseconds) / 1_000_000;
-  const diff = Date.now() - ms;
-  const minutes = Math.floor(diff / 60000);
-  const hours = Math.floor(diff / 3600000);
-  const days = Math.floor(diff / 86400000);
-  if (days > 0) return `${days}d ago`;
-  if (hours > 0) return `${hours}h ago`;
-  if (minutes > 0) return `${minutes}m ago`;
-  return "just now";
-}
+import React from 'react';
+import { useNavigate } from '@tanstack/react-router';
+import { Bookmark, BookmarkCheck, ThumbsUp, Link2, Tag } from 'lucide-react';
+import { Post, Category } from '../backend';
+import { useWishlistState } from '../hooks/useWishlist';
+import { useToast } from '../hooks/useToast';
+import { playBubblePop } from '../utils/sounds';
 
 interface PostCardProps {
   post: Post;
 }
 
-const PostCard: React.FC<PostCardProps> = ({ post }) => {
-  const catConfig = categoryConfig[post.category] ?? categoryConfig[Category.general];
+const CATEGORY_STYLES: Record<string, { label: string; className: string }> = {
+  [Category.internships]: {
+    label: 'Internships',
+    className: 'bg-violet-100 text-violet-700 border-violet-200',
+  },
+  [Category.hackathons]: {
+    label: 'Hackathons',
+    className: 'bg-violet-50 text-violet-600 border-violet-100',
+  },
+  [Category.courses]: {
+    label: 'Courses',
+    className: 'bg-neutral-100 text-neutral-600 border-neutral-200',
+  },
+  [Category.general]: {
+    label: 'General',
+    className: 'bg-neutral-50 text-neutral-500 border-neutral-100',
+  },
+};
+
+const YEAR_COLORS: Record<string, string> = {
+  '1st Year': 'bg-violet-100 text-violet-700',
+  '2nd Year': 'bg-violet-200 text-violet-800',
+  '3rd Year': 'bg-neutral-100 text-neutral-700',
+  '4th Year': 'bg-neutral-200 text-neutral-800',
+};
+
+export default function PostCard({ post }: PostCardProps) {
+  const navigate = useNavigate();
   const { isSaved, toggleWishlist, isLoading } = useWishlistState(post.id);
   const { showToast } = useToast();
 
+  const catStyle = CATEGORY_STYLES[post.category as string] ?? {
+    label: String(post.category),
+    className: 'bg-neutral-100 text-neutral-600 border-neutral-200',
+  };
+
+  const yearColor = YEAR_COLORS[post.authorYear] ?? 'bg-neutral-100 text-neutral-600';
+
   const handleBookmark = (e: React.MouseEvent) => {
-    e.preventDefault();
     e.stopPropagation();
     playBubblePop();
     const willSave = !isSaved;
     toggleWishlist();
     showToast(
-      willSave ? "✨ Added to wishlist!" : "Removed from wishlist",
-      willSave ? "success" : "info"
+      willSave ? 'Added to saved ✓' : 'Removed from saved',
+      willSave ? 'success' : 'info'
     );
   };
 
   return (
-    <Link to="/post/$id" params={{ id: String(post.id) }}>
-      <article
-        className="rounded-xl border p-4 transition-all duration-200 hover:shadow-md cursor-pointer group"
-        style={{
-          background: "oklch(0.98 0.015 60)",
-          borderColor: "oklch(0.88 0.025 55)",
-        }}
-        onMouseEnter={(e) => {
-          (e.currentTarget as HTMLElement).style.borderColor = "oklch(0.72 0.08 52)";
-          (e.currentTarget as HTMLElement).style.background = "oklch(0.99 0.010 58)";
-        }}
-        onMouseLeave={(e) => {
-          (e.currentTarget as HTMLElement).style.borderColor = "oklch(0.88 0.025 55)";
-          (e.currentTarget as HTMLElement).style.background = "oklch(0.98 0.015 60)";
-        }}
-      >
-        {/* Header row */}
-        <div className="flex items-start justify-between gap-2 mb-3">
-          <div className="flex items-center gap-2 flex-wrap">
-            {/* Category badge */}
-            <span
-              className="inline-flex items-center gap-1 text-xs font-semibold px-2 py-0.5 rounded-full"
-              style={{
-                background: catConfig.bg,
-                color: catConfig.color,
-              }}
-            >
-              {catConfig.emoji} {catConfig.label}
-            </span>
-            {/* Year badge */}
-            <span
-              className="text-xs px-2 py-0.5 rounded-full font-medium"
-              style={{
-                background: "oklch(0.92 0.025 55)",
-                color: "oklch(0.45 0.06 50)",
-              }}
-            >
-              {post.authorYear}
-            </span>
-          </div>
-
-          {/* Bookmark */}
-          <button
-            onClick={handleBookmark}
-            disabled={isLoading}
-            className="p-1 rounded-full transition-colors flex-shrink-0"
-            style={{ color: isSaved ? "oklch(0.55 0.12 42)" : "oklch(0.65 0.04 50)" }}
-            title={isSaved ? "Remove from wishlist" : "Save to wishlist"}
-          >
-            {isSaved ? <BookmarkCheck size={16} /> : <Bookmark size={16} />}
-          </button>
-        </div>
-
-        {/* Content */}
-        <p
-          className="text-sm leading-relaxed line-clamp-3 mb-3"
-          style={{ color: "oklch(0.32 0.04 50)" }}
-        >
-          {post.content}
-        </p>
-
-        {/* Footer row */}
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <span
-              className="flex items-center gap-1 text-xs"
-              style={{ color: "oklch(0.55 0.05 50)" }}
-            >
-              <ThumbsUp size={13} />
-              {String(post.upvotes)}
-            </span>
-            <span
-              className="flex items-center gap-1 text-xs"
-              style={{ color: "oklch(0.55 0.05 50)" }}
-            >
-              <Users size={13} />
-              {String(post.connectCount)}
-            </span>
-          </div>
-          <span className="text-xs" style={{ color: "oklch(0.62 0.04 50)" }}>
-            {formatTimeAgo(post.createdAt)}
+    <article
+      className="bg-white rounded-2xl border border-neutral-200 p-5 cursor-pointer hover:border-violet-300 hover:shadow-card transition-all duration-200 group"
+      onClick={() => navigate({ to: '/post/$id', params: { id: String(post.id) } })}
+    >
+      {/* Header */}
+      <div className="flex items-start justify-between gap-2 mb-3">
+        <div className="flex items-center gap-2 flex-wrap">
+          <span className={`text-xs font-semibold px-2.5 py-1 rounded-full border ${catStyle.className}`}>
+            <Tag size={10} className="inline mr-1" />
+            {catStyle.label}
+          </span>
+          <span className={`text-xs font-medium px-2.5 py-1 rounded-full ${yearColor}`}>
+            {post.authorYear}
           </span>
         </div>
-      </article>
-    </Link>
-  );
-};
+        <button
+          onClick={handleBookmark}
+          disabled={isLoading}
+          className={`p-1.5 rounded-full transition-all duration-200 flex-shrink-0 ${
+            isSaved
+              ? 'text-violet-600 bg-violet-50 hover:bg-violet-100'
+              : 'text-neutral-400 hover:text-violet-600 hover:bg-violet-50'
+          }`}
+          aria-label={isSaved ? 'Remove from saved' : 'Save post'}
+        >
+          {isSaved ? <BookmarkCheck size={16} /> : <Bookmark size={16} />}
+        </button>
+      </div>
 
-export default PostCard;
+      {/* Content */}
+      <p className="text-neutral-800 text-sm leading-relaxed line-clamp-3 mb-4">
+        {post.content}
+      </p>
+
+      {/* Footer */}
+      <div className="flex items-center gap-4 text-xs text-neutral-400">
+        <span className="flex items-center gap-1">
+          <ThumbsUp size={12} />
+          {String(post.upvotes)} upvotes
+        </span>
+        <span className="flex items-center gap-1">
+          <Link2 size={12} />
+          {String(post.connectCount)} connects
+        </span>
+        <span className="ml-auto text-violet-400 text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity">
+          Read more →
+        </span>
+      </div>
+    </article>
+  );
+}

@@ -1,74 +1,43 @@
 {
   "kind": "build_request",
-  "title": "Update color scheme to violet/black with pink background and yellow grids",
+  "title": "Export complete app as a single self-contained HTML file",
   "projectName": "Mem Nerchukunnavi",
   "priority": "normal",
   "requirements": [
     {
       "id": "REQ-1",
-      "text": "Update the global CSS custom properties in frontend/src/index.css to use a violet and black color combo: set the primary/accent colors to violet tones, set the main background color to pink, and update the grid background utility colors to yellow. Ensure both light and dark theme tokens reflect this new palette consistently.",
+      "text": "Create a standalone, self-contained single HTML file (frontend/public/standalone.html) that duplicates the full current application. The file must inline all CSS (Tailwind via CDN or inlined styles), all JavaScript logic (React via CDN UMD builds), all UI content, translations, and mock/static data so it runs without any backend canister or build toolchain. All fonts, icons, and assets must be loaded via CDN links or inlined as base64 data URIs. The file should be fully functional as a static preview/demo with hardcoded sample data replacing backend calls.",
       "target": "frontend",
       "source": {
         "messageIds": [
           "msg-4"
         ],
         "quotes": [
-          "cahnge the colour to violet and black combo with pink background and yellow coloyr grids"
+          "make the complete code to one html file as a duplicate"
         ]
       },
       "acceptanceCriteria": [
-        "Primary/accent CSS tokens are violet (e.g., oklch values in the violet range)",
-        "Background CSS token is pink",
-        "Grid background utility (defined in index.css) renders yellow grid lines",
-        "Black is used for text/foreground contrast tokens",
-        "All existing pages and components visually reflect the new palette without layout breakage"
-      ]
-    },
-    {
-      "id": "REQ-2",
-      "text": "Update frontend/tailwind.config.js color tokens to align with the new violet/black/pink/yellow palette, ensuring Tailwind utility classes used across components (badges, cards, buttons, year badges, navigation) pick up the updated theme colors.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-4"
-        ],
-        "quotes": [
-          "cahnge the colour to violet and black combo with pink background and yellow coloyr grids"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Tailwind config color tokens for primary, background, accent, and grid reference the new violet/pink/yellow/black values",
-        "Year badges, nav links, and card components display the updated colors",
-        "No hardcoded color classes conflict with the new palette"
-      ]
-    },
-    {
-      "id": "REQ-3",
-      "text": "Update the SparkParticles component (frontend/src/components/SparkParticles.tsx) to use the new violet/pink/yellow color schemes for the floating pill particles instead of the existing warm brown/skin-tone schemes.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-4"
-        ],
-        "quotes": [
-          "cahnge the colour to violet and black combo with pink background and yellow coloyr grids"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Floating pill particles use violet, pink, and yellow color variants",
-        "No warm brown or skin-tone colors remain in the particle animation"
+        "A single file frontend/public/standalone.html exists and opens correctly in a browser without a local server or build step.",
+        "All pages and navigation (Home, About, Share Experience, Dashboard, Community Chat, Available Students, Wishlist, Post Detail) are represented and navigable within the single file using hash-based or in-page routing.",
+        "The file includes all CSS styles either via Tailwind CDN or inlined, matching the existing violet/neutral color palette and theme.",
+        "Sample/mock data is hardcoded to populate posts, college connect tips, feedback, community chat messages, and student profiles so every section appears populated.",
+        "Year selection modal appears on first load and year badges display correctly for all four years (1st–4th).",
+        "No external canister calls are made; all data interactions use in-memory JavaScript state.",
+        "The file renders correctly in modern browsers (Chrome, Firefox, Safari) without console errors.",
+        "Open Graph meta tags and the page title 'Mem Nerchukunnavi | మేము నేర్చుకున్నవి' are present in the <head>."
       ]
     }
   ],
   "constraints": [
-    "Do not modify any files under frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useActor.ts, frontend/src/main.tsx, or frontend/src/components/ui",
-    "Do not change any backend logic or data models",
-    "Do not alter layout structure or component functionality — only colors"
+    "The output must be a single .html file — no separate .js, .css, or asset files.",
+    "Do not modify any existing frontend source files or the backend.",
+    "All immutable frontend paths must remain untouched."
   ],
   "nonGoals": [
-    "Adding new features or pages",
-    "Changing typography or font configuration beyond what is needed for color contrast",
-    "Modifying backend schema or API"
+    "Replacing or modifying the existing React/Motoko application.",
+    "Connecting the standalone HTML file to any live backend canister.",
+    "Supporting Internet Identity authentication in the standalone file.",
+    "Real-time data updates or persistence in the standalone file."
   ],
   "imageRequirements": {
     "required": [],

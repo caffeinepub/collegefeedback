@@ -1,160 +1,124 @@
-import React, { useState } from "react";
-import { useYearSelection, type CollegeYear } from "../hooks/useYearSelection";
-import { playBubblePop } from "../utils/sounds";
+import React from 'react';
+import { useYearSelection } from '../hooks/useYearSelection';
+import type { CollegeYear } from '../hooks/useYearSelection';
+import { X } from 'lucide-react';
 
-const YEARS: CollegeYear[] = ["1st Year", "2nd Year", "3rd Year", "4th Year"];
+const YEAR_CARDS: { year: CollegeYear; emoji: string; subtitle: string; color: string }[] = [
+  {
+    year: '1st Year',
+    emoji: '🌱',
+    subtitle: 'Just getting started',
+    color: 'from-emerald-50 to-emerald-100 border-emerald-200 hover:border-emerald-400',
+  },
+  {
+    year: '2nd Year',
+    emoji: '📚',
+    subtitle: 'Building foundations',
+    color: 'from-sky-50 to-sky-100 border-sky-200 hover:border-sky-400',
+  },
+  {
+    year: '3rd Year',
+    emoji: '🚀',
+    subtitle: 'Leveling up fast',
+    color: 'from-violet-50 to-violet-100 border-violet-200 hover:border-violet-400',
+  },
+  {
+    year: '4th Year',
+    emoji: '🎓',
+    subtitle: 'Almost there!',
+    color: 'from-amber-50 to-amber-100 border-amber-200 hover:border-amber-400',
+  },
+];
 
 interface YearSelectionModalProps {
-  onClose?: () => void;
+  onClose: () => void;
 }
 
-const YearSelectionModal: React.FC<YearSelectionModalProps> = ({ onClose }) => {
-  const { setYear, setCollegeName } = useYearSelection();
-  const [collegeName, setCollegeNameLocal] = useState("");
-  const [selectedYear, setSelectedYear] = useState<CollegeYear | null>(null);
-  const [error, setError] = useState("");
+export default function YearSelectionModal({ onClose }: YearSelectionModalProps) {
+  const { setYear, year: currentYear } = useYearSelection();
 
-  const handleYearSelect = (year: CollegeYear) => {
-    playBubblePop();
-    setSelectedYear(year);
-    setError("");
-  };
-
-  const handleSubmit = () => {
-    if (!selectedYear) {
-      setError("Please select your year.");
-      return;
-    }
-    playBubblePop();
-    setYear(selectedYear);
-    setCollegeName(collegeName);
-    onClose?.();
+  const handleSelect = (y: CollegeYear) => {
+    setYear(y);
+    onClose();
   };
 
   return (
-    /* Full-screen overlay */
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center p-4"
-      style={{ background: "oklch(0.28 0.04 50 / 0.55)", backdropFilter: "blur(6px)" }}
+      className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
     >
-      <div
-        className="w-full max-w-md rounded-2xl shadow-2xl p-8 flex flex-col gap-6"
-        style={{
-          background: "oklch(0.98 0.018 60)",
-          border: "1.5px solid oklch(0.88 0.025 55)",
-        }}
-      >
-        {/* Brand heading */}
-        <div className="text-center">
-          <h1
-            className="font-brand text-3xl mb-1"
-            style={{ color: "oklch(0.45 0.10 42)" }}
-          >
-            Memu నేర్చుకున్నవి
-          </h1>
-          <p className="text-sm" style={{ color: "oklch(0.52 0.05 50)" }}>
-            Share what you've learned in college
+      <div className="bg-white rounded-3xl border border-neutral-200 p-8 w-full max-w-md shadow-2xl relative animate-in fade-in zoom-in-95 duration-200">
+        {/* Close button */}
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 p-1.5 rounded-full text-neutral-400 hover:text-neutral-700 hover:bg-neutral-100 transition-colors"
+          aria-label="Close"
+        >
+          <X size={18} />
+        </button>
+
+        {/* Header */}
+        <div className="text-center mb-7">
+          <div className="text-4xl mb-3">🎓</div>
+          <h2 className="text-2xl font-heading font-black text-neutral-900 mb-1.5">
+            Which year are you in?
+          </h2>
+          <p className="text-neutral-500 text-sm leading-relaxed">
+            We'll show you the most relevant tips and experiences for your college year.
           </p>
         </div>
 
-        {/* Year selection */}
-        <div>
-          <p
-            className="text-sm font-semibold mb-3 text-center"
-            style={{ color: "oklch(0.35 0.06 48)" }}
-          >
-            Which year are you in?
-          </p>
-          <div className="grid grid-cols-2 gap-3">
-            {YEARS.map((year) => (
+        {/* Year option cards */}
+        <div className="grid grid-cols-2 gap-3">
+          {YEAR_CARDS.map(({ year, emoji, subtitle, color }) => {
+            const isSelected = currentYear === year;
+            return (
               <button
                 key={year}
-                onClick={() => handleYearSelect(year)}
-                className="py-3 px-4 rounded-xl text-sm font-semibold transition-all duration-200 border-2"
-                style={
-                  selectedYear === year
-                    ? {
-                        background: "oklch(0.55 0.12 42)",
-                        color: "oklch(0.99 0.005 58)",
-                        borderColor: "oklch(0.55 0.12 42)",
-                        boxShadow: "0 4px 12px oklch(0.55 0.12 42 / 0.3)",
-                      }
-                    : {
-                        background: "oklch(0.95 0.020 58)",
-                        color: "oklch(0.38 0.07 48)",
-                        borderColor: "oklch(0.88 0.025 55)",
-                      }
-                }
+                onClick={() => handleSelect(year)}
+                className={`
+                  relative flex flex-col items-center justify-center gap-1.5
+                  px-4 py-5 rounded-2xl border-2 bg-gradient-to-br
+                  font-semibold transition-all duration-200 group
+                  ${color}
+                  ${isSelected
+                    ? 'border-violet-600 bg-gradient-to-br from-violet-50 to-violet-100 ring-2 ring-violet-300 ring-offset-1'
+                    : ''
+                  }
+                  hover:scale-[1.03] hover:shadow-md active:scale-[0.98]
+                `}
               >
-                {year}
+                {isSelected && (
+                  <span className="absolute top-2 right-2 w-4 h-4 bg-violet-600 rounded-full flex items-center justify-center">
+                    <svg width="8" height="8" viewBox="0 0 8 8" fill="none">
+                      <path d="M1.5 4L3 5.5L6.5 2" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </span>
+                )}
+                <span className="text-3xl">{emoji}</span>
+                <span className={`text-base font-black ${isSelected ? 'text-violet-700' : 'text-neutral-800'}`}>
+                  {year}
+                </span>
+                <span className={`text-xs font-medium ${isSelected ? 'text-violet-500' : 'text-neutral-500'}`}>
+                  {subtitle}
+                </span>
               </button>
-            ))}
-          </div>
-          {error && (
-            <p className="text-xs mt-2 text-center" style={{ color: "oklch(0.55 0.18 25)" }}>
-              {error}
-            </p>
-          )}
+            );
+          })}
         </div>
 
-        {/* College name (optional) */}
-        <div>
-          <label
-            className="block text-sm font-medium mb-1.5"
-            style={{ color: "oklch(0.38 0.06 48)" }}
+        {/* Skip */}
+        <div className="mt-5 text-center">
+          <button
+            onClick={onClose}
+            className="text-sm text-neutral-400 hover:text-neutral-600 transition-colors underline-offset-2 hover:underline"
           >
-            College name{" "}
-            <span style={{ color: "oklch(0.62 0.04 50)" }}>(optional)</span>
-          </label>
-          <input
-            type="text"
-            value={collegeName}
-            onChange={(e) => setCollegeNameLocal(e.target.value)}
-            placeholder="e.g. JNTU, Osmania University…"
-            className="w-full px-3 py-2 rounded-lg text-sm outline-none transition-colors"
-            style={{
-              background: "oklch(0.96 0.015 58)",
-              border: "1.5px solid oklch(0.88 0.025 55)",
-              color: "oklch(0.30 0.04 50)",
-            }}
-            onFocus={(e) => {
-              e.currentTarget.style.borderColor = "oklch(0.62 0.10 42)";
-            }}
-            onBlur={(e) => {
-              e.currentTarget.style.borderColor = "oklch(0.88 0.025 55)";
-            }}
-          />
+            Skip for now
+          </button>
         </div>
-
-        {/* Motivational quote */}
-        <p
-          className="text-center text-sm italic"
-          style={{ color: "oklch(0.55 0.06 50)" }}
-        >
-          "నేర్చుకోవడం ఆగిపోకు — మీ అనుభవాలు ఇతరులకు దారి చూపిస్తాయి"
-        </p>
-
-        {/* Submit */}
-        <button
-          onClick={handleSubmit}
-          className="w-full py-3 rounded-xl text-sm font-bold transition-all duration-200"
-          style={{
-            background: "oklch(0.55 0.12 42)",
-            color: "oklch(0.99 0.005 58)",
-            boxShadow: "0 4px 14px oklch(0.55 0.12 42 / 0.35)",
-          }}
-          onMouseEnter={(e) => {
-            (e.currentTarget as HTMLElement).style.background = "oklch(0.50 0.13 42)";
-          }}
-          onMouseLeave={(e) => {
-            (e.currentTarget as HTMLElement).style.background = "oklch(0.55 0.12 42)";
-          }}
-        >
-          Let's Go! 🚀
-        </button>
       </div>
     </div>
   );
-};
-
-export default YearSelectionModal;
+}

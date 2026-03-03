@@ -1,92 +1,102 @@
-import React, { useMemo } from "react";
-
-const YEAR_LABELS = [
-  "I'm 1st Year",
-  "I'm 2nd Year",
-  "I'm 3rd Year",
-  "I'm 4th Year",
-];
-
-interface ColorScheme {
-  bg: string;
-  text: string;
-  border: string;
-}
-
-// Violet / Pink / Yellow pill colors
-const PILL_COLORS: ColorScheme[] = [
-  { bg: "#EDE0FF", text: "#4B0082", border: "#9B59B6" },   // light violet
-  { bg: "#FFD6EC", text: "#7B0050", border: "#E91E8C" },   // pink
-  { bg: "#FFF9C4", text: "#5A4000", border: "#F4C430" },   // yellow
-  { bg: "#D8B4FE", text: "#3B0764", border: "#7C3AED" },   // medium violet
-  { bg: "#FECDD3", text: "#881337", border: "#F43F5E" },   // rose pink
-  { bg: "#FEF08A", text: "#713F12", border: "#EAB308" },   // bright yellow
-  { bg: "#F3E8FF", text: "#581C87", border: "#A855F7" },   // soft violet
-  { bg: "#FCE7F3", text: "#831843", border: "#EC4899" },   // hot pink
-];
+import React, { useMemo } from 'react';
 
 interface Particle {
   id: number;
-  left: number;
-  top: number;
-  yearLabel: string;
-  colorScheme: ColorScheme;
-  animVariant: number;
-  duration: number;
-  delay: number;
+  top: string;
+  left: string;
+  width: string;
+  height: string;
+  color: string;
+  shadow: string;
+  animation: string;
+  delay: string;
+  opacity: number;
 }
 
-// Stratified grid: divide viewport into a 4x4 grid, place one particle per cell
-function generateStratifiedParticles(): Particle[] {
-  const COLS = 4;
-  const ROWS = 4;
-  const TOTAL = COLS * ROWS; // 16 particles
+const VIOLET_NEUTRAL_COLORS = [
+  // Violet shades
+  '#5B4EE8',
+  '#7C6FF0',
+  '#9B8FF5',
+  '#C4B5FD',
+  '#DDD6FE',
+  // Neutral grays
+  '#D4D4D4',
+  '#A3A3A3',
+  '#E5E5E5',
+  '#F5F5F5',
+  // Light violet tints
+  '#EDE9FE',
+  '#F3F0FF',
+];
 
-  const particles: Particle[] = [];
+const ANIMATIONS = [
+  'spark-float-1',
+  'spark-float-2',
+  'spark-float-3',
+  'spark-float-4',
+];
 
-  for (let row = 0; row < ROWS; row++) {
-    for (let col = 0; col < COLS; col++) {
-      const index = row * COLS + col;
+function seededRandom(seed: number): number {
+  const x = Math.sin(seed + 1) * 10000;
+  return x - Math.floor(x);
+}
 
-      // Cell boundaries (in %)
-      const cellW = 100 / COLS;
-      const cellH = 100 / ROWS;
+export default function SparkParticles() {
+  const particles = useMemo<Particle[]>(() => {
+    const result: Particle[] = [];
+    const gridCols = 4;
+    const gridRows = 4;
+    const cellW = 100 / gridCols;
+    const cellH = 100 / gridRows;
 
-      // Add jitter within the cell (keep 15% margin from edges)
-      const jitterX = 0.15 + Math.random() * 0.70;
-      const jitterY = 0.15 + Math.random() * 0.70;
+    for (let row = 0; row < gridRows; row++) {
+      for (let col = 0; col < gridCols; col++) {
+        const idx = row * gridCols + col;
+        const r1 = seededRandom(idx * 7 + 1);
+        const r2 = seededRandom(idx * 7 + 2);
+        const r3 = seededRandom(idx * 7 + 3);
+        const r4 = seededRandom(idx * 7 + 4);
+        const r5 = seededRandom(idx * 7 + 5);
+        const r6 = seededRandom(idx * 7 + 6);
 
-      const left = col * cellW + jitterX * cellW;
-      const top = row * cellH + jitterY * cellH;
+        const topPct = cellH * row + r1 * cellH * 0.8 + cellH * 0.1;
+        const leftPct = cellW * col + r2 * cellW * 0.8 + cellW * 0.1;
 
-      // Clamp to safe viewport range
-      const safeLeft = Math.min(Math.max(left, 2), 92);
-      const safeTop = Math.min(Math.max(top, 2), 88);
+        const colorIdx = Math.floor(r3 * VIOLET_NEUTRAL_COLORS.length);
+        const color = VIOLET_NEUTRAL_COLORS[colorIdx];
 
-      const yearLabel = YEAR_LABELS[index % YEAR_LABELS.length];
-      const colorScheme = PILL_COLORS[index % PILL_COLORS.length];
-      const animVariant = (index % 4) + 1;
-      const duration = 3.5 + (index % 7) * 0.4;
-      const delay = (index * 0.45) % 6;
+        const animIdx = Math.floor(r4 * ANIMATIONS.length);
+        const animation = ANIMATIONS[animIdx];
 
-      particles.push({
-        id: index,
-        left: safeLeft,
-        top: safeTop,
-        yearLabel,
-        colorScheme,
-        animVariant,
-        duration,
-        delay,
-      });
+        const width = Math.floor(r5 * 40 + 20);
+        const height = Math.floor(r6 * 10 + 6);
+
+        // Violet particles get a violet glow, neutrals get a subtle shadow
+        const isViolet = colorIdx < 5;
+        const shadow = isViolet
+          ? `0 0 8px 2px #5B4EE840`
+          : `0 0 4px 1px #00000010`;
+
+        const delay = `${(seededRandom(idx * 3 + 99) * 5).toFixed(2)}s`;
+        const opacity = 0.35 + seededRandom(idx * 2 + 55) * 0.45;
+
+        result.push({
+          id: idx,
+          top: `${topPct.toFixed(2)}%`,
+          left: `${leftPct.toFixed(2)}%`,
+          width: `${width}px`,
+          height: `${height}px`,
+          color,
+          shadow,
+          animation,
+          delay,
+          opacity,
+        });
+      }
     }
-  }
-
-  return particles;
-}
-
-const SparkParticles: React.FC = () => {
-  const particles = useMemo(() => generateStratifiedParticles(), []);
+    return result;
+  }, []);
 
   return (
     <div
@@ -97,38 +107,27 @@ const SparkParticles: React.FC = () => {
       {particles.map((p) => (
         <div
           key={p.id}
-          className={`animate-spark-float-${p.animVariant}`}
           style={{
-            position: "absolute",
-            left: `${p.left}%`,
-            top: `${p.top}%`,
-            animationDuration: `${p.duration}s`,
-            animationDelay: `${p.delay}s`,
-            ["--duration" as string]: `${p.duration}s`,
+            position: 'absolute',
+            top: p.top,
+            left: p.left,
+            width: p.width,
+            height: p.height,
+            borderRadius: '9999px',
+            backgroundColor: p.color,
+            boxShadow: p.shadow,
+            opacity: p.opacity,
+            animationName: p.animation,
+            animationDuration: p.animation === 'spark-float-1' ? '6s'
+              : p.animation === 'spark-float-2' ? '8s'
+              : p.animation === 'spark-float-3' ? '7s'
+              : '9s',
+            animationTimingFunction: 'ease-in-out',
+            animationIterationCount: 'infinite',
+            animationDelay: p.delay,
           }}
-        >
-          <span
-            style={{
-              display: "inline-block",
-              padding: "3px 10px",
-              borderRadius: "999px",
-              fontSize: "11px",
-              fontWeight: 600,
-              fontFamily: "DM Sans, sans-serif",
-              backgroundColor: p.colorScheme.bg,
-              color: p.colorScheme.text,
-              border: `1.5px solid ${p.colorScheme.border}`,
-              whiteSpace: "nowrap",
-              boxShadow: "0 2px 8px rgba(75,0,130,0.15)",
-              letterSpacing: "0.01em",
-            }}
-          >
-            {p.yearLabel}
-          </span>
-        </div>
+        />
       ))}
     </div>
   );
-};
-
-export default SparkParticles;
+}

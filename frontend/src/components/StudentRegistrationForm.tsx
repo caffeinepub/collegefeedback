@@ -1,194 +1,78 @@
-import React, { useState } from "react";
-import { useRegisterStudent } from "../hooks/useQueries";
-import { playBubblePop } from "../utils/sounds";
-import { useToast } from "../hooks/useToast";
+import React, { useState } from 'react';
+import { useRegisterStudent } from '../hooks/useQueries';
+import { useToast } from '../hooks/useToast';
 
-const YEARS = ["1st Year", "2nd Year", "3rd Year", "4th Year"];
+const YEARS = ['1st Year', '2nd Year', '3rd Year', '4th Year'];
 
 interface StudentRegistrationFormProps {
   onSuccess?: () => void;
 }
 
-const StudentRegistrationForm: React.FC<StudentRegistrationFormProps> = ({ onSuccess }) => {
-  const [name, setName] = useState("");
-  const [year, setYear] = useState("");
-  const [college, setCollege] = useState("");
+export default function StudentRegistrationForm({ onSuccess }: StudentRegistrationFormProps) {
+  const [name, setName] = useState('');
+  const [year, setYear] = useState('1st Year');
+  const [college, setCollege] = useState('');
   const [available, setAvailable] = useState(true);
-  const [errors, setErrors] = useState<Record<string, string>>({});
+  const { mutateAsync: register, isPending } = useRegisterStudent();
   const { showToast } = useToast();
 
-  const { mutate, isPending } = useRegisterStudent();
-
-  const validate = () => {
-    const e: Record<string, string> = {};
-    if (!name.trim()) e.name = "Name is required.";
-    if (!year) e.year = "Please select your year.";
-    if (!college.trim()) e.college = "College name is required.";
-    return e;
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const errs = validate();
-    if (Object.keys(errs).length > 0) {
-      setErrors(errs);
-      showToast("Please fix the errors before submitting.", "error");
-      return;
+    if (!name.trim() || !college.trim()) return;
+    try {
+      await register({ name: name.trim(), year, college: college.trim(), available });
+      showToast('Profile registered! 🎉', 'success');
+      onSuccess?.();
+    } catch {
+      showToast('Failed to register. Please try again.', 'error');
     }
-    setErrors({});
-    mutate(
-      { name: name.trim(), year, college: college.trim(), available },
-      {
-        onSuccess: () => {
-          playBubblePop();
-          showToast(
-            available
-              ? "🎉 You're now listed as available for DMs!"
-              : "✅ Profile saved successfully!",
-            "success"
-          );
-          onSuccess?.();
-        },
-        onError: () => {
-          showToast("Failed to save profile. Please try again.", "error");
-        },
-      }
-    );
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-      {/* Name */}
-      <div>
-        <label className="block text-xs font-semibold mb-1" style={{ color: "oklch(0.38 0.06 48)" }}>
-          Your Name *
-        </label>
+    <div className="bg-white rounded-2xl border border-neutral-200 p-6 shadow-card">
+      <h3 className="font-heading font-bold text-neutral-900 mb-4">Register as Available</h3>
+      <form onSubmit={handleSubmit} className="space-y-3">
         <input
           type="text"
+          placeholder="Your name"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          placeholder="e.g. Priya Sharma"
-          className="w-full px-3 py-2 rounded-lg text-sm outline-none transition-colors"
-          style={{
-            background: "oklch(0.97 0.012 60)",
-            border: `1.5px solid ${errors.name ? "oklch(0.55 0.18 25)" : "oklch(0.88 0.025 55)"}`,
-            color: "oklch(0.30 0.04 50)",
-          }}
-          onFocus={(e) => { e.currentTarget.style.borderColor = "oklch(0.62 0.10 42)"; }}
-          onBlur={(e) => { e.currentTarget.style.borderColor = errors.name ? "oklch(0.55 0.18 25)" : "oklch(0.88 0.025 55)"; }}
+          className="w-full bg-neutral-50 border border-neutral-200 rounded-xl px-4 py-2.5 text-sm text-neutral-800 focus:outline-none focus:ring-2 focus:ring-violet-400 focus:border-violet-400 placeholder:text-neutral-400"
         />
-        {errors.name && (
-          <p className="text-xs mt-1" style={{ color: "oklch(0.55 0.18 25)" }}>{errors.name}</p>
-        )}
-      </div>
-
-      {/* Year */}
-      <div>
-        <label className="block text-xs font-semibold mb-1" style={{ color: "oklch(0.38 0.06 48)" }}>
-          College Year *
-        </label>
         <select
           value={year}
           onChange={(e) => setYear(e.target.value)}
-          className="w-full px-3 py-2 rounded-lg text-sm outline-none transition-colors"
-          style={{
-            background: "oklch(0.97 0.012 60)",
-            border: `1.5px solid ${errors.year ? "oklch(0.55 0.18 25)" : "oklch(0.88 0.025 55)"}`,
-            color: year ? "oklch(0.30 0.04 50)" : "oklch(0.62 0.04 50)",
-          }}
+          className="w-full bg-neutral-50 border border-neutral-200 rounded-xl px-4 py-2.5 text-sm text-neutral-800 focus:outline-none focus:ring-2 focus:ring-violet-400 focus:border-violet-400"
         >
-          <option value="">Select year…</option>
-          {YEARS.map((y) => (
-            <option key={y} value={y}>{y}</option>
-          ))}
+          {YEARS.map((y) => <option key={y} value={y}>{y}</option>)}
         </select>
-        {errors.year && (
-          <p className="text-xs mt-1" style={{ color: "oklch(0.55 0.18 25)" }}>{errors.year}</p>
-        )}
-      </div>
-
-      {/* College */}
-      <div>
-        <label className="block text-xs font-semibold mb-1" style={{ color: "oklch(0.38 0.06 48)" }}>
-          College Name *
-        </label>
         <input
           type="text"
+          placeholder="College name"
           value={college}
           onChange={(e) => setCollege(e.target.value)}
-          placeholder="e.g. JNTU Hyderabad"
-          className="w-full px-3 py-2 rounded-lg text-sm outline-none transition-colors"
-          style={{
-            background: "oklch(0.97 0.012 60)",
-            border: `1.5px solid ${errors.college ? "oklch(0.55 0.18 25)" : "oklch(0.88 0.025 55)"}`,
-            color: "oklch(0.30 0.04 50)",
-          }}
-          onFocus={(e) => { e.currentTarget.style.borderColor = "oklch(0.62 0.10 42)"; }}
-          onBlur={(e) => { e.currentTarget.style.borderColor = errors.college ? "oklch(0.55 0.18 25)" : "oklch(0.88 0.025 55)"; }}
+          className="w-full bg-neutral-50 border border-neutral-200 rounded-xl px-4 py-2.5 text-sm text-neutral-800 focus:outline-none focus:ring-2 focus:ring-violet-400 focus:border-violet-400 placeholder:text-neutral-400"
         />
-        {errors.college && (
-          <p className="text-xs mt-1" style={{ color: "oklch(0.55 0.18 25)" }}>{errors.college}</p>
-        )}
-      </div>
-
-      {/* Availability toggle */}
-      <div
-        className="flex items-center justify-between px-3 py-2.5 rounded-lg"
-        style={{
-          background: "oklch(0.95 0.025 58)",
-          border: "1px solid oklch(0.88 0.025 55)",
-        }}
-      >
-        <div>
-          <p className="text-sm font-semibold" style={{ color: "oklch(0.35 0.06 48)" }}>
-            Available for DMs
-          </p>
-          <p className="text-xs" style={{ color: "oklch(0.55 0.04 50)" }}>
-            Let other students message you directly
-          </p>
-        </div>
+        <label className="flex items-center gap-3 cursor-pointer">
+          <div
+            onClick={() => setAvailable(!available)}
+            className={`w-10 h-6 rounded-full transition-colors relative cursor-pointer ${available ? 'bg-violet-600' : 'bg-neutral-200'}`}
+          >
+            <div className={`absolute top-1 w-4 h-4 bg-white rounded-full shadow transition-transform ${available ? 'translate-x-5' : 'translate-x-1'}`} />
+          </div>
+          <span className="text-sm text-neutral-700 font-medium">Available for DMs</span>
+        </label>
         <button
-          type="button"
-          onClick={() => setAvailable(!available)}
-          className="relative w-11 h-6 rounded-full transition-all duration-200 flex-shrink-0"
-          style={{
-            background: available ? "oklch(0.55 0.12 42)" : "oklch(0.78 0.04 52)",
-          }}
-          aria-checked={available}
-          role="switch"
+          type="submit"
+          disabled={isPending || !name.trim() || !college.trim()}
+          className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-violet-600 text-white font-semibold rounded-xl hover:bg-violet-700 disabled:opacity-50 transition-colors"
         >
-          <span
-            className="absolute top-0.5 w-5 h-5 rounded-full transition-all duration-200"
-            style={{
-              background: "oklch(0.99 0.005 58)",
-              left: available ? "calc(100% - 1.375rem)" : "0.125rem",
-              boxShadow: "0 1px 3px oklch(0.30 0.04 50 / 0.3)",
-            }}
-          />
+          {isPending ? (
+            <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+          ) : null}
+          Register
         </button>
-      </div>
-
-      <button
-        type="submit"
-        disabled={isPending}
-        className="w-full py-2.5 rounded-xl text-sm font-bold transition-all duration-200 flex items-center justify-center gap-2"
-        style={{
-          background: isPending ? "oklch(0.75 0.06 52)" : "oklch(0.55 0.12 42)",
-          color: "oklch(0.99 0.005 58)",
-          cursor: isPending ? "not-allowed" : "pointer",
-        }}
-      >
-        {isPending ? (
-          <>
-            <span className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />
-            Saving…
-          </>
-        ) : (
-          "Save Profile 🎓"
-        )}
-      </button>
-    </form>
+      </form>
+    </div>
   );
-};
-
-export default StudentRegistrationForm;
+}

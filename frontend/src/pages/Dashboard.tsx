@@ -1,253 +1,123 @@
-import React from "react";
-import { useGetStats } from "../hooks/useQueries";
-import { Skeleton } from "@/components/ui/skeleton";
-import PostCard from "../components/PostCard";
-import CollegeConnectForm from "../components/CollegeConnectForm";
-import CollegeConnectList from "../components/CollegeConnectList";
-import FeedbackSection from "../components/FeedbackSection";
-import FeedbackForm from "../components/FeedbackForm";
-import { Category } from "../backend";
+import React from 'react';
+import { BarChart2, TrendingUp, FileText, Link2, ThumbsUp } from 'lucide-react';
+import { useGetStats } from '../hooks/useQueries';
+import CollegeConnectForm from '../components/CollegeConnectForm';
+import CollegeConnectList from '../components/CollegeConnectList';
+import FeedbackSection from '../components/FeedbackSection';
+import FeedbackForm from '../components/FeedbackForm';
+import { Category } from '../backend';
 
 const CATEGORY_LABELS: Record<string, string> = {
-  [Category.internships]: "💼 Internships",
-  [Category.hackathons]: "⚡ Hackathons",
-  [Category.courses]: "📚 Courses",
-  [Category.general]: "💬 General",
+  [Category.internships]: 'Internships',
+  [Category.hackathons]: 'Hackathons',
+  [Category.courses]: 'Courses',
+  [Category.general]: 'General',
 };
 
-const Dashboard: React.FC = () => {
-  const { data: stats, isLoading, isError } = useGetStats();
+export default function Dashboard() {
+  const { data: stats, isLoading } = useGetStats();
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8">
-      <h1
-        className="font-heading text-2xl font-bold mb-6"
-        style={{ color: "oklch(0.35 0.08 48)" }}
-      >
-        📊 Dashboard
-      </h1>
+    <div className="max-w-5xl mx-auto px-4 py-12">
+      <div className="text-center mb-10">
+        <h1 className="text-4xl font-heading font-black text-neutral-900 mb-2">
+          <span className="italic text-violet-600">Community</span> Dashboard
+        </h1>
+        <p className="text-neutral-500">Stats, insights, and college connect tips.</p>
+      </div>
 
-      {/* Feedback Section — shown at the top */}
-      <section className="mb-8">
-        <div
-          className="rounded-2xl border p-5"
-          style={{
-            background: "oklch(0.97 0.018 60)",
-            borderColor: "oklch(0.88 0.025 55)",
-          }}
-        >
-          <h2
-            className="font-heading text-lg font-bold mb-4"
-            style={{ color: "oklch(0.38 0.07 48)" }}
-          >
-            💬 Student Feedback
-          </h2>
-
-          {/* Feedback list */}
-          <div className="mb-4">
-            <FeedbackSection />
-          </div>
-
-          {/* Divider */}
-          <div
-            className="my-4 border-t"
-            style={{ borderColor: "oklch(0.88 0.025 55)" }}
-          />
-
-          {/* Feedback form */}
-          <h3
-            className="font-heading text-sm font-bold mb-3"
-            style={{ color: "oklch(0.45 0.06 50)" }}
-          >
-            Share Your Feedback
-          </h3>
+      {/* Feedback */}
+      <section className="mb-10">
+        <h2 className="text-xl font-heading font-bold text-neutral-800 mb-4">Student Feedback</h2>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <FeedbackForm />
+          <FeedbackSection />
         </div>
       </section>
 
-      {/* Stats Cards */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
-        {/* Total Posts */}
-        <div
-          className="rounded-xl border p-4 text-center"
-          style={{
-            background: "oklch(0.96 0.025 58)",
-            borderColor: "oklch(0.88 0.025 55)",
-          }}
-        >
-          {isLoading ? (
-            <Skeleton className="h-8 w-12 mx-auto mb-1" />
-          ) : (
-            <p
-              className="text-3xl font-bold font-heading"
-              style={{ color: "oklch(0.45 0.10 42)" }}
-            >
-              {isError ? "—" : String(stats?.totalPosts ?? 0)}
-            </p>
-          )}
-          <p className="text-xs font-medium mt-1" style={{ color: "oklch(0.55 0.05 50)" }}>
-            Total Posts
-          </p>
+      {/* Stats */}
+      {isLoading ? (
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
+          {[...Array(4)].map((_, i) => (
+            <div key={i} className="bg-white rounded-2xl border border-neutral-200 p-5 animate-pulse">
+              <div className="h-8 bg-neutral-100 rounded-full w-1/2 mb-2" />
+              <div className="h-3 bg-neutral-100 rounded-full w-3/4" />
+            </div>
+          ))}
         </div>
-
-        {/* Category counts */}
-        {isLoading
-          ? [1, 2, 3].map((i) => (
-              <div
-                key={i}
-                className="rounded-xl border p-4 text-center"
-                style={{
-                  background: "oklch(0.96 0.025 58)",
-                  borderColor: "oklch(0.88 0.025 55)",
-                }}
-              >
-                <Skeleton className="h-8 w-12 mx-auto mb-1" />
-                <Skeleton className="h-3 w-16 mx-auto" />
+      ) : stats ? (
+        <>
+          {/* Summary cards */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            <div className="bg-white rounded-2xl border border-neutral-200 p-5 shadow-card">
+              <div className="flex items-center gap-2 mb-1">
+                <FileText size={16} className="text-violet-500" />
+                <span className="text-xs text-neutral-500 font-medium">Total Posts</span>
               </div>
-            ))
-          : stats?.categoryCounts.map(([cat, count]) => (
-              <div
-                key={String(cat)}
-                className="rounded-xl border p-4 text-center"
-                style={{
-                  background: "oklch(0.96 0.025 58)",
-                  borderColor: "oklch(0.88 0.025 55)",
-                }}
-              >
-                <p
-                  className="text-3xl font-bold font-heading"
-                  style={{ color: "oklch(0.45 0.10 42)" }}
-                >
-                  {String(count)}
-                </p>
-                <p className="text-xs font-medium mt-1" style={{ color: "oklch(0.55 0.05 50)" }}>
-                  {CATEGORY_LABELS[String(cat)] ?? String(cat)}
-                </p>
+              <p className="text-3xl font-black text-neutral-900">{String(stats.totalPosts)}</p>
+            </div>
+            {stats.categoryCounts.map(([cat, count]) => (
+              <div key={String(cat)} className="bg-white rounded-2xl border border-neutral-200 p-5 shadow-card">
+                <div className="flex items-center gap-2 mb-1">
+                  <BarChart2 size={16} className="text-violet-400" />
+                  <span className="text-xs text-neutral-500 font-medium">{CATEGORY_LABELS[String(cat)] ?? String(cat)}</span>
+                </div>
+                <p className="text-3xl font-black text-neutral-900">{String(count)}</p>
               </div>
             ))}
-      </div>
-
-      {/* Main content: posts + college connect */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Posts columns */}
-        <div className="lg:col-span-2 flex flex-col gap-6">
-          {/* Top Upvoted */}
-          <section>
-            <h2
-              className="font-heading text-lg font-bold mb-3"
-              style={{ color: "oklch(0.38 0.07 48)" }}
-            >
-              🔥 Top Upvoted
-            </h2>
-            {isLoading ? (
-              <div className="flex flex-col gap-3">
-                {[1, 2].map((i) => (
-                  <div
-                    key={i}
-                    className="rounded-xl border p-4"
-                    style={{
-                      background: "oklch(0.97 0.012 60)",
-                      borderColor: "oklch(0.88 0.025 55)",
-                    }}
-                  >
-                    <Skeleton className="h-4 w-24 mb-3" />
-                    <Skeleton className="h-3 w-full mb-2" />
-                    <Skeleton className="h-3 w-5/6" />
-                  </div>
-                ))}
-              </div>
-            ) : isError ? (
-              <p className="text-sm" style={{ color: "oklch(0.55 0.18 25)" }}>
-                Failed to load.
-              </p>
-            ) : stats?.topUpvotedPosts.length === 0 ? (
-              <p className="text-sm" style={{ color: "oklch(0.62 0.04 50)" }}>
-                No posts yet.
-              </p>
-            ) : (
-              <div className="flex flex-col gap-3">
-                {stats?.topUpvotedPosts.map((post) => (
-                  <PostCard key={String(post.id)} post={post} />
-                ))}
-              </div>
-            )}
-          </section>
-
-          {/* Top Connected */}
-          <section>
-            <h2
-              className="font-heading text-lg font-bold mb-3"
-              style={{ color: "oklch(0.38 0.07 48)" }}
-            >
-              🤝 Most Connected
-            </h2>
-            {isLoading ? (
-              <div className="flex flex-col gap-3">
-                {[1, 2].map((i) => (
-                  <div
-                    key={i}
-                    className="rounded-xl border p-4"
-                    style={{
-                      background: "oklch(0.97 0.012 60)",
-                      borderColor: "oklch(0.88 0.025 55)",
-                    }}
-                  >
-                    <Skeleton className="h-4 w-24 mb-3" />
-                    <Skeleton className="h-3 w-full mb-2" />
-                    <Skeleton className="h-3 w-5/6" />
-                  </div>
-                ))}
-              </div>
-            ) : isError ? (
-              <p className="text-sm" style={{ color: "oklch(0.55 0.18 25)" }}>
-                Failed to load.
-              </p>
-            ) : stats?.topConnectedPosts.length === 0 ? (
-              <p className="text-sm" style={{ color: "oklch(0.62 0.04 50)" }}>
-                No posts yet.
-              </p>
-            ) : (
-              <div className="flex flex-col gap-3">
-                {stats?.topConnectedPosts.map((post) => (
-                  <PostCard key={String(post.id)} post={post} />
-                ))}
-              </div>
-            )}
-          </section>
-        </div>
-
-        {/* College Connect sidebar */}
-        <aside className="lg:col-span-1">
-          <div
-            className="rounded-2xl border p-5 sticky top-24"
-            style={{
-              background: "oklch(0.97 0.018 60)",
-              borderColor: "oklch(0.88 0.025 55)",
-            }}
-          >
-            <h2
-              className="font-heading text-lg font-bold mb-4"
-              style={{ color: "oklch(0.38 0.07 48)" }}
-            >
-              🤝 College Connect
-            </h2>
-            <CollegeConnectForm />
-            <div
-              className="my-4 border-t"
-              style={{ borderColor: "oklch(0.88 0.025 55)" }}
-            />
-            <h3
-              className="font-heading text-sm font-bold mb-3"
-              style={{ color: "oklch(0.45 0.06 50)" }}
-            >
-              Recent Tips
-            </h3>
-            <CollegeConnectList />
           </div>
-        </aside>
-      </div>
+
+          {/* Top posts */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+            <div className="bg-white rounded-2xl border border-neutral-200 p-6 shadow-card">
+              <h3 className="font-heading font-bold text-neutral-800 mb-4 flex items-center gap-2">
+                <ThumbsUp size={16} className="text-violet-500" />
+                Top Upvoted
+              </h3>
+              <div className="space-y-3">
+                {stats.topUpvotedPosts.slice(0, 5).map((post) => (
+                  <div key={String(post.id)} className="flex items-start gap-3 p-3 bg-neutral-50 rounded-xl border border-neutral-100">
+                    <span className="text-violet-600 font-black text-sm min-w-[2rem]">↑{String(post.upvotes)}</span>
+                    <p className="text-sm text-neutral-700 line-clamp-2">{post.content}</p>
+                  </div>
+                ))}
+                {stats.topUpvotedPosts.length === 0 && (
+                  <p className="text-neutral-400 text-sm">No posts yet.</p>
+                )}
+              </div>
+            </div>
+
+            <div className="bg-white rounded-2xl border border-neutral-200 p-6 shadow-card">
+              <h3 className="font-heading font-bold text-neutral-800 mb-4 flex items-center gap-2">
+                <TrendingUp size={16} className="text-violet-500" />
+                Top Connected
+              </h3>
+              <div className="space-y-3">
+                {stats.topConnectedPosts.slice(0, 5).map((post) => (
+                  <div key={String(post.id)} className="flex items-start gap-3 p-3 bg-neutral-50 rounded-xl border border-neutral-100">
+                    <span className="text-violet-600 font-black text-sm min-w-[2rem]">
+                      <Link2 size={12} className="inline" />{String(post.connectCount)}
+                    </span>
+                    <p className="text-sm text-neutral-700 line-clamp-2">{post.content}</p>
+                  </div>
+                ))}
+                {stats.topConnectedPosts.length === 0 && (
+                  <p className="text-neutral-400 text-sm">No posts yet.</p>
+                )}
+              </div>
+            </div>
+          </div>
+        </>
+      ) : null}
+
+      {/* College Connect */}
+      <section>
+        <h2 className="text-xl font-heading font-bold text-neutral-800 mb-4">College Connect Tips</h2>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <CollegeConnectForm />
+          <CollegeConnectList />
+        </div>
+      </section>
     </div>
   );
-};
-
-export default Dashboard;
+}

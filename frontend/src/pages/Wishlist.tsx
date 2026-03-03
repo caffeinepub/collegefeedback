@@ -1,82 +1,62 @@
-import React from "react";
-import { useGetAllPosts, useGetWishlist } from "../hooks/useQueries";
-import { useWishlistSession } from "../hooks/useWishlist";
-import PostCard from "../components/PostCard";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Link } from "@tanstack/react-router";
+import React from 'react';
+import { Bookmark, ArrowLeft } from 'lucide-react';
+import { useNavigate } from '@tanstack/react-router';
+import { useGetAllPosts, useGetWishlist } from '../hooks/useQueries';
+import { useWishlistSession } from '../hooks/useWishlist';
+import PostCard from '../components/PostCard';
 
-const Wishlist: React.FC = () => {
-  // useWishlistSession returns a string directly (not an object)
+export default function Wishlist() {
+  const navigate = useNavigate();
   const sessionKey = useWishlistSession();
   const { data: wishlistIds, isLoading: wishlistLoading } = useGetWishlist(sessionKey);
   const { data: allPosts, isLoading: postsLoading } = useGetAllPosts();
 
   const isLoading = wishlistLoading || postsLoading;
 
-  const savedPosts = React.useMemo(() => {
-    if (!allPosts || !wishlistIds) return [];
-    const idSet = new Set(wishlistIds.map((id) => String(id)));
-    return allPosts.filter((p) => idSet.has(String(p.id)));
-  }, [allPosts, wishlistIds]);
+  const savedPosts = allPosts && wishlistIds
+    ? allPosts.filter((p) => wishlistIds.some((id) => id === p.id))
+    : [];
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
-      <h1
-        className="font-heading text-2xl font-bold mb-6"
-        style={{ color: "oklch(0.35 0.08 48)" }}
+    <div className="max-w-3xl mx-auto px-4 py-12">
+      <button
+        onClick={() => navigate({ to: '/' })}
+        className="flex items-center gap-2 text-neutral-500 hover:text-violet-600 mb-6 text-sm font-medium transition-colors"
       >
-        🔖 My Wishlist
-      </h1>
+        <ArrowLeft size={16} /> Back to Home
+      </button>
+
+      <div className="text-center mb-10">
+        <h1 className="text-4xl font-heading font-black text-neutral-900 mb-2">
+          <span className="italic text-violet-600">Saved</span> Posts
+        </h1>
+        <p className="text-neutral-500">Your bookmarked experiences and advice.</p>
+      </div>
 
       {isLoading ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {[1, 2, 3, 4].map((i) => (
-            <div
-              key={i}
-              className="rounded-xl border p-4"
-              style={{
-                background: "oklch(0.97 0.012 60)",
-                borderColor: "oklch(0.88 0.025 55)",
-              }}
-            >
-              <Skeleton className="h-4 w-24 mb-3" />
-              <Skeleton className="h-3 w-full mb-2" />
-              <Skeleton className="h-3 w-5/6 mb-2" />
-              <Skeleton className="h-3 w-4/6" />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {[...Array(4)].map((_, i) => (
+            <div key={i} className="bg-white rounded-2xl border border-neutral-200 p-5 animate-pulse">
+              <div className="h-4 bg-neutral-100 rounded-full w-1/3 mb-3" />
+              <div className="h-3 bg-neutral-100 rounded-full w-full mb-2" />
+              <div className="h-3 bg-neutral-100 rounded-full w-4/5" />
             </div>
           ))}
         </div>
       ) : savedPosts.length === 0 ? (
-        <div
-          className="text-center py-16 rounded-2xl border"
-          style={{
-            background: "oklch(0.97 0.012 60)",
-            borderColor: "oklch(0.88 0.025 55)",
-          }}
-        >
-          <p className="text-4xl mb-3">🔖</p>
-          <p
-            className="text-lg font-semibold mb-1"
-            style={{ color: "oklch(0.38 0.06 48)" }}
+        <div className="text-center py-16">
+          <Bookmark size={40} className="text-neutral-300 mx-auto mb-3" />
+          <p className="text-neutral-500 font-medium">No saved posts yet.</p>
+          <p className="text-neutral-400 text-sm mt-1">Bookmark posts from the feed to see them here.</p>
+          <button
+            onClick={() => navigate({ to: '/' })}
+            className="mt-4 px-5 py-2 bg-violet-600 text-white rounded-xl font-semibold hover:bg-violet-700 transition-colors"
           >
-            No saved posts yet
-          </p>
-          <p className="text-sm mb-4" style={{ color: "oklch(0.55 0.05 50)" }}>
-            Bookmark posts you find helpful to revisit them here.
-          </p>
-          <Link
-            to="/"
-            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-semibold transition-all"
-            style={{
-              background: "oklch(0.55 0.12 42)",
-              color: "oklch(0.99 0.005 58)",
-            }}
-          >
-            Browse Posts →
-          </Link>
+            Browse Posts
+          </button>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {savedPosts.map((post) => (
             <PostCard key={String(post.id)} post={post} />
           ))}
@@ -84,6 +64,4 @@ const Wishlist: React.FC = () => {
       )}
     </div>
   );
-};
-
-export default Wishlist;
+}

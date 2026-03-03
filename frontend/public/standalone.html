@@ -1,0 +1,1324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mem Nerchukunnavi | మేము నేర్చుకున్నవి</title>
+  <meta name="description" content="A platform for students to share experiences, connect, and learn together." />
+  <meta property="og:title" content="Mem Nerchukunnavi | మేము నేర్చుకున్నవి" />
+  <meta property="og:description" content="Share your college experiences, connect with peers, and grow together." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="/assets/generated/hero-banner.dim_1200x400.png" />
+  <link rel="icon" href="/assets/generated/memu-logo.dim_256x256.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            display: ['Sora', 'Inter', 'sans-serif'],
+          },
+          colors: {
+            primary: {
+              DEFAULT: '#7c3aed',
+              50: '#f5f3ff',
+              100: '#ede9fe',
+              200: '#ddd6fe',
+              300: '#c4b5fd',
+              400: '#a78bfa',
+              500: '#8b5cf6',
+              600: '#7c3aed',
+              700: '#6d28d9',
+              800: '#5b21b6',
+              900: '#4c1d95',
+            },
+          },
+          borderRadius: {
+            xl: '0.75rem',
+            '2xl': '1rem',
+            '3xl': '1.5rem',
+          },
+          boxShadow: {
+            card: '0 2px 16px 0 rgba(124,58,237,0.07), 0 1px 4px 0 rgba(0,0,0,0.06)',
+            nav: '0 4px 24px 0 rgba(124,58,237,0.10)',
+            violet: '0 4px 24px 0 rgba(124,58,237,0.18)',
+          },
+          keyframes: {
+            'spark-float-1': {
+              '0%, 100%': { transform: 'translateY(0px) translateX(0px)', opacity: '0.7' },
+              '50%': { transform: 'translateY(-18px) translateX(8px)', opacity: '1' },
+            },
+            'spark-float-2': {
+              '0%, 100%': { transform: 'translateY(0px) translateX(0px)', opacity: '0.5' },
+              '50%': { transform: 'translateY(-12px) translateX(-10px)', opacity: '0.9' },
+            },
+            'spark-float-3': {
+              '0%, 100%': { transform: 'translateY(0px) translateX(0px)', opacity: '0.6' },
+              '50%': { transform: 'translateY(-22px) translateX(5px)', opacity: '1' },
+            },
+            'spark-float-4': {
+              '0%, 100%': { transform: 'translateY(0px) translateX(0px)', opacity: '0.4' },
+              '50%': { transform: 'translateY(-15px) translateX(-7px)', opacity: '0.8' },
+            },
+          },
+          animation: {
+            'spark-1': 'spark-float-1 3.5s ease-in-out infinite',
+            'spark-2': 'spark-float-2 4.2s ease-in-out infinite',
+            'spark-3': 'spark-float-3 2.8s ease-in-out infinite',
+            'spark-4': 'spark-float-4 5.1s ease-in-out infinite',
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    :root {
+      --background: oklch(0.98 0.003 280);
+      --foreground: oklch(0.13 0.02 280);
+      --card: oklch(1 0 0);
+      --card-foreground: oklch(0.13 0.02 280);
+      --primary: oklch(0.49 0.24 293);
+      --primary-foreground: oklch(1 0 0);
+      --secondary: oklch(0.94 0.01 280);
+      --secondary-foreground: oklch(0.25 0.03 280);
+      --muted: oklch(0.95 0.005 280);
+      --muted-foreground: oklch(0.52 0.02 280);
+      --accent: oklch(0.94 0.04 293);
+      --accent-foreground: oklch(0.49 0.24 293);
+      --border: oklch(0.90 0.01 280);
+      --ring: oklch(0.49 0.24 293);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background-color: #f8f7ff;
+      color: #1a1523;
+      min-height: 100vh;
+      background-image: radial-gradient(circle at 1px 1px, rgba(124,58,237,0.06) 1px, transparent 0);
+      background-size: 32px 32px;
+    }
+    .font-display { font-family: 'Sora', 'Inter', sans-serif; }
+    /* Spark animations */
+    @keyframes spark-float-1 {
+      0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0.7; }
+      50% { transform: translateY(-18px) translateX(8px); opacity: 1; }
+    }
+    @keyframes spark-float-2 {
+      0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0.5; }
+      50% { transform: translateY(-12px) translateX(-10px); opacity: 0.9; }
+    }
+    @keyframes spark-float-3 {
+      0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0.6; }
+      50% { transform: translateY(-22px) translateX(5px); opacity: 1; }
+    }
+    @keyframes spark-float-4 {
+      0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0.4; }
+      50% { transform: translateY(-15px) translateX(-7px); opacity: 0.8; }
+    }
+    .spark { position: fixed; border-radius: 9999px; pointer-events: none; z-index: 0; }
+    .spark-v1 { animation: spark-float-1 3.5s ease-in-out infinite; background: #7c3aed; box-shadow: 0 0 6px 2px rgba(124,58,237,0.3); }
+    .spark-v2 { animation: spark-float-2 4.2s ease-in-out infinite; background: #8b5cf6; box-shadow: 0 0 6px 2px rgba(139,92,246,0.25); }
+    .spark-v3 { animation: spark-float-3 2.8s ease-in-out infinite; background: #a78bfa; }
+    .spark-v4 { animation: spark-float-4 5.1s ease-in-out infinite; background: #9ca3af; }
+    /* Toast */
+    #toast-container { position: fixed; bottom: 24px; right: 24px; z-index: 9999; display: flex; flex-direction: column; gap: 8px; }
+    .toast { display: flex; align-items: center; gap: 10px; padding: 12px 18px; border-radius: 12px; background: white; box-shadow: 0 4px 24px rgba(0,0,0,0.12); font-size: 14px; font-weight: 500; min-width: 220px; max-width: 340px; animation: slideIn 0.3s ease; }
+    .toast.success { border-left: 4px solid #7c3aed; }
+    .toast.error { border-left: 4px solid #ef4444; }
+    .toast.info { border-left: 4px solid #6b7280; }
+    @keyframes slideIn { from { transform: translateX(60px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+    /* Modal overlay */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 16px; }
+    /* Nav pill */
+    .nav-pill { background: white; border-radius: 9999px; box-shadow: 0 4px 24px rgba(124,58,237,0.10); }
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #f1f0f7; }
+    ::-webkit-scrollbar-thumb { background: #c4b5fd; border-radius: 3px; }
+    /* Year badge colors */
+    .year-1st { background: #7c3aed; color: white; }
+    .year-2nd { background: #8b5cf6; color: white; }
+    .year-3rd { background: #a78bfa; color: #1a1523; }
+    .year-4th { background: #6b7280; color: white; }
+    /* Category badge */
+    .cat-internships { background: #ddd6fe; color: #5b21b6; }
+    .cat-hackathons { background: #ede9fe; color: #6d28d9; }
+    .cat-courses { background: #e0e7ff; color: #3730a3; }
+    .cat-general { background: #f3f4f6; color: #374151; }
+    /* Responsive */
+    @media (max-width: 640px) {
+      .hide-mobile { display: none !important; }
+      .show-mobile { display: flex !important; }
+    }
+    @media (min-width: 641px) {
+      .show-mobile { display: none !important; }
+    }
+    /* Chat bubble */
+    .bubble-sent { background: #7c3aed; color: white; border-radius: 18px 18px 4px 18px; }
+    .bubble-recv { background: #f3f4f6; color: #1a1523; border-radius: 18px 18px 18px 4px; }
+    /* Page transitions */
+    .page { animation: fadeIn 0.25s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    /* Card hover */
+    .post-card:hover { box-shadow: 0 8px 32px rgba(124,58,237,0.13); transform: translateY(-2px); transition: all 0.2s ease; }
+    .post-card { transition: all 0.2s ease; }
+  </style>
+</head>
+<body>
+
+<!-- Spark Particles -->
+<div id="sparks-container" aria-hidden="true"></div>
+
+<!-- Toast Container -->
+<div id="toast-container"></div>
+
+<!-- Year Selection Modal -->
+<div id="year-modal" class="modal-overlay" style="display:none;">
+  <div style="background:white;border-radius:24px;padding:32px;max-width:520px;width:100%;box-shadow:0 20px 60px rgba(124,58,237,0.18);position:relative;">
+    <button onclick="closeYearModal()" style="position:absolute;top:16px;right:16px;background:none;border:none;cursor:pointer;color:#6b7280;font-size:20px;">✕</button>
+    <div style="text-align:center;margin-bottom:24px;">
+      <div style="font-family:'Sora',sans-serif;font-size:22px;font-weight:700;color:#1a1523;">Which year are you in? 🎓</div>
+      <div style="color:#6b7280;font-size:14px;margin-top:6px;">మీరు ఏ సంవత్సరంలో ఉన్నారు?</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div class="year-card" data-year="1st Year" onclick="selectYear('1st Year')" style="cursor:pointer;border-radius:16px;padding:20px;background:linear-gradient(135deg,#7c3aed,#6d28d9);color:white;text-align:center;transition:transform 0.15s;position:relative;">
+        <div style="font-size:28px;margin-bottom:8px;">🌱</div>
+        <div style="font-weight:700;font-size:16px;">1st Year</div>
+        <div style="font-size:12px;opacity:0.85;margin-top:4px;">Fresh Beginnings</div>
+        <div class="year-check" style="display:none;position:absolute;top:10px;right:10px;background:white;border-radius:50%;width:20px;height:20px;display:none;align-items:center;justify-content:center;color:#7c3aed;font-size:12px;font-weight:700;">✓</div>
+      </div>
+      <div class="year-card" data-year="2nd Year" onclick="selectYear('2nd Year')" style="cursor:pointer;border-radius:16px;padding:20px;background:linear-gradient(135deg,#8b5cf6,#7c3aed);color:white;text-align:center;transition:transform 0.15s;position:relative;">
+        <div style="font-size:28px;margin-bottom:8px;">📚</div>
+        <div style="font-weight:700;font-size:16px;">2nd Year</div>
+        <div style="font-size:12px;opacity:0.85;margin-top:4px;">Finding Your Path</div>
+        <div class="year-check" style="display:none;position:absolute;top:10px;right:10px;background:white;border-radius:50%;width:20px;height:20px;display:none;align-items:center;justify-content:center;color:#7c3aed;font-size:12px;font-weight:700;">✓</div>
+      </div>
+      <div class="year-card" data-year="3rd Year" onclick="selectYear('3rd Year')" style="cursor:pointer;border-radius:16px;padding:20px;background:linear-gradient(135deg,#a78bfa,#8b5cf6);color:#1a1523;text-align:center;transition:transform 0.15s;position:relative;">
+        <div style="font-size:28px;margin-bottom:8px;">🚀</div>
+        <div style="font-weight:700;font-size:16px;">3rd Year</div>
+        <div style="font-size:12px;opacity:0.75;margin-top:4px;">Building Skills</div>
+        <div class="year-check" style="display:none;position:absolute;top:10px;right:10px;background:#7c3aed;border-radius:50%;width:20px;height:20px;display:none;align-items:center;justify-content:center;color:white;font-size:12px;font-weight:700;">✓</div>
+      </div>
+      <div class="year-card" data-year="4th Year" onclick="selectYear('4th Year')" style="cursor:pointer;border-radius:16px;padding:20px;background:linear-gradient(135deg,#6b7280,#4b5563);color:white;text-align:center;transition:transform 0.15s;position:relative;">
+        <div style="font-size:28px;margin-bottom:8px;">🎯</div>
+        <div style="font-weight:700;font-size:16px;">4th Year</div>
+        <div style="font-size:12px;opacity:0.85;margin-top:4px;">Final Stretch</div>
+        <div class="year-check" style="display:none;position:absolute;top:10px;right:10px;background:white;border-radius:50%;width:20px;height:20px;display:none;align-items:center;justify-content:center;color:#6b7280;font-size:12px;font-weight:700;">✓</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DM Panel Modal -->
+<div id="dm-modal" class="modal-overlay" style="display:none;">
+  <div style="background:white;border-radius:20px;width:100%;max-width:440px;max-height:80vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,0.15);">
+    <div style="padding:20px 24px;border-bottom:1px solid #f3f4f6;display:flex;align-items:center;justify-content:space-between;">
+      <div>
+        <div style="font-weight:700;font-size:16px;" id="dm-recipient-name">Chat</div>
+        <div style="font-size:12px;color:#6b7280;">Direct Message</div>
+      </div>
+      <button onclick="closeDMModal()" style="background:none;border:none;cursor:pointer;color:#6b7280;font-size:20px;">✕</button>
+    </div>
+    <div id="dm-messages" style="flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;min-height:200px;max-height:340px;"></div>
+    <div style="padding:16px;border-top:1px solid #f3f4f6;display:flex;gap:8px;">
+      <input id="dm-input" type="text" placeholder="Type a message..." maxlength="200" style="flex:1;padding:10px 14px;border:1.5px solid #e5e7eb;border-radius:12px;font-size:14px;outline:none;" onkeydown="if(event.key==='Enter')sendDM()" />
+      <button onclick="sendDM()" style="background:#7c3aed;color:white;border:none;border-radius:12px;padding:10px 18px;cursor:pointer;font-weight:600;font-size:14px;">Send</button>
+    </div>
+  </div>
+</div>
+
+<!-- Sender Name Modal -->
+<div id="sender-modal" class="modal-overlay" style="display:none;">
+  <div style="background:white;border-radius:20px;padding:28px;max-width:360px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.15);">
+    <div style="font-weight:700;font-size:18px;margin-bottom:8px;">Enter Your Name</div>
+    <div style="color:#6b7280;font-size:14px;margin-bottom:20px;">To send a DM, please enter your name.</div>
+    <input id="sender-name-input" type="text" placeholder="Your name..." style="width:100%;padding:10px 14px;border:1.5px solid #e5e7eb;border-radius:12px;font-size:14px;outline:none;margin-bottom:16px;" />
+    <div style="display:flex;gap:10px;">
+      <button onclick="closeSenderModal()" style="flex:1;padding:10px;border:1.5px solid #e5e7eb;border-radius:12px;background:white;cursor:pointer;font-weight:500;">Cancel</button>
+      <button onclick="confirmSenderName()" style="flex:1;padding:10px;background:#7c3aed;color:white;border:none;border-radius:12px;cursor:pointer;font-weight:600;">Continue</button>
+    </div>
+  </div>
+</div>
+
+<!-- App Shell -->
+<div id="app" style="min-height:100vh;display:flex;flex-direction:column;position:relative;z-index:1;">
+
+  <!-- Navigation -->
+  <nav style="position:sticky;top:0;z-index:100;padding:12px 16px;">
+    <div style="max-width:900px;margin:0 auto;">
+      <div class="nav-pill" style="display:flex;align-items:center;justify-content:space-between;padding:10px 20px;">
+        <!-- Logo -->
+        <button onclick="navigate('home')" style="background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:10px;">
+          <div style="width:32px;height:32px;background:linear-gradient(135deg,#7c3aed,#8b5cf6);border-radius:8px;display:flex;align-items:center;justify-content:center;color:white;font-weight:800;font-size:14px;font-family:'Sora',sans-serif;">M</div>
+          <span style="font-family:'Sora',sans-serif;font-weight:700;font-size:15px;color:#1a1523;" class="hide-mobile">Mem Nerchukunnavi</span>
+        </button>
+        <!-- Desktop Nav Links -->
+        <div class="hide-mobile" style="display:flex;align-items:center;gap:4px;">
+          <button class="nav-btn" data-page="home" onclick="navigate('home')" style="padding:7px 14px;border-radius:9999px;border:none;cursor:pointer;font-size:13px;font-weight:500;transition:all 0.15s;">Home</button>
+          <button class="nav-btn" data-page="about" onclick="navigate('about')" style="padding:7px 14px;border-radius:9999px;border:none;cursor:pointer;font-size:13px;font-weight:500;transition:all 0.15s;">About</button>
+          <button class="nav-btn" data-page="share" onclick="navigate('share')" style="padding:7px 14px;border-radius:9999px;border:none;cursor:pointer;font-size:13px;font-weight:500;transition:all 0.15s;">Share</button>
+          <button class="nav-btn" data-page="dashboard" onclick="navigate('dashboard')" style="padding:7px 14px;border-radius:9999px;border:none;cursor:pointer;font-size:13px;font-weight:500;transition:all 0.15s;">Dashboard</button>
+          <button class="nav-btn" data-page="chat" onclick="navigate('chat')" style="padding:7px 14px;border-radius:9999px;border:none;cursor:pointer;font-size:13px;font-weight:500;transition:all 0.15s;">Chat</button>
+          <button class="nav-btn" data-page="students" onclick="navigate('students')" style="padding:7px 14px;border-radius:9999px;border:none;cursor:pointer;font-size:13px;font-weight:500;transition:all 0.15s;">Students</button>
+          <button class="nav-btn" data-page="wishlist" onclick="navigate('wishlist')" style="padding:7px 14px;border-radius:9999px;border:none;cursor:pointer;font-size:13px;font-weight:500;transition:all 0.15s;">Wishlist</button>
+        </div>
+        <!-- Right controls -->
+        <div style="display:flex;align-items:center;gap:8px;">
+          <button id="lang-btn" onclick="toggleLang()" style="padding:6px 12px;border-radius:9999px;border:1.5px solid #e5e7eb;background:white;cursor:pointer;font-size:12px;font-weight:600;color:#7c3aed;">EN</button>
+          <button id="mute-btn" onclick="toggleMute()" style="padding:6px 10px;border-radius:9999px;border:1.5px solid #e5e7eb;background:white;cursor:pointer;font-size:14px;" title="Toggle sound">🔊</button>
+          <!-- Mobile hamburger -->
+          <button class="show-mobile" onclick="toggleMobileMenu()" style="padding:6px 10px;border-radius:9999px;border:1.5px solid #e5e7eb;background:white;cursor:pointer;font-size:16px;">☰</button>
+        </div>
+      </div>
+      <!-- Mobile Menu -->
+      <div id="mobile-menu" style="display:none;background:white;border-radius:16px;margin-top:8px;padding:12px;box-shadow:0 4px 24px rgba(124,58,237,0.10);">
+        <button class="nav-btn" data-page="home" onclick="navigate('home');toggleMobileMenu()" style="display:block;width:100%;text-align:left;padding:10px 14px;border-radius:10px;border:none;cursor:pointer;font-size:14px;font-weight:500;margin-bottom:4px;">🏠 Home</button>
+        <button class="nav-btn" data-page="about" onclick="navigate('about');toggleMobileMenu()" style="display:block;width:100%;text-align:left;padding:10px 14px;border-radius:10px;border:none;cursor:pointer;font-size:14px;font-weight:500;margin-bottom:4px;">ℹ️ About</button>
+        <button class="nav-btn" data-page="share" onclick="navigate('share');toggleMobileMenu()" style="display:block;width:100%;text-align:left;padding:10px 14px;border-radius:10px;border:none;cursor:pointer;font-size:14px;font-weight:500;margin-bottom:4px;">✍️ Share Experience</button>
+        <button class="nav-btn" data-page="dashboard" onclick="navigate('dashboard');toggleMobileMenu()" style="display:block;width:100%;text-align:left;padding:10px 14px;border-radius:10px;border:none;cursor:pointer;font-size:14px;font-weight:500;margin-bottom:4px;">📊 Dashboard</button>
+        <button class="nav-btn" data-page="chat" onclick="navigate('chat');toggleMobileMenu()" style="display:block;width:100%;text-align:left;padding:10px 14px;border-radius:10px;border:none;cursor:pointer;font-size:14px;font-weight:500;margin-bottom:4px;">💬 Community Chat</button>
+        <button class="nav-btn" data-page="students" onclick="navigate('students');toggleMobileMenu()" style="display:block;width:100%;text-align:left;padding:10px 14px;border-radius:10px;border:none;cursor:pointer;font-size:14px;font-weight:500;margin-bottom:4px;">👥 Students</button>
+        <button class="nav-btn" data-page="wishlist" onclick="navigate('wishlist');toggleMobileMenu()" style="display:block;width:100%;text-align:left;padding:10px 14px;border-radius:10px;border:none;cursor:pointer;font-size:14px;font-weight:500;">🔖 Wishlist</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main id="main-content" style="flex:1;padding-bottom:40px;"></main>
+
+  <!-- Footer -->
+  <footer style="background:white;border-top:1px solid #f3f4f6;padding:24px 16px;text-align:center;">
+    <div style="max-width:900px;margin:0 auto;">
+      <div style="font-family:'Sora',sans-serif;font-weight:700;font-size:16px;color:#7c3aed;margin-bottom:6px;">Mem Nerchukunnavi</div>
+      <div style="font-size:13px;color:#6b7280;margin-bottom:8px;">మేము నేర్చుకున్నవి — Sharing knowledge, building futures</div>
+      <div style="font-size:12px;color:#9ca3af;">
+        © <span id="footer-year"></span> &nbsp;|&nbsp;
+        Built with ❤️ using <a href="https://caffeine.ai/?utm_source=Caffeine-footer&utm_medium=referral&utm_content=mem-nerchukunnavi-standalone" target="_blank" rel="noopener" style="color:#7c3aed;text-decoration:none;font-weight:600;">caffeine.ai</a>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<script>
+// ============================================================
+// STATE
+// ============================================================
+let currentPage = 'home';
+let selectedYear = localStorage.getItem('selectedYear') || null;
+let isMuted = sessionStorage.getItem('muted') === 'true';
+let currentLang = 'en';
+let wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+let dmRecipient = null;
+let dmSenderName = localStorage.getItem('dmSenderName') || null;
+let pendingDMRecipient = null;
+
+// ============================================================
+// TRANSLATIONS
+// ============================================================
+const translations = {
+  en: {
+    home: 'Home', about: 'About', share: 'Share Experience',
+    dashboard: 'Dashboard', chat: 'Community Chat', students: 'Available Students',
+    wishlist: 'Wishlist', postDetail: 'Post Detail',
+    internships: 'Internships', hackathons: 'Hackathons', courses: 'Courses', general: 'General',
+    allCategories: 'All', allYears: 'All Years',
+    noPostsFound: 'No posts found for your filters.',
+    bookmarkAdded: 'Added to wishlist!', bookmarkRemoved: 'Removed from wishlist',
+    shareExperience: 'Share Your Experience',
+    submitSuccess: 'Submitted successfully!',
+    sendMessage: 'Send Message',
+    typeMessage: 'Type a message...',
+    dmSent: 'Message sent!',
+    feedbackSubmitted: 'Feedback submitted!',
+    connectSubmitted: 'Tip submitted!',
+    changeYear: 'Change Year',
+  },
+  te: {
+    home: 'హోమ్', about: 'గురించి', share: 'అనుభవం పంచుకోండి',
+    dashboard: 'డాష్‌బోర్డ్', chat: 'కమ్యూనిటీ చాట్', students: 'అందుబాటులో ఉన్న విద్యార్థులు',
+    wishlist: 'విష్‌లిస్ట్', postDetail: 'పోస్ట్ వివరాలు',
+    internships: 'ఇంటర్న్‌షిప్‌లు', hackathons: 'హ్యాకథాన్‌లు', courses: 'కోర్సులు', general: 'సాధారణ',
+    allCategories: 'అన్నీ', allYears: 'అన్ని సంవత్సరాలు',
+    noPostsFound: 'మీ ఫిల్టర్‌లకు పోస్ట్‌లు కనుగొనబడలేదు.',
+    bookmarkAdded: 'విష్‌లిస్ట్‌కు జోడించబడింది!', bookmarkRemoved: 'విష్‌లిస్ట్ నుండి తీసివేయబడింది',
+    shareExperience: 'మీ అనుభవం పంచుకోండి',
+    submitSuccess: 'విజయవంతంగా సమర్పించబడింది!',
+    sendMessage: 'సందేశం పంపండి',
+    typeMessage: 'సందేశం టైప్ చేయండి...',
+    dmSent: 'సందేశం పంపబడింది!',
+    feedbackSubmitted: 'అభిప్రాయం సమర్పించబడింది!',
+    connectSubmitted: 'చిట్కా సమర్పించబడింది!',
+    changeYear: 'సంవత్సరం మార్చండి',
+  }
+};
+function t(key) { return (translations[currentLang] || translations.en)[key] || key; }
+
+// ============================================================
+// MOCK DATA
+// ============================================================
+let posts = [
+  { id: 1, content: "Got my first internship at TCS through campus placement! The key was practicing DSA on LeetCode for 3 months and doing mock interviews. Don't give up — consistency is everything! 💪", authorYear: "3rd Year", category: "internships", upvotes: 42, connectCount: 18, createdAt: Date.now() - 86400000 * 2 },
+  { id: 2, content: "Won 2nd place at Smart India Hackathon 2024! Our team built an AI-powered crop disease detection app. The experience was incredible — 36 hours of coding, zero sleep, and pure adrenaline! 🏆", authorYear: "2nd Year", category: "hackathons", upvotes: 67, connectCount: 31, createdAt: Date.now() - 86400000 * 3 },
+  { id: 3, content: "Completed the Full Stack Web Development course on Coursera. The React + Node.js combo is amazing. Highly recommend the Meta Front-End Developer certificate for beginners! 📚", authorYear: "1st Year", category: "courses", upvotes: 28, connectCount: 14, createdAt: Date.now() - 86400000 * 1 },
+  { id: 4, content: "Placed at Infosys as a Systems Engineer! The off-campus drive was tough but worth it. Tip: Focus on verbal ability and logical reasoning for the aptitude test. 🎉", authorYear: "4th Year", category: "internships", upvotes: 55, connectCount: 22, createdAt: Date.now() - 86400000 * 5 },
+  { id: 5, content: "Participated in HackWithInfy and reached the finals! The problem statement was on smart city solutions. Great networking opportunity — met students from 50+ colleges! 🌟", authorYear: "3rd Year", category: "hackathons", upvotes: 39, connectCount: 25, createdAt: Date.now() - 86400000 * 4 },
+  { id: 6, content: "Machine Learning course by Andrew Ng on Coursera changed my perspective on AI. The assignments are challenging but the community forums are super helpful. Start with Python basics first! 🤖", authorYear: "2nd Year", category: "courses", upvotes: 51, connectCount: 19, createdAt: Date.now() - 86400000 * 6 },
+  { id: 7, content: "First year tip: Join at least 2 technical clubs. I joined the coding club and robotics club — they opened doors to competitions, workshops, and amazing friendships! 🤝", authorYear: "1st Year", category: "general", upvotes: 33, connectCount: 27, createdAt: Date.now() - 86400000 * 7 },
+  { id: 8, content: "Summer internship at Wipro was a great learning experience. Got to work on real client projects using Java Spring Boot. The mentors were very supportive! ☕", authorYear: "3rd Year", category: "internships", upvotes: 44, connectCount: 16, createdAt: Date.now() - 86400000 * 8 },
+  { id: 9, content: "CodeChef Snackdown 2024 — our team made it to Round 2! Competitive programming is hard but the growth is exponential. Start with Codeforces Div 3 problems! 💻", authorYear: "2nd Year", category: "hackathons", upvotes: 36, connectCount: 20, createdAt: Date.now() - 86400000 * 9 },
+  { id: 10, content: "AWS Cloud Practitioner certification done! It took me 3 weeks of preparation. The free tier is perfect for hands-on practice. Cloud skills are in huge demand right now! ☁️", authorYear: "4th Year", category: "courses", upvotes: 48, connectCount: 23, createdAt: Date.now() - 86400000 * 10 },
+  { id: 11, content: "Landed a research internship at IIT Hyderabad! Cold emailing professors actually works — I sent 40 emails and got 3 positive responses. Persistence pays off! 🔬", authorYear: "3rd Year", category: "internships", upvotes: 61, connectCount: 29, createdAt: Date.now() - 86400000 * 11 },
+  { id: 12, content: "Google Solution Challenge 2024 participant! Our app for rural healthcare won regional recognition. The Google mentors were incredibly helpful during the development phase! 🌍", authorYear: "2nd Year", category: "hackathons", upvotes: 72, connectCount: 35, createdAt: Date.now() - 86400000 * 12 },
+  { id: 13, content: "Data Structures & Algorithms — the most important subject for placements. I used GeeksforGeeks + LeetCode combo. Solved 300+ problems over 6 months. Worth every minute! 📊", authorYear: "4th Year", category: "courses", upvotes: 58, connectCount: 41, createdAt: Date.now() - 86400000 * 13 },
+  { id: 14, content: "Semester abroad program at NUS Singapore was life-changing! The exposure to international students and research culture is unmatched. Apply early — seats fill up fast! ✈️", authorYear: "3rd Year", category: "general", upvotes: 45, connectCount: 32, createdAt: Date.now() - 86400000 * 14 },
+  { id: 15, content: "Microsoft internship through MSFT Engage program! The interview had 3 rounds — DSA, system design, and HR. Prepare STAR format answers for behavioral questions! 🪟", authorYear: "4th Year", category: "internships", upvotes: 83, connectCount: 47, createdAt: Date.now() - 86400000 * 15 },
+  { id: 16, content: "Built my first open source contribution to a React library! Start with 'good first issue' labels on GitHub. The maintainers are usually very welcoming to newcomers! 🐙", authorYear: "1st Year", category: "general", upvotes: 29, connectCount: 21, createdAt: Date.now() - 86400000 * 16 },
+  { id: 17, content: "Flipkart Grid 5.0 — made it to Level 3! The e-commerce problem statements are very practical. Great way to understand real-world software engineering challenges! 🛒", authorYear: "3rd Year", category: "hackathons", upvotes: 41, connectCount: 18, createdAt: Date.now() - 86400000 * 17 },
+  { id: 18, content: "UI/UX Design course on Figma — completely free and incredibly useful! Good design skills set you apart from other developers. Dribbble is great for inspiration! 🎨", authorYear: "2nd Year", category: "courses", upvotes: 37, connectCount: 26, createdAt: Date.now() - 86400000 * 18 },
+  { id: 19, content: "CGPA matters less than projects and skills for startups. Built 5 projects in 2nd year and got a startup internship with 3x the stipend of campus placements! 💡", authorYear: "3rd Year", category: "general", upvotes: 76, connectCount: 53, createdAt: Date.now() - 86400000 * 19 },
+  { id: 20, content: "Amazon SDE internship experience: 2 coding rounds + 1 system design. Focus on arrays, trees, and graphs. The intern project was on AWS Lambda optimization — super exciting! 🚀", authorYear: "4th Year", category: "internships", upvotes: 91, connectCount: 58, createdAt: Date.now() - 86400000 * 20 },
+];
+
+let collegeConnects = [
+  { id: 1, collegeName: "JNTU Hyderabad", year: "3rd Year", tip: "The placement cell is very active. Register early and attend all pre-placement talks. Companies like TCS, Wipro, and Infosys visit every year!", createdAt: Date.now() - 86400000 * 1 },
+  { id: 2, collegeName: "Osmania University", year: "4th Year", tip: "Library resources are underutilized. The digital library has access to IEEE and Springer journals — perfect for research papers and projects!", createdAt: Date.now() - 86400000 * 2 },
+  { id: 3, collegeName: "BITS Pilani Hyderabad", year: "2nd Year", tip: "BITS has an amazing PS (Practice School) program. Apply for PS-2 in top companies — it's essentially a 6-month paid internship!", createdAt: Date.now() - 86400000 * 3 },
+  { id: 4, collegeName: "NIT Warangal", year: "3rd Year", tip: "The alumni network is incredibly strong. LinkedIn outreach to NIT-W alumni gets 70%+ response rate. Don't hesitate to reach out for referrals!", createdAt: Date.now() - 86400000 * 4 },
+  { id: 5, collegeName: "IIT Hyderabad", year: "4th Year", tip: "Research opportunities are abundant. Email professors directly with your CV and a specific research proposal. Most respond within a week!", createdAt: Date.now() - 86400000 * 5 },
+  { id: 6, collegeName: "VIT Vellore", year: "1st Year", tip: "Join the technical clubs in the first week itself. ISTE, IEEE, and ACM chapters organize amazing workshops and hackathons throughout the year!", createdAt: Date.now() - 86400000 * 6 },
+  { id: 7, collegeName: "CBIT Hyderabad", year: "2nd Year", tip: "The CSE department has strong industry connections. Attend every guest lecture — professors often share internship opportunities during these sessions!", createdAt: Date.now() - 86400000 * 7 },
+  { id: 8, collegeName: "Vasavi College", year: "3rd Year", tip: "The entrepreneurship cell is very active. If you have a startup idea, they provide mentorship, funding guidance, and co-working space!", createdAt: Date.now() - 86400000 * 8 },
+  { id: 9, collegeName: "MVSR Engineering", year: "4th Year", tip: "Mock interviews organized by the placement cell are gold. Treat them seriously — the feedback from industry professionals is invaluable!", createdAt: Date.now() - 86400000 * 9 },
+  { id: 10, collegeName: "Chaitanya Bharathi", year: "2nd Year", tip: "The annual tech fest attracts companies for sponsorship. Volunteering for the fest gives you direct interaction with company representatives!", createdAt: Date.now() - 86400000 * 10 },
+];
+
+let feedbackEntries = [
+  { authorName: "Priya Sharma", collegeYear: "3rd Year", feedback: "This platform helped me find my internship mentor! The community is so supportive and the tips shared here are genuinely useful. Keep up the great work! 🌟", timestamp: Date.now() - 86400000 * 1 },
+  { authorName: "Rahul Reddy", collegeYear: "2nd Year", feedback: "The hackathon experiences shared here motivated me to participate in my first competition. Won 3rd place thanks to the preparation tips! 🏆", timestamp: Date.now() - 86400000 * 2 },
+  { authorName: "Ananya Krishnan", collegeYear: "4th Year", feedback: "As a final year student, I wish I had found this platform earlier. The placement preparation advice is spot-on. Sharing it with all my juniors!", timestamp: Date.now() - 86400000 * 3 },
+  { authorName: "Karthik Nair", collegeYear: "1st Year", feedback: "Just joined college and this platform is already helping me understand what to focus on. The 'general' category posts are especially helpful for freshers!", timestamp: Date.now() - 86400000 * 4 },
+  { authorName: "Divya Patel", collegeYear: "3rd Year", feedback: "The DM feature is amazing! Connected with a senior who guided me through the entire internship application process. Truly grateful! 💜", timestamp: Date.now() - 86400000 * 5 },
+  { authorName: "Sai Teja", collegeYear: "2nd Year", feedback: "Community chat is super active and helpful. Got my doubts about competitive programming cleared within minutes. Great platform!", timestamp: Date.now() - 86400000 * 6 },
+  { authorName: "Meghana Rao", collegeYear: "4th Year", feedback: "The college connect tips section is a hidden gem. Found specific advice for my college that I couldn't find anywhere else. Highly recommend!", timestamp: Date.now() - 86400000 * 7 },
+  { authorName: "Arjun Varma", collegeYear: "3rd Year", feedback: "Telugu language support is a great touch! Makes the platform more accessible for students from Andhra and Telangana. Excellent initiative! 🙏", timestamp: Date.now() - 86400000 * 8 },
+];
+
+let chatMessages = [
+  { authorName: "Ravi Kumar", collegeYear: "2nd Year", message: "Hey everyone! Anyone preparing for TCS NQT? Looking for study partners! 📚", timestamp: Date.now() - 3600000 * 5 },
+  { authorName: "Sneha Reddy", collegeYear: "3rd Year", message: "I cleared TCS NQT last year! The key is practicing verbal ability and coding sections. Happy to help! 😊", timestamp: Date.now() - 3600000 * 4.8 },
+  { authorName: "Aditya Singh", collegeYear: "1st Year", message: "Which programming language should I start with as a CSE fresher? Python or Java?", timestamp: Date.now() - 3600000 * 4.5 },
+  { authorName: "Preethi Nair", collegeYear: "4th Year", message: "Start with Python! It's beginner-friendly and has amazing libraries for ML/AI. Java is great for placements though! 🐍", timestamp: Date.now() - 3600000 * 4.2 },
+  { authorName: "Vikram Rao", collegeYear: "3rd Year", message: "Anyone interested in forming a team for Smart India Hackathon 2025? Need a UI/UX designer and a backend dev!", timestamp: Date.now() - 3600000 * 3.8 },
+  { authorName: "Lakshmi Devi", collegeYear: "2nd Year", message: "I can join as UI/UX! I have experience with Figma and have participated in 2 hackathons before 🎨", timestamp: Date.now() - 3600000 * 3.5 },
+  { authorName: "Suresh Babu", collegeYear: "4th Year", message: "For placements, CGPA matters less than projects. Build at least 3 good projects and put them on GitHub! 💻", timestamp: Date.now() - 3600000 * 3 },
+  { authorName: "Kavitha Sharma", collegeYear: "1st Year", message: "What are the best resources for learning DSA? I'm completely new to competitive programming!", timestamp: Date.now() - 3600000 * 2.5 },
+  { authorName: "Nikhil Reddy", collegeYear: "3rd Year", message: "Start with Striver's A2Z DSA sheet! It's comprehensive and well-structured. Also join Codeforces for practice! 🚀", timestamp: Date.now() - 3600000 * 2 },
+  { authorName: "Pooja Krishnan", collegeYear: "2nd Year", message: "The college connect section here is amazing! Found tips specific to my college that were super helpful 🌟", timestamp: Date.now() - 3600000 * 1.5 },
+  { authorName: "Harish Varma", collegeYear: "4th Year", message: "Final year tip: Start applying for jobs 6 months before graduation. The job market is competitive but opportunities are there! 💪", timestamp: Date.now() - 3600000 * 1 },
+  { authorName: "Deepika Rao", collegeYear: "3rd Year", message: "Anyone from JNTU Hyderabad here? Want to connect and discuss placement preparation strategies!", timestamp: Date.now() - 3600000 * 0.5 },
+  { authorName: "Srinivas Kumar", collegeYear: "2nd Year", message: "Just got selected for Google Summer of Code! The key is contributing to open source early. Start in 1st year itself! 🎉", timestamp: Date.now() - 3600000 * 0.3 },
+  { authorName: "Anitha Reddy", collegeYear: "1st Year", message: "This community is so helpful! Already learned so much in just a week. Thank you everyone! 🙏", timestamp: Date.now() - 3600000 * 0.1 },
+  { authorName: "Manoj Patel", collegeYear: "4th Year", message: "Remember: Rejections are part of the journey. I got rejected 15 times before landing my dream job. Keep going! 💜", timestamp: Date.now() - 60000 * 5 },
+];
+
+let studentProfiles = [
+  { name: "Arjun Mehta", collegeYear: "3rd Year", collegeName: "JNTU Hyderabad", availableForDM: true },
+  { name: "Priya Lakshmi", collegeYear: "4th Year", collegeName: "NIT Warangal", availableForDM: true },
+  { name: "Kiran Reddy", collegeYear: "2nd Year", collegeName: "BITS Pilani Hyderabad", availableForDM: true },
+  { name: "Sruthi Nair", collegeYear: "3rd Year", collegeName: "Osmania University", availableForDM: true },
+  { name: "Venkat Rao", collegeYear: "4th Year", collegeName: "IIT Hyderabad", availableForDM: true },
+  { name: "Divya Sharma", collegeYear: "1st Year", collegeName: "VIT Vellore", availableForDM: true },
+  { name: "Rohit Kumar", collegeYear: "2nd Year", collegeName: "CBIT Hyderabad", availableForDM: true },
+  { name: "Meena Krishnan", collegeYear: "3rd Year", collegeName: "Vasavi College", availableForDM: true },
+];
+
+let dmConversations = {};
+
+// ============================================================
+// SOUND UTILITIES
+// ============================================================
+function playBubblePop() {
+  if (isMuted) return;
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain); gain.connect(ctx.destination);
+    osc.frequency.setValueAtTime(600, ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(300, ctx.currentTime + 0.1);
+    gain.gain.setValueAtTime(0.15, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.15);
+    osc.start(ctx.currentTime); osc.stop(ctx.currentTime + 0.15);
+  } catch(e) {}
+}
+function playTypingTick() {
+  if (isMuted) return;
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const buf = ctx.createBuffer(1, ctx.sampleRate * 0.05, ctx.sampleRate);
+    const data = buf.getChannelData(0);
+    for (let i = 0; i < data.length; i++) data[i] = (Math.random() * 2 - 1) * 0.08;
+    const src = ctx.createBufferSource();
+    src.buffer = buf;
+    src.connect(ctx.destination);
+    src.start();
+  } catch(e) {}
+}
+
+// ============================================================
+// TOAST
+// ============================================================
+function showToast(message, type = 'success') {
+  const container = document.getElementById('toast-container');
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  const icons = { success: '✅', error: '❌', info: 'ℹ️' };
+  toast.innerHTML = `<span>${icons[type] || '✅'}</span><span>${message}</span>`;
+  container.appendChild(toast);
+  playBubblePop();
+  setTimeout(() => { toast.style.opacity = '0'; toast.style.transform = 'translateX(60px)'; toast.style.transition = 'all 0.3s'; setTimeout(() => toast.remove(), 300); }, 3500);
+}
+
+// ============================================================
+// YEAR SELECTION
+// ============================================================
+function openYearModal() {
+  document.getElementById('year-modal').style.display = 'flex';
+  updateYearCards();
+}
+function closeYearModal() {
+  document.getElementById('year-modal').style.display = 'none';
+}
+function selectYear(year) {
+  selectedYear = year;
+  localStorage.setItem('selectedYear', year);
+  closeYearModal();
+  updateYearDisplay();
+  renderCurrentPage();
+  showToast(`Year set to ${year}! 🎓`, 'success');
+}
+function updateYearCards() {
+  document.querySelectorAll('.year-card').forEach(card => {
+    const cardYear = card.getAttribute('data-year');
+    const check = card.querySelector('.year-check');
+    if (cardYear === selectedYear) {
+      card.style.outline = '3px solid white';
+      if (check) check.style.display = 'flex';
+    } else {
+      card.style.outline = 'none';
+      if (check) check.style.display = 'none';
+    }
+  });
+}
+function updateYearDisplay() {
+  const btn = document.getElementById('year-display-btn');
+  if (btn) {
+    const yearEmojis = { '1st Year': '🌱', '2nd Year': '📚', '3rd Year': '🚀', '4th Year': '🎯' };
+    btn.textContent = `${yearEmojis[selectedYear] || '🎓'} ${selectedYear || 'Select Year'}`;
+  }
+}
+
+// ============================================================
+// MUTE TOGGLE
+// ============================================================
+function toggleMute() {
+  isMuted = !isMuted;
+  sessionStorage.setItem('muted', isMuted);
+  document.getElementById('mute-btn').textContent = isMuted ? '🔇' : '🔊';
+}
+
+// ============================================================
+// LANGUAGE TOGGLE
+// ============================================================
+function toggleLang() {
+  currentLang = currentLang === 'en' ? 'te' : 'en';
+  document.getElementById('lang-btn').textContent = currentLang === 'en' ? 'EN' : 'తె';
+  renderCurrentPage();
+}
+
+// ============================================================
+// MOBILE MENU
+// ============================================================
+function toggleMobileMenu() {
+  const menu = document.getElementById('mobile-menu');
+  menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
+}
+
+// ============================================================
+// NAVIGATION
+// ============================================================
+function navigate(page, data) {
+  currentPage = page;
+  window.location.hash = page;
+  updateNavActive();
+  renderCurrentPage(data);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function updateNavActive() {
+  document.querySelectorAll('.nav-btn').forEach(btn => {
+    const isActive = btn.getAttribute('data-page') === currentPage;
+    btn.style.background = isActive ? '#7c3aed' : 'transparent';
+    btn.style.color = isActive ? 'white' : '#374151';
+  });
+}
+function renderCurrentPage(data) {
+  const main = document.getElementById('main-content');
+  main.innerHTML = '';
+  const div = document.createElement('div');
+  div.className = 'page';
+  switch(currentPage) {
+    case 'home': div.innerHTML = renderHome(); break;
+    case 'about': div.innerHTML = renderAbout(); break;
+    case 'share': div.innerHTML = renderShare(); break;
+    case 'dashboard': div.innerHTML = renderDashboard(); break;
+    case 'chat': div.innerHTML = renderChat(); break;
+    case 'students': div.innerHTML = renderStudents(); break;
+    case 'wishlist': div.innerHTML = renderWishlist(); break;
+    case 'post-detail': div.innerHTML = renderPostDetail(data); break;
+    default: div.innerHTML = renderHome();
+  }
+  main.appendChild(div);
+  attachEventListeners();
+}
+
+// ============================================================
+// UTILITY FUNCTIONS
+// ============================================================
+function formatDate(ts) {
+  const d = new Date(ts);
+  const now = Date.now();
+  const diff = now - ts;
+  if (diff < 3600000) return `${Math.floor(diff/60000)}m ago`;
+  if (diff < 86400000) return `${Math.floor(diff/3600000)}h ago`;
+  if (diff < 604800000) return `${Math.floor(diff/86400000)}d ago`;
+  return d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' });
+}
+function yearBadgeClass(year) {
+  if (year === '1st Year') return 'year-1st';
+  if (year === '2nd Year') return 'year-2nd';
+  if (year === '3rd Year') return 'year-3rd';
+  return 'year-4th';
+}
+function catBadgeClass(cat) {
+  return `cat-${cat}`;
+}
+function catLabel(cat) {
+  const labels = { internships: t('internships'), hackathons: t('hackathons'), courses: t('courses'), general: t('general') };
+  return labels[cat] || cat;
+}
+function isWishlisted(id) { return wishlist.includes(id); }
+function toggleWishlist(id) {
+  if (isWishlisted(id)) {
+    wishlist = wishlist.filter(w => w !== id);
+    showToast(t('bookmarkRemoved'), 'info');
+  } else {
+    wishlist.push(id);
+    showToast(t('bookmarkAdded'), 'success');
+  }
+  localStorage.setItem('wishlist', JSON.stringify(wishlist));
+  renderCurrentPage();
+}
+
+// ============================================================
+// POST CARD HTML
+// ============================================================
+function postCardHTML(post) {
+  const saved = isWishlisted(post.id);
+  const catIcons = { internships: '💼', hackathons: '⚡', courses: '📚', general: '💬' };
+  return `
+    <div class="post-card" style="background:white;border-radius:16px;padding:20px;box-shadow:0 2px 16px rgba(124,58,237,0.07);border:1px solid #f3f4f6;cursor:pointer;" onclick="navigate('post-detail', ${post.id})">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:9999px;" class="${catBadgeClass(post.category)}">${catIcons[post.category]} ${catLabel(post.category)}</span>
+          <span style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:9999px;" class="${yearBadgeClass(post.authorYear)}">${post.authorYear}</span>
+        </div>
+        <button onclick="event.stopPropagation();toggleWishlist(${post.id})" style="background:none;border:none;cursor:pointer;font-size:18px;padding:4px;" title="${saved ? 'Remove from wishlist' : 'Add to wishlist'}">${saved ? '🔖' : '🏷️'}</button>
+      </div>
+      <p style="font-size:14px;line-height:1.6;color:#374151;margin-bottom:14px;">${post.content}</p>
+      <div style="display:flex;align-items:center;justify-content:space-between;">
+        <div style="display:flex;align-items:center;gap:14px;">
+          <span style="font-size:13px;color:#6b7280;">👍 ${post.upvotes}</span>
+          <span style="font-size:13px;color:#6b7280;">🔗 ${post.connectCount}</span>
+        </div>
+        <span style="font-size:12px;color:#9ca3af;">${formatDate(post.createdAt)}</span>
+      </div>
+    </div>`;
+}
+
+// ============================================================
+// HOME PAGE
+// ============================================================
+let homeFilter = { category: 'all', year: 'all', search: '' };
+function renderHome() {
+  const yearEmojis = { '1st Year': '🌱', '2nd Year': '📚', '3rd Year': '🚀', '4th Year': '🎯' };
+  let filtered = posts;
+  if (homeFilter.category !== 'all') filtered = filtered.filter(p => p.category === homeFilter.category);
+  if (homeFilter.year !== 'all') filtered = filtered.filter(p => p.authorYear === homeFilter.year);
+  if (homeFilter.search) filtered = filtered.filter(p => p.content.toLowerCase().includes(homeFilter.search.toLowerCase()));
+  if (filtered.length === 0 && homeFilter.year !== 'all') filtered = posts.filter(p => homeFilter.category === 'all' || p.category === homeFilter.category);
+
+  const cats = ['all', 'internships', 'hackathons', 'courses', 'general'];
+  const years = ['all', '1st Year', '2nd Year', '3rd Year', '4th Year'];
+
+  return `
+    <div style="max-width:900px;margin:0 auto;padding:0 16px;">
+      <!-- Hero -->
+      <div style="background:linear-gradient(135deg,#7c3aed,#8b5cf6);border-radius:20px;padding:36px 32px;margin-bottom:28px;color:white;position:relative;overflow:hidden;">
+        <div style="position:absolute;inset:0;background:url('data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"60\" height=\"60\"><circle cx=\"30\" cy=\"30\" r=\"1\" fill=\"rgba(255,255,255,0.15)\"/></svg>') repeat;"></div>
+        <div style="position:relative;z-index:1;">
+          <div style="font-family:'Sora',sans-serif;font-size:28px;font-weight:800;margin-bottom:8px;">మేము నేర్చుకున్నవి 🎓</div>
+          <div style="font-size:16px;opacity:0.9;margin-bottom:20px;">Mem Nerchukunnavi — Share. Learn. Grow Together.</div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <button onclick="navigate('share')" style="background:white;color:#7c3aed;border:none;border-radius:9999px;padding:10px 22px;font-weight:700;cursor:pointer;font-size:14px;">✍️ Share Experience</button>
+            ${selectedYear ? `<button id="year-display-btn" onclick="openYearModal()" style="background:rgba(255,255,255,0.2);color:white;border:2px solid rgba(255,255,255,0.5);border-radius:9999px;padding:10px 22px;font-weight:600;cursor:pointer;font-size:14px;">${yearEmojis[selectedYear] || '🎓'} ${selectedYear}</button>` : `<button onclick="openYearModal()" style="background:rgba(255,255,255,0.2);color:white;border:2px solid rgba(255,255,255,0.5);border-radius:9999px;padding:10px 22px;font-weight:600;cursor:pointer;font-size:14px;">🎓 Select Your Year</button>`}
+          </div>
+        </div>
+      </div>
+
+      <!-- Search -->
+      <div style="margin-bottom:16px;">
+        <input id="search-input" type="text" placeholder="🔍 Search experiences..." value="${homeFilter.search}" style="width:100%;padding:12px 18px;border:1.5px solid #e5e7eb;border-radius:12px;font-size:14px;outline:none;background:white;" oninput="homeFilter.search=this.value;renderCurrentPage()" />
+      </div>
+
+      <!-- Category Filters -->
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;">
+        ${cats.map(c => `<button onclick="homeFilter.category='${c}';renderCurrentPage()" style="padding:7px 16px;border-radius:9999px;border:1.5px solid ${homeFilter.category===c?'#7c3aed':'#e5e7eb'};background:${homeFilter.category===c?'#7c3aed':'white'};color:${homeFilter.category===c?'white':'#374151'};font-size:13px;font-weight:500;cursor:pointer;">${c==='all'?t('allCategories'):catLabel(c)}</button>`).join('')}
+      </div>
+
+      <!-- Year Filters -->
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;">
+        ${years.map(y => `<button onclick="homeFilter.year='${y}';renderCurrentPage()" style="padding:6px 14px;border-radius:9999px;border:1.5px solid ${homeFilter.year===y?'#7c3aed':'#e5e7eb'};background:${homeFilter.year===y?'#ede9fe':'white'};color:${homeFilter.year===y?'#7c3aed':'#6b7280'};font-size:12px;font-weight:500;cursor:pointer;">${y==='all'?t('allYears'):y}</button>`).join('')}
+      </div>
+
+      <!-- Posts Grid -->
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;">
+        ${filtered.length > 0 ? filtered.map(p => postCardHTML(p)).join('') : `<div style="grid-column:1/-1;text-align:center;padding:48px;color:#6b7280;">${t('noPostsFound')}</div>`}
+      </div>
+    </div>`;
+}
+
+// ============================================================
+// ABOUT PAGE
+// ============================================================
+function renderAbout() {
+  return `
+    <div style="max-width:900px;margin:0 auto;padding:0 16px;">
+      <!-- Hero Banner -->
+      <div style="background:linear-gradient(135deg,#7c3aed,#6d28d9);border-radius:20px;padding:48px 32px;margin-bottom:32px;color:white;text-align:center;">
+        <div style="font-size:48px;margin-bottom:16px;">🎓</div>
+        <div style="font-family:'Sora',sans-serif;font-size:32px;font-weight:800;margin-bottom:12px;">Mem Nerchukunnavi</div>
+        <div style="font-size:18px;opacity:0.9;margin-bottom:8px;">మేము నేర్చుకున్నవి</div>
+        <div style="font-size:15px;opacity:0.8;max-width:500px;margin:0 auto;">A student-driven platform for sharing college experiences, connecting with peers, and growing together.</div>
+      </div>
+
+      <!-- Mission -->
+      <div style="background:white;border-radius:16px;padding:28px;margin-bottom:20px;box-shadow:0 2px 16px rgba(124,58,237,0.07);">
+        <div style="font-family:'Sora',sans-serif;font-size:20px;font-weight:700;color:#1a1523;margin-bottom:12px;">🎯 Our Mission</div>
+        <p style="color:#374151;line-height:1.7;font-size:15px;">We believe every student has valuable experiences worth sharing. Whether it's landing your first internship, winning a hackathon, or discovering a life-changing course — your story can inspire and guide hundreds of fellow students on their journey.</p>
+      </div>
+
+      <!-- Features Grid -->
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px;margin-bottom:32px;">
+        ${[
+          { icon: '📝', title: 'Share Experiences', desc: 'Post your internship stories, hackathon wins, course reviews, and general college tips.' },
+          { icon: '🔗', title: 'College Connect', desc: 'Get and share college-specific tips that help students navigate their unique campus environment.' },
+          { icon: '💬', title: 'Community Chat', desc: 'Real-time discussions with students from across colleges. Ask questions, share insights.' },
+          { icon: '👥', title: 'Student Network', desc: 'Connect directly with available students via DM for mentorship and guidance.' },
+          { icon: '🔖', title: 'Wishlist', desc: 'Save posts that inspire you and revisit them whenever you need motivation.' },
+          { icon: '🌐', title: 'Bilingual', desc: 'Full support for English and Telugu — making knowledge accessible to all.' },
+        ].map(f => `
+          <div style="background:white;border-radius:14px;padding:22px;box-shadow:0 2px 16px rgba(124,58,237,0.07);border-left:4px solid #7c3aed;">
+            <div style="font-size:28px;margin-bottom:10px;">${f.icon}</div>
+            <div style="font-weight:700;font-size:15px;color:#1a1523;margin-bottom:6px;">${f.title}</div>
+            <div style="font-size:13px;color:#6b7280;line-height:1.5;">${f.desc}</div>
+          </div>`).join('')}
+      </div>
+
+      <!-- CTA -->
+      <div style="text-align:center;padding:32px;">
+        <button onclick="navigate('share')" style="background:#7c3aed;color:white;border:none;border-radius:9999px;padding:14px 36px;font-weight:700;font-size:16px;cursor:pointer;box-shadow:0 4px 24px rgba(124,58,237,0.3);">✍️ Share Your Experience</button>
+      </div>
+    </div>`;
+}
+
+// ============================================================
+// SHARE EXPERIENCE PAGE
+// ============================================================
+function renderShare() {
+  return `
+    <div style="max-width:640px;margin:0 auto;padding:0 16px;">
+      <div style="text-align:center;margin-bottom:28px;">
+        <div style="font-family:'Sora',sans-serif;font-size:26px;font-weight:800;color:#1a1523;margin-bottom:8px;">✍️ ${t('shareExperience')}</div>
+        <div style="color:#6b7280;font-size:14px;">Your experience can inspire hundreds of students!</div>
+      </div>
+      <div style="background:white;border-radius:20px;padding:28px;box-shadow:0 2px 16px rgba(124,58,237,0.07);">
+        <form id="share-form" onsubmit="submitPost(event)">
+          <div style="margin-bottom:18px;">
+            <label style="display:block;font-weight:600;font-size:14px;color:#374151;margin-bottom:6px;">Category *</label>
+            <select id="post-category" required style="width:100%;padding:10px 14px;border:1.5px solid #e5e7eb;border-radius:10px;font-size:14px;outline:none;background:white;">
+              <option value="">Select category...</option>
+              <option value="internships">💼 Internships</option>
+              <option value="hackathons">⚡ Hackathons</option>
+              <option value="courses">📚 Courses</option>
+              <option value="general">💬 General</option>
+            </select>
+          </div>
+          <div style="margin-bottom:18px;">
+            <label style="display:block;font-weight:600;font-size:14px;color:#374151;margin-bottom:6px;">Your Year *</label>
+            <select id="post-year" required style="width:100%;padding:10px 14px;border:1.5px solid #e5e7eb;border-radius:10px;font-size:14px;outline:none;background:white;">
+              <option value="">Select year...</option>
+              <option value="1st Year" ${selectedYear==='1st Year'?'selected':''}>🌱 1st Year</option>
+              <option value="2nd Year" ${selectedYear==='2nd Year'?'selected':''}>📚 2nd Year</option>
+              <option value="3rd Year" ${selectedYear==='3rd Year'?'selected':''}>🚀 3rd Year</option>
+              <option value="4th Year" ${selectedYear==='4th Year'?'selected':''}>🎯 4th Year</option>
+            </select>
+          </div>
+          <div style="margin-bottom:24px;">
+            <label style="display:block;font-weight:600;font-size:14px;color:#374151;margin-bottom:6px;">Your Experience *</label>
+            <textarea id="post-content" required maxlength="500" rows="5" placeholder="Share your experience, tips, or story... (max 500 characters)" style="width:100%;padding:12px 14px;border:1.5px solid #e5e7eb;border-radius:10px;font-size:14px;outline:none;resize:vertical;font-family:inherit;" oninput="document.getElementById('char-count').textContent=this.value.length"></textarea>
+            <div style="text-align:right;font-size:12px;color:#9ca3af;margin-top:4px;"><span id="char-count">0</span>/500</div>
+          </div>
+          <button type="submit" style="width:100%;background:#7c3aed;color:white;border:none;border-radius:12px;padding:13px;font-weight:700;font-size:15px;cursor:pointer;">🚀 Share Experience</button>
+        </form>
+      </div>
+
+      <!-- College Connect Form -->
+      <div style="background:white;border-radius:20px;padding:28px;box-shadow:0 2px 16px rgba(124,58,237,0.07);margin-top:20px;">
+        <div style="font-family:'Sora',sans-serif;font-size:18px;font-weight:700;color:#1a1523;margin-bottom:16px;">🔗 Share a College Connect Tip</div>
+        <form id="connect-form" onsubmit="submitConnect(event)">
+          <div style="margin-bottom:14px;">
+            <input id="connect-college" type="text" required placeholder="College name..." style="width:100%;padding:10px 14px;border:1.5px solid #e5e7eb;border-radius:10px;font-size:14px;outline:none;" />
+          </div>
+          <div style="margin-bottom:14px;">
+            <select id="connect-year" required style="width:100%;padding:10px 14px;border:1.5px solid #e5e7eb;border-radius:10px;font-size:14px;outline:none;background:white;">
+              <option value="">Your year...</option>
+              <option value="1st Year">1st Year</option>
+              <option value="2nd Year">2nd Year</option>
+              <option value="3rd Year">3rd Year</option>
+              <option value="4th Year">4th Year</option>
+            </select>
+          </div>
+          <div style="margin-bottom:16px;">
+            <textarea id="connect-tip" required maxlength="200" rows="3" placeholder="Share a tip about your college... (max 200 chars)" style="width:100%;padding:10px 14px;border:1.5px solid #e5e7eb;border-radius:10px;font-size:14px;outline:none;resize:vertical;font-family:inherit;"></textarea>
+          </div>
+          <button type="submit" style="width:100%;background:#6d28d9;color:white;border:none;border-radius:12px;padding:12px;font-weight:700;font-size:14px;cursor:pointer;">🔗 Submit Tip</button>
+        </form>
+      </div>
+    </div>`;
+}
+
+function submitPost(e) {
+  e.preventDefault();
+  const content = document.getElementById('post-content').value.trim();
+  const category = document.getElementById('post-category').value;
+  const year = document.getElementById('post-year').value;
+  if (!content || !category || !year) return;
+  const newPost = { id: Date.now(), content, category, authorYear: year, upvotes: 0, connectCount: 0, createdAt: Date.now() };
+  posts.unshift(newPost);
+  showToast(t('submitSuccess'), 'success');
+  navigate('home');
+}
+
+function submitConnect(e) {
+  e.preventDefault();
+  const college = document.getElementById('connect-college').value.trim();
+  const year = document.getElementById('connect-year').value;
+  const tip = document.getElementById('connect-tip').value.trim();
+  if (!college || !year || !tip) return;
+  collegeConnects.unshift({ id: Date.now(), collegeName: college, year, tip, createdAt: Date.now() });
+  showToast(t('connectSubmitted'), 'success');
+  document.getElementById('connect-form').reset();
+}
+
+// ============================================================
+// DASHBOARD PAGE
+// ============================================================
+function renderDashboard() {
+  const total = posts.length;
+  const cats = { internships: 0, hackathons: 0, courses: 0, general: 0 };
+  posts.forEach(p => cats[p.category]++);
+  const topUpvoted = [...posts].sort((a,b) => b.upvotes - a.upvotes).slice(0, 5);
+  const topConnected = [...posts].sort((a,b) => b.connectCount - a.connectCount).slice(0, 5);
+
+  return `
+    <div style="max-width:900px;margin:0 auto;padding:0 16px;">
+      <div style="font-family:'Sora',sans-serif;font-size:26px;font-weight:800;color:#1a1523;margin-bottom:24px;">📊 Dashboard</div>
+
+      <!-- Stats Cards -->
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px;margin-bottom:28px;">
+        ${[
+          { label: 'Total Posts', value: total, icon: '📝', color: '#7c3aed' },
+          { label: 'Internships', value: cats.internships, icon: '💼', color: '#6d28d9' },
+          { label: 'Hackathons', value: cats.hackathons, icon: '⚡', color: '#8b5cf6' },
+          { label: 'Courses', value: cats.courses, icon: '📚', color: '#a78bfa' },
+          { label: 'General', value: cats.general, icon: '💬', color: '#6b7280' },
+        ].map(s => `
+          <div style="background:white;border-radius:14px;padding:20px;box-shadow:0 2px 16px rgba(124,58,237,0.07);text-align:center;">
+            <div style="font-size:28px;margin-bottom:8px;">${s.icon}</div>
+            <div style="font-size:28px;font-weight:800;color:${s.color};font-family:'Sora',sans-serif;">${s.value}</div>
+            <div style="font-size:12px;color:#6b7280;margin-top:4px;">${s.label}</div>
+          </div>`).join('')}
+      </div>
+
+      <!-- Top Posts -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:28px;">
+        <div style="background:white;border-radius:16px;padding:22px;box-shadow:0 2px 16px rgba(124,58,237,0.07);">
+          <div style="font-weight:700;font-size:16px;color:#1a1523;margin-bottom:14px;">🏆 Top Upvoted</div>
+          ${topUpvoted.map((p,i) => `
+            <div onclick="navigate('post-detail',${p.id})" style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #f9f9f9;cursor:pointer;">
+              <span style="font-size:16px;font-weight:800;color:#7c3aed;min-width:20px;">${i+1}</span>
+              <div style="flex:1;min-width:0;">
+                <div style="font-size:13px;color:#374151;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${p.content.substring(0,60)}...</div>
+                <div style="font-size:11px;color:#9ca3af;">👍 ${p.upvotes}</div>
+              </div>
+            </div>`).join('')}
+        </div>
+        <div style="background:white;border-radius:16px;padding:22px;box-shadow:0 2px 16px rgba(124,58,237,0.07);">
+          <div style="font-weight:700;font-size:16px;color:#1a1523;margin-bottom:14px;">🔗 Most Connected</div>
+          ${topConnected.map((p,i) => `
+            <div onclick="navigate('post-detail',${p.id})" style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #f9f9f9;cursor:pointer;">
+              <span style="font-size:16px;font-weight:800;color:#7c3aed;min-width:20px;">${i+1}</span>
+              <div style="flex:1;min-width:0;">
+                <div style="font-size:13px;color:#374151;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${p.content.substring(0,60)}...</div>
+                <div style="font-size:11px;color:#9ca3af;">🔗 ${p.connectCount}</div>
+              </div>
+            </div>`).join('')}
+        </div>
+      </div>
+
+      <!-- College Connect Tips -->
+      <div style="background:white;border-radius:16px;padding:22px;box-shadow:0 2px 16px rgba(124,58,237,0.07);margin-bottom:24px;">
+        <div style="font-weight:700;font-size:18px;color:#1a1523;margin-bottom:16px;">🔗 College Connect Tips</div>
+        <div style="display:flex;flex-direction:column;gap:12px;max-height:400px;overflow-y:auto;">
+          ${collegeConnects.map(c => `
+            <div style="border:1px solid #f3f4f6;border-radius:12px;padding:14px;">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+                <span style="font-weight:700;font-size:14px;color:#1a1523;">${c.collegeName}</span>
+                <span style="font-size:11px;font-weight:600;padding:2px 8px;border-radius:9999px;" class="${yearBadgeClass(c.year)}">${c.year}</span>
+              </div>
+              <p style="font-size:13px;color:#374151;line-height:1.5;">${c.tip}</p>
+              <div style="font-size:11px;color:#9ca3af;margin-top:6px;">${formatDate(c.createdAt)}</div>
+            </div>`).join('')}
+        </div>
+      </div>
+
+      <!-- Feedback Section -->
+      <div style="background:white;border-radius:16px;padding:22px;box-shadow:0 2px 16px rgba(124,58,237,0.07);margin-bottom:24px;">
+        <div style="font-weight:700;font-size:18px;color:#1a1523;margin-bottom:16px;">💬 Community Feedback</div>
+        <div style="display:flex;flex-direction:column;gap:12px;max-height:360px;overflow-y:auto;margin-bottom:20px;">
+          ${feedbackEntries.map(f => `
+            <div style="border:1px solid #f3f4f6;border-radius:12px;padding:14px;">
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+                <div style="width:36px;height:36px;background:#7c3aed;border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;">${f.authorName[0]}</div>
+                <div>
+                  <div style="font-weight:600;font-size:14px;color:#1a1523;">${f.authorName}</div>
+                  <span style="font-size:11px;font-weight:600;padding:2px 8px;border-radius:9999px;" class="${yearBadgeClass(f.collegeYear)}">${f.collegeYear}</span>
+                </div>
+              </div>
+              <p style="font-size:13px;color:#374151;line-height:1.5;">${f.feedback}</p>
+              <div style="font-size:11px;color:#9ca3af;margin-top:6px;">${formatDate(f.timestamp)}</div>
+            </div>`).join('')}
+        </div>
+        <!-- Feedback Form -->
+        <form id="feedback-form" onsubmit="submitFeedback(event)" style="border-top:1px solid #f3f4f6;padding-top:16px;">
+          <div style="font-weight:600;font-size:14px;color:#374151;margin-bottom:12px;">Share Your Feedback</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">
+            <input id="fb-name" type="text" required placeholder="Your name..." style="padding:9px 12px;border:1.5px solid #e5e7eb;border-radius:9px;font-size:13px;outline:none;" />
+            <select id="fb-year" required style="padding:9px 12px;border:1.5px solid #e5e7eb;border-radius:9px;font-size:13px;outline:none;background:white;">
+              <option value="">Year...</option>
+              <option value="1st Year">1st Year</option>
+              <option value="2nd Year">2nd Year</option>
+              <option value="3rd Year">3rd Year</option>
+              <option value="4th Year">4th Year</option>
+            </select>
+          </div>
+          <textarea id="fb-text" required maxlength="500" rows="3" placeholder="Your feedback... (max 500 chars)" style="width:100%;padding:9px 12px;border:1.5px solid #e5e7eb;border-radius:9px;font-size:13px;outline:none;resize:vertical;font-family:inherit;margin-bottom:10px;"></textarea>
+          <button type="submit" style="background:#7c3aed;color:white;border:none;border-radius:9px;padding:10px 22px;font-weight:600;font-size:13px;cursor:pointer;">Submit Feedback</button>
+        </form>
+      </div>
+    </div>`;
+}
+
+function submitFeedback(e) {
+  e.preventDefault();
+  const name = document.getElementById('fb-name').value.trim();
+  const year = document.getElementById('fb-year').value;
+  const text = document.getElementById('fb-text').value.trim();
+  if (!name || !year || !text) return;
+  feedbackEntries.unshift({ authorName: name, collegeYear: year, feedback: text, timestamp: Date.now() });
+  showToast(t('feedbackSubmitted'), 'success');
+  document.getElementById('feedback-form').reset();
+  renderCurrentPage();
+}
+
+// ============================================================
+// COMMUNITY CHAT PAGE
+// ============================================================
+function renderChat() {
+  return `
+    <div style="max-width:700px;margin:0 auto;padding:0 16px;">
+      <div style="font-family:'Sora',sans-serif;font-size:26px;font-weight:800;color:#1a1523;margin-bottom:20px;">💬 ${t('chat')}</div>
+      <div style="background:white;border-radius:20px;box-shadow:0 2px 16px rgba(124,58,237,0.07);overflow:hidden;">
+        <!-- Messages -->
+        <div id="chat-messages" style="padding:20px;display:flex;flex-direction:column;gap:14px;max-height:480px;overflow-y:auto;">
+          ${chatMessages.map(m => `
+            <div style="display:flex;gap:10px;align-items:flex-start;">
+              <div style="width:36px;height:36px;background:#7c3aed;border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:13px;flex-shrink:0;">${m.authorName[0]}</div>
+              <div style="flex:1;">
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+                  <span style="font-weight:600;font-size:13px;color:#1a1523;">${m.authorName}</span>
+                  <span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:9999px;" class="${yearBadgeClass(m.collegeYear)}">${m.collegeYear}</span>
+                  <span style="font-size:11px;color:#9ca3af;">${formatDate(m.timestamp)}</span>
+                </div>
+                <div style="background:#f9f8ff;border-radius:0 12px 12px 12px;padding:10px 14px;font-size:14px;color:#374151;line-height:1.5;">${m.message}</div>
+              </div>
+            </div>`).join('')}
+        </div>
+        <!-- Input -->
+        <div style="padding:16px;border-top:1px solid #f3f4f6;">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;">
+            <input id="chat-name" type="text" placeholder="Your name..." style="padding:9px 12px;border:1.5px solid #e5e7eb;border-radius:9px;font-size:13px;outline:none;" />
+            <select id="chat-year" style="padding:9px 12px;border:1.5px solid #e5e7eb;border-radius:9px;font-size:13px;outline:none;background:white;">
+              <option value="">Year...</option>
+              <option value="1st Year" ${selectedYear==='1st Year'?'selected':''}>1st Year</option>
+              <option value="2nd Year" ${selectedYear==='2nd Year'?'selected':''}>2nd Year</option>
+              <option value="3rd Year" ${selectedYear==='3rd Year'?'selected':''}>3rd Year</option>
+              <option value="4th Year" ${selectedYear==='4th Year'?'selected':''}>4th Year</option>
+            </select>
+          </div>
+          <div style="display:flex;gap:8px;">
+            <input id="chat-input" type="text" placeholder="${t('typeMessage')}" maxlength="200" style="flex:1;padding:10px 14px;border:1.5px solid #e5e7eb;border-radius:10px;font-size:14px;outline:none;" onkeydown="if(event.key==='Enter')sendChatMessage()" oninput="playTypingTick()" />
+            <button onclick="sendChatMessage()" style="background:#7c3aed;color:white;border:none;border-radius:10px;padding:10px 20px;cursor:pointer;font-weight:600;font-size:14px;">${t('sendMessage')}</button>
+          </div>
+        </div>
+      </div>
+    </div>`;
+}
+
+function sendChatMessage() {
+  const name = document.getElementById('chat-name')?.value.trim();
+  const year = document.getElementById('chat-year')?.value;
+  const msg = document.getElementById('chat-input')?.value.trim();
+  if (!name || !year || !msg) { showToast('Please fill in all fields', 'error'); return; }
+  chatMessages.push({ authorName: name, collegeYear: year, message: msg, timestamp: Date.now() });
+  if (chatMessages.length > 50) chatMessages.shift();
+  const savedName = name; const savedYear = year;
+  renderCurrentPage();
+  setTimeout(() => {
+    const nameEl = document.getElementById('chat-name');
+    const yearEl = document.getElementById('chat-year');
+    if (nameEl) nameEl.value = savedName;
+    if (yearEl) yearEl.value = savedYear;
+    const chatDiv = document.getElementById('chat-messages');
+    if (chatDiv) chatDiv.scrollTop = chatDiv.scrollHeight;
+  }, 50);
+}
+
+// ============================================================
+// AVAILABLE STUDENTS PAGE
+// ============================================================
+function renderStudents() {
+  return `
+    <div style="max-width:900px;margin:0 auto;padding:0 16px;">
+      <div style="font-family:'Sora',sans-serif;font-size:26px;font-weight:800;color:#1a1523;margin-bottom:8px;">👥 ${t('students')}</div>
+      <div style="color:#6b7280;font-size:14px;margin-bottom:24px;">Connect with students who are available for direct messaging and mentorship.</div>
+
+      <!-- Register Form -->
+      <div style="background:white;border-radius:16px;padding:22px;box-shadow:0 2px 16px rgba(124,58,237,0.07);margin-bottom:24px;">
+        <div style="font-weight:700;font-size:16px;color:#1a1523;margin-bottom:14px;">📋 Register as Available</div>
+        <form id="register-form" onsubmit="registerStudent(event)">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">
+            <input id="reg-name" type="text" required placeholder="Your name..." style="padding:9px 12px;border:1.5px solid #e5e7eb;border-radius:9px;font-size:13px;outline:none;" />
+            <input id="reg-college" type="text" required placeholder="College name..." style="padding:9px 12px;border:1.5px solid #e5e7eb;border-radius:9px;font-size:13px;outline:none;" />
+          </div>
+          <div style="display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end;">
+            <select id="reg-year" required style="padding:9px 12px;border:1.5px solid #e5e7eb;border-radius:9px;font-size:13px;outline:none;background:white;">
+              <option value="">Year...</option>
+              <option value="1st Year">1st Year</option>
+              <option value="2nd Year">2nd Year</option>
+              <option value="3rd Year">3rd Year</option>
+              <option value="4th Year">4th Year</option>
+            </select>
+            <button type="submit" style="background:#7c3aed;color:white;border:none;border-radius:9px;padding:10px 20px;font-weight:600;font-size:13px;cursor:pointer;white-space:nowrap;">✅ Mark Me Available</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Student Cards -->
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;">
+        ${studentProfiles.map(s => `
+          <div style="background:white;border-radius:16px;padding:20px;box-shadow:0 2px 16px rgba(124,58,237,0.07);">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+              <div style="width:44px;height:44px;background:linear-gradient(135deg,#7c3aed,#8b5cf6);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:18px;">${s.name[0]}</div>
+              <div>
+                <div style="font-weight:700;font-size:15px;color:#1a1523;">${s.name}</div>
+                <div style="font-size:12px;color:#6b7280;">${s.collegeName}</div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;">
+              <span style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:9999px;" class="${yearBadgeClass(s.collegeYear)}">${s.collegeYear}</span>
+              <div style="display:flex;align-items:center;gap:6px;">
+                <span style="width:8px;height:8px;background:#10b981;border-radius:50%;display:inline-block;"></span>
+                <span style="font-size:12px;color:#10b981;font-weight:500;">Available</span>
+              </div>
+            </div>
+            <button onclick="openDMPanel('${s.name}')" style="width:100%;margin-top:14px;background:#7c3aed;color:white;border:none;border-radius:10px;padding:9px;font-weight:600;font-size:13px;cursor:pointer;">💬 Send DM</button>
+          </div>`).join('')}
+      </div>
+    </div>`;
+}
+
+function registerStudent(e) {
+  e.preventDefault();
+  const name = document.getElementById('reg-name').value.trim();
+  const college = document.getElementById('reg-college').value.trim();
+  const year = document.getElementById('reg-year').value;
+  if (!name || !college || !year) return;
+  const exists = studentProfiles.findIndex(s => s.name === name);
+  if (exists >= 0) { studentProfiles[exists] = { name, collegeName: college, collegeYear: year, availableForDM: true }; }
+  else { studentProfiles.push({ name, collegeName: college, collegeYear: year, availableForDM: true }); }
+  showToast('You are now marked as available! 🎉', 'success');
+  document.getElementById('register-form').reset();
+  renderCurrentPage();
+}
+
+// ============================================================
+// WISHLIST PAGE
+// ============================================================
+function renderWishlist() {
+  const saved = posts.filter(p => wishlist.includes(p.id));
+  return `
+    <div style="max-width:900px;margin:0 auto;padding:0 16px;">
+      <div style="font-family:'Sora',sans-serif;font-size:26px;font-weight:800;color:#1a1523;margin-bottom:8px;">🔖 ${t('wishlist')}</div>
+      <div style="color:#6b7280;font-size:14px;margin-bottom:24px;">${saved.length} saved post${saved.length !== 1 ? 's' : ''}</div>
+      ${saved.length > 0
+        ? `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;">${saved.map(p => postCardHTML(p)).join('')}</div>`
+        : `<div style="text-align:center;padding:64px 16px;">
+            <div style="font-size:48px;margin-bottom:16px;">🏷️</div>
+            <div style="font-size:18px;font-weight:600;color:#374151;margin-bottom:8px;">No saved posts yet</div>
+            <div style="color:#6b7280;margin-bottom:24px;">Bookmark posts you find helpful to revisit them later.</div>
+            <button onclick="navigate('home')" style="background:#7c3aed;color:white;border:none;border-radius:9999px;padding:12px 28px;font-weight:600;cursor:pointer;">Browse Posts</button>
+          </div>`}
+    </div>`;
+}
+
+// ============================================================
+// POST DETAIL PAGE
+// ============================================================
+function renderPostDetail(postId) {
+  const post = posts.find(p => p.id === postId);
+  if (!post) return `<div style="text-align:center;padding:64px;color:#6b7280;">Post not found. <button onclick="navigate('home')" style="color:#7c3aed;background:none;border:none;cursor:pointer;font-weight:600;">Go Home</button></div>`;
+  const saved = isWishlisted(post.id);
+  const catIcons = { internships: '💼', hackathons: '⚡', courses: '📚', general: '💬' };
+  const shareUrl = window.location.href;
+
+  return `
+    <div style="max-width:680px;margin:0 auto;padding:0 16px;">
+      <button onclick="navigate('home')" style="display:flex;align-items:center;gap:6px;background:none;border:none;cursor:pointer;color:#7c3aed;font-weight:600;font-size:14px;margin-bottom:20px;">← Back to Feed</button>
+      <div style="background:white;border-radius:20px;padding:28px;box-shadow:0 2px 16px rgba(124,58,237,0.07);">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span style="font-size:12px;font-weight:600;padding:4px 12px;border-radius:9999px;" class="${catBadgeClass(post.category)}">${catIcons[post.category]} ${catLabel(post.category)}</span>
+            <span style="font-size:12px;font-weight:600;padding:4px 12px;border-radius:9999px;" class="${yearBadgeClass(post.authorYear)}">${post.authorYear}</span>
+          </div>
+          <button onclick="toggleWishlist(${post.id})" style="background:none;border:none;cursor:pointer;font-size:22px;" title="${saved ? 'Remove from wishlist' : 'Add to wishlist'}">${saved ? '🔖' : '🏷️'}</button>
+        </div>
+        <p style="font-size:16px;line-height:1.75;color:#374151;margin-bottom:20px;">${post.content}</p>
+        <div style="display:flex;align-items:center;justify-content:space-between;padding-top:16px;border-top:1px solid #f3f4f6;">
+          <div style="display:flex;gap:16px;">
+            <button onclick="upvotePost(${post.id})" style="display:flex;align-items:center;gap:6px;background:#f5f3ff;border:none;border-radius:9999px;padding:8px 16px;cursor:pointer;color:#7c3aed;font-weight:600;font-size:14px;">👍 ${post.upvotes}</button>
+            <span style="display:flex;align-items:center;gap:6px;color:#6b7280;font-size:14px;">🔗 ${post.connectCount} connects</span>
+          </div>
+          <span style="font-size:13px;color:#9ca3af;">${formatDate(post.createdAt)}</span>
+        </div>
+      </div>
+
+      <!-- Share Buttons -->
+      <div style="background:white;border-radius:16px;padding:20px;box-shadow:0 2px 16px rgba(124,58,237,0.07);margin-top:16px;">
+        <div style="font-weight:600;font-size:14px;color:#374151;margin-bottom:12px;">Share this post</div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <button onclick="copyLink()" style="display:flex;align-items:center;gap:6px;padding:9px 16px;border:1.5px solid #e5e7eb;border-radius:9px;background:white;cursor:pointer;font-size:13px;font-weight:500;">🔗 Copy Link</button>
+          <a href="https://wa.me/?text=${encodeURIComponent('Check this out: ' + post.content.substring(0,100) + '... ' + shareUrl)}" target="_blank" style="display:flex;align-items:center;gap:6px;padding:9px 16px;border:1.5px solid #e5e7eb;border-radius:9px;background:white;cursor:pointer;font-size:13px;font-weight:500;text-decoration:none;color:#374151;">📱 WhatsApp</a>
+          <button onclick="nativeShare('${encodeURIComponent(post.content.substring(0,100))}')" style="display:flex;align-items:center;gap:6px;padding:9px 16px;border:1.5px solid #e5e7eb;border-radius:9px;background:white;cursor:pointer;font-size:13px;font-weight:500;">↗️ Share</button>
+        </div>
+      </div>
+    </div>`;
+}
+
+function upvotePost(id) {
+  const post = posts.find(p => p.id === id);
+  if (post) { post.upvotes++; renderCurrentPage(id); }
+}
+function copyLink() {
+  navigator.clipboard.writeText(window.location.href).then(() => showToast('Link copied!', 'success')).catch(() => showToast('Could not copy link', 'error'));
+}
+function nativeShare(encodedText) {
+  const text = decodeURIComponent(encodedText);
+  if ('share' in navigator) {
+    navigator.share({ title: 'Mem Nerchukunnavi', text, url: window.location.href }).catch(() => {});
+  } else { copyLink(); }
+}
+
+// ============================================================
+// DM SYSTEM
+// ============================================================
+function openDMPanel(recipientName) {
+  dmRecipient = recipientName;
+  if (!dmSenderName) {
+    pendingDMRecipient = recipientName;
+    document.getElementById('sender-modal').style.display = 'flex';
+    return;
+  }
+  showDMPanel(recipientName);
+}
+function closeSenderModal() {
+  document.getElementById('sender-modal').style.display = 'none';
+  pendingDMRecipient = null;
+}
+function confirmSenderName() {
+  const name = document.getElementById('sender-name-input').value.trim();
+  if (!name) return;
+  dmSenderName = name;
+  localStorage.setItem('dmSenderName', name);
+  document.getElementById('sender-modal').style.display = 'none';
+  if (pendingDMRecipient) { showDMPanel(pendingDMRecipient); pendingDMRecipient = null; }
+}
+function showDMPanel(recipientName) {
+  document.getElementById('dm-recipient-name').textContent = `Chat with ${recipientName}`;
+  document.getElementById('dm-modal').style.display = 'flex';
+  renderDMMessages(recipientName);
+}
+function closeDMModal() {
+  document.getElementById('dm-modal').style.display = 'none';
+}
+function renderDMMessages(recipientName) {
+  const key = [dmSenderName, recipientName].sort().join('::');
+  const msgs = dmConversations[key] || [];
+  const container = document.getElementById('dm-messages');
+  if (!container) return;
+  container.innerHTML = msgs.length === 0
+    ? `<div style="text-align:center;color:#9ca3af;font-size:13px;padding:20px;">No messages yet. Say hello! 👋</div>`
+    : msgs.map(m => `
+        <div style="display:flex;justify-content:${m.sender === dmSenderName ? 'flex-end' : 'flex-start'};">
+          <div class="${m.sender === dmSenderName ? 'bubble-sent' : 'bubble-recv'}" style="max-width:75%;padding:10px 14px;font-size:14px;line-height:1.4;">
+            ${m.sender !== dmSenderName ? `<div style="font-size:11px;font-weight:600;margin-bottom:4px;opacity:0.7;">${m.sender}</div>` : ''}
+            ${m.message}
+            <div style="font-size:10px;opacity:0.6;margin-top:4px;text-align:right;">${formatDate(m.timestamp)}</div>
+          </div>
+        </div>`).join('');
+  container.scrollTop = container.scrollHeight;
+}
+function sendDM() {
+  const input = document.getElementById('dm-input');
+  const msg = input?.value.trim();
+  if (!msg || !dmRecipient || !dmSenderName) return;
+  const key = [dmSenderName, dmRecipient].sort().join('::');
+  if (!dmConversations[key]) dmConversations[key] = [];
+  dmConversations[key].push({ sender: dmSenderName, recipient: dmRecipient, message: msg, timestamp: Date.now() });
+  input.value = '';
+  renderDMMessages(dmRecipient);
+  showToast(t('dmSent'), 'success');
+}
+
+// ============================================================
+// EVENT LISTENERS (re-attached after render)
+// ============================================================
+function attachEventListeners() {
+  // Auto-scroll chat
+  if (currentPage === 'chat') {
+    setTimeout(() => {
+      const chatDiv = document.getElementById('chat-messages');
+      if (chatDiv) chatDiv.scrollTop = chatDiv.scrollHeight;
+    }, 50);
+  }
+}
+
+// ============================================================
+// SPARK PARTICLES
+// ============================================================
+function initSparks() {
+  const container = document.getElementById('sparks-container');
+  const sparkData = [
+    { top: '8%', left: '5%', w: 6, h: 6, cls: 'spark-v1', delay: '0s' },
+    { top: '15%', left: '20%', w: 4, h: 4, cls: 'spark-v2', delay: '0.5s' },
+    { top: '25%', left: '85%', w: 5, h: 5, cls: 'spark-v1', delay: '1s' },
+    { top: '35%', left: '92%', w: 3, h: 3, cls: 'spark-v3', delay: '1.5s' },
+    { top: '50%', left: '3%', w: 4, h: 4, cls: 'spark-v2', delay: '0.8s' },
+    { top: '60%', left: '78%', w: 6, h: 6, cls: 'spark-v4', delay: '2s' },
+    { top: '70%', left: '12%', w: 3, h: 3, cls: 'spark-v1', delay: '1.2s' },
+    { top: '80%', left: '65%', w: 5, h: 5, cls: 'spark-v3', delay: '0.3s' },
+    { top: '90%', left: '30%', w: 4, h: 4, cls: 'spark-v2', delay: '1.8s' },
+    { top: '45%', left: '50%', w: 3, h: 3, cls: 'spark-v4', delay: '2.5s' },
+    { top: '20%', left: '45%', w: 5, h: 5, cls: 'spark-v1', delay: '0.7s' },
+    { top: '75%', left: '88%', w: 4, h: 4, cls: 'spark-v2', delay: '1.4s' },
+    { top: '5%', left: '60%', w: 3, h: 3, cls: 'spark-v3', delay: '2.1s' },
+    { top: '55%', left: '35%', w: 6, h: 6, cls: 'spark-v4', delay: '0.9s' },
+    { top: '88%', left: '8%', w: 4, h: 4, cls: 'spark-v1', delay: '1.6s' },
+    { top: '42%', left: '72%', w: 3, h: 3, cls: 'spark-v2', delay: '2.3s' },
+  ];
+  sparkData.forEach(s => {
+    const el = document.createElement('div');
+    el.className = `spark ${s.cls}`;
+    el.style.cssText = `top:${s.top};left:${s.left};width:${s.w}px;height:${s.h}px;animation-delay:${s.delay};`;
+    container.appendChild(el);
+  });
+}
+
+// ============================================================
+// INIT
+// ============================================================
+function init() {
+  // Footer year
+  document.getElementById('footer-year').textContent = new Date().getFullYear();
+
+  // Init sparks
+  initSparks();
+
+  // Mute button state
+  document.getElementById('mute-btn').textContent = isMuted ? '🔇' : '🔊';
+
+  // Hash routing
+  const hash = window.location.hash.replace('#', '');
+  if (hash && ['home','about','share','dashboard','chat','students','wishlist'].includes(hash)) {
+    currentPage = hash;
+  }
+
+  // Render initial page
+  updateNavActive();
+  renderCurrentPage();
+
+  // Show year modal on first visit (600ms delay)
+  if (!selectedYear) {
+    setTimeout(() => openYearModal(), 600);
+  }
+
+  // Handle hash changes
+  window.addEventListener('hashchange', () => {
+    const h = window.location.hash.replace('#', '');
+    if (h && h !== currentPage) {
+      currentPage = h;
+      updateNavActive();
+      renderCurrentPage();
+    }
+  });
+
+  // Close modals on overlay click
+  document.getElementById('year-modal').addEventListener('click', function(e) {
+    if (e.target === this) closeYearModal();
+  });
+  document.getElementById('dm-modal').addEventListener('click', function(e) {
+    if (e.target === this) closeDMModal();
+  });
+  document.getElementById('sender-modal').addEventListener('click', function(e) {
+    if (e.target === this) closeSenderModal();
+  });
+}
+
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
